@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * 20180814 SJK: Created
  */
-public class Config
+public class MediaConfig
 {
     /**
      * Create a new builder.
@@ -34,7 +34,7 @@ public class Config
     private AlbumLoader mLoader;
     private Locale mLocale;
 
-    private AlbumConfig(Builder builder) {
+    private MediaConfig(Builder builder) {
         this.mLoader = builder.mLoader == null ? AlbumLoader.DEFAULT : builder.mLoader;
         this.mLocale = builder.mLocale == null ? Locale.getDefault() : builder.mLocale;
     }
@@ -90,10 +90,10 @@ public class Config
         /**
          * Create AlbumConfig.
          *
-         * @return {@link AlbumConfig}.
+         * @return {@link MediaConfig}.
          */
-        public AlbumConfig build() {
-            return new AlbumConfig(this);
+        public MediaConfig build() {
+            return new MediaConfig(this);
         }
     }
 }
