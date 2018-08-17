@@ -69,14 +69,14 @@ public final class MediaAlbum
     public @interface ChoiceMode {
     }
 
-    private static AlbumConfig sAlbumConfig;
+    private static MediaConfig sAlbumConfig;
 
     /**
      * Initialize Album.
      *
-     * @param albumConfig {@link AlbumConfig}.
+     * @param albumConfig {@link MediaConfig}.
      */
-    public static void initialize(AlbumConfig albumConfig) {
+    public static void initialize(MediaConfig albumConfig) {
         if (sAlbumConfig == null) sAlbumConfig = albumConfig;
         else Log.w("Album", new IllegalStateException("Illegal operation, only allowed to configure once."));
     }
@@ -84,9 +84,9 @@ public final class MediaAlbum
     /**
      * Get the album configuration.
      */
-    public static AlbumConfig getAlbumConfig() {
+    public static MediaConfig getAlbumConfig() {
         if (sAlbumConfig == null) {
-            sAlbumConfig = AlbumConfig.newBuilder(null).build();
+            sAlbumConfig = MediaConfig.newBuilder(null).build();
         }
         return sAlbumConfig;
     }
