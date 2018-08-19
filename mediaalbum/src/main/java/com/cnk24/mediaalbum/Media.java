@@ -119,16 +119,16 @@ public class Media
     /**
      * Preview picture.
      */
-    public static GalleryWrapper gallery(Context context) {
-        return new GalleryWrapper(context);
-    }
+    //public static GalleryWrapper gallery(Context context) {
+    //    return new GalleryWrapper(context);
+    //}
 
     /**
      * Preview Album.
      */
-    public static GalleryAlbumWrapper galleryAlbum(Context context) {
-        return new GalleryAlbumWrapper(context);
-    }
+    //public static GalleryAlbumWrapper galleryAlbum(Context context) {
+    //    return new GalleryAlbumWrapper(context);
+    //}
 
     /**
      * Open the camera from the activity.
@@ -154,16 +154,16 @@ public class Media
     /**
      * Preview picture.
      */
-    public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Activity activity) {
-        return new GalleryWrapper(activity);
-    }
+    //public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Activity activity) {
+    //    return new GalleryWrapper(activity);
+    //}
 
     /**
      * Preview Album.
      */
-    public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Activity activity) {
-        return new GalleryAlbumWrapper(activity);
-    }
+    //public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Activity activity) {
+    //    return new GalleryAlbumWrapper(activity);
+    //}
 
     /**
      * Open the camera from the activity.
@@ -189,16 +189,16 @@ public class Media
     /**
      * Preview picture.
      */
-    public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Fragment fragment) {
-        return new GalleryWrapper(fragment.getActivity());
-    }
+    //public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Fragment fragment) {
+    //    return new GalleryWrapper(fragment.getActivity());
+    //}
 
     /**
      * Preview Album.
      */
-    public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Fragment fragment) {
-        return new GalleryAlbumWrapper(fragment.getActivity());
-    }
+    //public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Fragment fragment) {
+    //    return new GalleryAlbumWrapper(fragment.getActivity());
+    //}
 
     /**
      * Open the camera from the activity.
@@ -224,14 +224,14 @@ public class Media
     /**
      * Preview picture.
      */
-    public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(android.support.v4.app.Fragment fragment) {
-        return new GalleryWrapper(fragment.getContext());
-    }
+    //public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(android.support.v4.app.Fragment fragment) {
+    //    return new GalleryWrapper(fragment.getContext());
+    //}
 
     /**
      * Preview Album.
      */
-    public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(android.support.v4.app.Fragment fragment) {
-        return new GalleryAlbumWrapper(fragment.getContext());
-    }
+    //public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(android.support.v4.app.Fragment fragment) {
+    //    return new GalleryAlbumWrapper(fragment.getContext());
+    //}
 }

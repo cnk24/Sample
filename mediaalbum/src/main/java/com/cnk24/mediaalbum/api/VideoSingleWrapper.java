@@ -18,12 +18,17 @@ package com.cnk24.mediaalbum.api;
 import android.content.Context;
 import android.content.Intent;
 
+import com.cnk24.mediaalbum.Filter;
+import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.app.media.MediaActivity;
+
 import java.util.ArrayList;
 
 /**
  * 20180817 SJK: Created
  */
-public final class VideoSingleWrapper extends BasicChoiceVideoWrapper<VideoSingleWrapper, ArrayList<AlbumFile>, String, AlbumFile>
+public final class VideoSingleWrapper extends BasicChoiceVideoWrapper<VideoSingleWrapper, ArrayList<MediaFile>, String, MediaFile>
 {
     private Filter<Long> mDurationFilter;
 
@@ -43,23 +48,22 @@ public final class VideoSingleWrapper extends BasicChoiceVideoWrapper<VideoSingl
 
     @Override
     public void start() {
-        AlbumActivity.sSizeFilter = mSizeFilter;
-        AlbumActivity.sMimeFilter = mMimeTypeFilter;
-        AlbumActivity.sDurationFilter = mDurationFilter;
-        AlbumActivity.sResult = mResult;
-        AlbumActivity.sCancel = mCancel;
-        Intent intent = new Intent(mContext, AlbumActivity.class);
-        intent.putExtra(Album.KEY_INPUT_WIDGET, mWidget);
+        MediaActivity.sSizeFilter = mSizeFilter;
+        MediaActivity.sMimeFilter = mMimeTypeFilter;
+        MediaActivity.sDurationFilter = mDurationFilter;
+        MediaActivity.sResult = mResult;
+        MediaActivity.sCancel = mCancel;
+        Intent intent = new Intent(mContext, MediaActivity.class);
+        intent.putExtra(Media.KEY_INPUT_WIDGET, mWidget);
 
-        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CHOICE_VIDEO);
-        intent.putExtra(Album.KEY_INPUT_CHOICE_MODE, Album.MODE_SINGLE);
-        intent.putExtra(Album.KEY_INPUT_COLUMN_COUNT, mColumnCount);
-        intent.putExtra(Album.KEY_INPUT_ALLOW_CAMERA, mHasCamera);
-        intent.putExtra(Album.KEY_INPUT_LIMIT_COUNT, 1);
-        intent.putExtra(Album.KEY_INPUT_FILTER_VISIBILITY, mFilterVisibility);
-        intent.putExtra(Album.KEY_INPUT_CAMERA_QUALITY, mQuality);
-        intent.putExtra(Album.KEY_INPUT_CAMERA_DURATION, mLimitDuration);
-        intent.putExtra(Album.KEY_INPUT_CAMERA_BYTES, mLimitBytes);
+        intent.putExtra(Media.KEY_INPUT_FUNCTION, Media.FUNCTION_CHOICE_VIDEO);
+        intent.putExtra(Media.KEY_INPUT_CHOICE_MODE, Media.MODE_SINGLE);
+        intent.putExtra(Media.KEY_INPUT_COLUMN_COUNT, mColumnCount);
+        intent.putExtra(Media.KEY_INPUT_ALLOW_CAMERA, mHasCamera);
+        intent.putExtra(Media.KEY_INPUT_LIMIT_COUNT, 1);
+        intent.putExtra(Media.KEY_INPUT_CAMERA_QUALITY, mQuality);
+        intent.putExtra(Media.KEY_INPUT_CAMERA_DURATION, mLimitDuration);
+        intent.putExtra(Media.KEY_INPUT_CAMERA_BYTES, mLimitBytes);
         mContext.startActivity(intent);
     }
 }

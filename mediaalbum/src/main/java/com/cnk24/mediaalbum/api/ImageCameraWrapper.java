@@ -18,6 +18,9 @@ package com.cnk24.mediaalbum.api;
 import android.content.Context;
 import android.content.Intent;
 
+import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.app.camera.CameraActivity;
+
 /**
  * 20180817 SJK: Created
  */
@@ -32,8 +35,8 @@ public class ImageCameraWrapper extends BasicCameraWrapper<ImageCameraWrapper>
         CameraActivity.sCancel = mCancel;
         Intent intent = new Intent(mContext, CameraActivity.class);
 
-        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CAMERA_IMAGE);
-        intent.putExtra(Album.KEY_INPUT_FILE_PATH, mFilePath);
+        intent.putExtra(Media.KEY_INPUT_FUNCTION, Media.FUNCTION_CAMERA_IMAGE);
+        intent.putExtra(Media.KEY_INPUT_FILE_PATH, mFilePath);
         mContext.startActivity(intent);
     }
 }

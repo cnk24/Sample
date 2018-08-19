@@ -17,7 +17,8 @@ package com.cnk24.mediaalbum.api.choice;
 
 import android.content.Context;
 
-import com.cnk24.mediaalbum.api.*;
+import com.cnk24.mediaalbum.api.VideoMultipleWrapper;
+import com.cnk24.mediaalbum.api.VideoSingleWrapper;
 
 /**
  * 20180817 SJK: Created

@@ -49,12 +49,12 @@ public class MediaFolder implements Parcelable
         this.name = name;
     }
 
-    public ArrayList<MediaFile> getAlbumFiles() {
+    public ArrayList<MediaFile> getMediaFiles() {
         return mMediaFiles;
     }
 
-    public void addAlbumFile(MediaFile albumFile) {
-        mMediaFiles.add(albumFile);
+    public void addMediaFile(MediaFile mediaFile) {
+        mMediaFiles.add(mediaFile);
     }
 
     public boolean isChecked() {

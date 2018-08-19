@@ -31,20 +31,20 @@ public class MediaConfig
         return new Builder(context);
     }
 
-    private AlbumLoader mLoader;
+    private MediaLoader mLoader;
     private Locale mLocale;
 
     private MediaConfig(Builder builder) {
-        this.mLoader = builder.mLoader == null ? AlbumLoader.DEFAULT : builder.mLoader;
+        this.mLoader = builder.mLoader == null ? MediaLoader.DEFAULT : builder.mLoader;
         this.mLocale = builder.mLocale == null ? Locale.getDefault() : builder.mLocale;
     }
 
     /**
-     * Get {@link AlbumLoader}.
+     * Get {@link MediaLoader}.
      *
-     * @return {@link AlbumLoader}.
+     * @return {@link MediaLoader}.
      */
-    public AlbumLoader getAlbumLoader() {
+    public MediaLoader getMediaLoader() {
         return mLoader;
     }
 
@@ -59,7 +59,7 @@ public class MediaConfig
 
     public static final class Builder {
 
-        private AlbumLoader mLoader;
+        private MediaLoader mLoader;
         private Locale mLocale;
 
         private Builder(Context context) {
@@ -68,10 +68,10 @@ public class MediaConfig
         /**
          * Set album loader.
          *
-         * @param loader {@link AlbumLoader}.
+         * @param loader {@link MediaLoader}.
          * @return {@link Builder}.
          */
-        public Builder setAlbumLoader(AlbumLoader loader) {
+        public Builder setMediaLoader(MediaLoader loader) {
             this.mLoader = loader;
             return this;
         }

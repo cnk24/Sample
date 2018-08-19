@@ -19,12 +19,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.IntRange;
 
+import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.app.media.MediaActivity;
+
 import java.util.ArrayList;
 
 /**
  * 20180817 SJK: Created
  */
-public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultipleWrapper, ArrayList<AlbumFile>, String, ArrayList<AlbumFile>>
+public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultipleWrapper, ArrayList<MediaFile>, String, ArrayList<MediaFile>>
 {
     @IntRange(from = 1, to = Integer.MAX_VALUE)
     private int mLimitCount = Integer.MAX_VALUE;
@@ -38,7 +42,7 @@ public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultiple
      *
      * @param checked the data list.
      */
-    public final ImageMultipleWrapper checkedList(ArrayList<AlbumFile> checked) {
+    public final ImageMultipleWrapper checkedList(ArrayList<MediaFile> checked) {
         this.mChecked = checked;
         return this;
     }
@@ -55,20 +59,19 @@ public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultiple
 
     @Override
     public void start() {
-        AlbumActivity.sSizeFilter = mSizeFilter;
-        AlbumActivity.sMimeFilter = mMimeTypeFilter;
-        AlbumActivity.sResult = mResult;
-        AlbumActivity.sCancel = mCancel;
-        Intent intent = new Intent(mContext, AlbumActivity.class);
-        intent.putExtra(Album.KEY_INPUT_WIDGET, mWidget);
-        intent.putParcelableArrayListExtra(Album.KEY_INPUT_CHECKED_LIST, mChecked);
+        MediaActivity.sSizeFilter = mSizeFilter;
+        MediaActivity.sMimeFilter = mMimeTypeFilter;
+        MediaActivity.sResult = mResult;
+        MediaActivity.sCancel = mCancel;
+        Intent intent = new Intent(mContext, MediaActivity.class);
+        intent.putExtra(Media.KEY_INPUT_WIDGET, mWidget);
+        intent.putParcelableArrayListExtra(Media.KEY_INPUT_CHECKED_LIST, mChecked);
 
-        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CHOICE_IMAGE);
-        intent.putExtra(Album.KEY_INPUT_CHOICE_MODE, Album.MODE_MULTIPLE);
-        intent.putExtra(Album.KEY_INPUT_COLUMN_COUNT, mColumnCount);
-        intent.putExtra(Album.KEY_INPUT_ALLOW_CAMERA, mHasCamera);
-        intent.putExtra(Album.KEY_INPUT_LIMIT_COUNT, mLimitCount);
-        intent.putExtra(Album.KEY_INPUT_FILTER_VISIBILITY, mFilterVisibility);
+        intent.putExtra(Media.KEY_INPUT_FUNCTION, Media.FUNCTION_CHOICE_IMAGE);
+        intent.putExtra(Media.KEY_INPUT_CHOICE_MODE, Media.MODE_MULTIPLE);
+        intent.putExtra(Media.KEY_INPUT_COLUMN_COUNT, mColumnCount);
+        intent.putExtra(Media.KEY_INPUT_ALLOW_CAMERA, mHasCamera);
+        intent.putExtra(Media.KEY_INPUT_LIMIT_COUNT, mLimitCount);
         mContext.startActivity(intent);
     }
 }

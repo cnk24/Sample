@@ -13,31 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.api.choice;
+package com.cnk24.mediaalbum.app.media;
 
 import android.content.Context;
+import android.widget.ImageView;
 
-import com.cnk24.mediaalbum.api.ImageMultipleWrapper;
-import com.cnk24.mediaalbum.api.ImageSingleWrapper;
+import com.cnk24.mediaalbum.Media;
+
+import java.util.List;
 
 /**
- * 20180817 SJK: Created
+ * 20180819 SJK: Created
  */
-public final class ImageChoice implements Choice<ImageMultipleWrapper, ImageSingleWrapper>
+public class PreviewPathAdapter extends PreviewAdapter<String>
 {
-    private Context mContext;
-
-    public ImageChoice(Context context) {
-        mContext = context;
+    public PreviewPathAdapter(Context context, List<String> previewList) {
+        super(context, previewList);
     }
 
     @Override
-    public ImageMultipleWrapper multipleChoice() {
-        return new ImageMultipleWrapper(mContext);
-    }
-
-    @Override
-    public ImageSingleWrapper singleChoice() {
-        return new ImageSingleWrapper(mContext);
+    protected void loadPreview(ImageView imageView, String item, int position) {
+        Media.getMediaConfig().getMediaLoader().load(imageView, item);
     }
 }

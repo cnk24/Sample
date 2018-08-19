@@ -24,7 +24,7 @@ public interface MediaLoader
 {
     MediaLoader DEFAULT = new MediaLoader() {
         @Override
-        public void load(ImageView imageView, MediaFile albumFile) {
+        public void load(ImageView imageView, MediaFile mediaFile) {
         }
 
         @Override
@@ -36,9 +36,9 @@ public interface MediaLoader
      * Load a preview of the album file.
      *
      * @param imageView {@link ImageView}.
-     * @param albumFile the media object may be a picture or video.
+     * @param mediaFile the media object may be a picture or video.
      */
-    void load(ImageView imageView, MediaFile albumFile);
+    void load(ImageView imageView, MediaFile mediaFile);
 
     /**
      * Load thumbnails of pictures or videos, either local file or remote file.
