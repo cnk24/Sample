@@ -18,6 +18,14 @@ package com.cnk24.mediaalbum.app.media;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.R;
+import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.app.Contract;
+import com.cnk24.mediaalbum.mvp.BaseActivity;
+import com.cnk24.mediaalbum.util.MediaUtils;
+
 import java.util.ArrayList;
 
 /**
@@ -25,7 +33,7 @@ import java.util.ArrayList;
  */
 public class GalleryActivity extends BaseActivity implements Contract.GalleryPresenter
 {
-    public static ArrayList<AlbumFile> sAlbumFiles;
+    public static ArrayList<MediaFile> sMediaFiles;
     public static int sCheckedCount;
     public static int sCurrentPosition;
 
@@ -35,21 +43,21 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
     private int mFunction;
     private int mAllowSelectCount;
 
-    private Contract.GalleryView<AlbumFile> mView;
+    private Contract.GalleryView<MediaFile> mView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.album_activity_gallery);
+        setContentView(R.layout.media_activity_gallery);
         mView = new GalleryView<>(this, this);
         Bundle argument = getIntent().getExtras();
         assert argument != null;
-        mWidget = argument.getParcelable(Album.KEY_INPUT_WIDGET);
-        mFunction = argument.getInt(Album.KEY_INPUT_FUNCTION);
-        mAllowSelectCount = argument.getInt(Album.KEY_INPUT_LIMIT_COUNT);
+        mWidget = argument.getParcelable(Media.KEY_INPUT_WIDGET);
+        mFunction = argument.getInt(Media.KEY_INPUT_FUNCTION);
+        mAllowSelectCount = argument.getInt(Media.KEY_INPUT_LIMIT_COUNT);
 
         mView.setupViews(mWidget, true);
-        mView.bindData(new PreviewAlbumAdapter(this, sAlbumFiles));
+        mView.bindData(new PreviewMediaAdapter(this, sMediaFiles));
 
         if (sCurrentPosition == 0) onCurrentChanged(sCurrentPosition);
         else mView.setCurrentItem(sCurrentPosition);
@@ -57,7 +65,7 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
     }
 
     private void setCheckedCount() {
-        String completeText = getString(R.string.album_menu_finish);
+        String completeText = getString(R.string.media_menu_finish);
         completeText += "(" + sCheckedCount + " / " + mAllowSelectCount + ")";
         mView.setCompleteText(completeText);
     }
@@ -65,14 +73,14 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
     @Override
     public void onCurrentChanged(int position) {
         sCurrentPosition = position;
-        mView.setTitle(sCurrentPosition + 1 + " / " + sAlbumFiles.size());
+        mView.setTitle(sCurrentPosition + 1 + " / " + sMediaFiles.size());
 
-        AlbumFile albumFile = sAlbumFiles.get(position);
-        mView.setChecked(albumFile.isChecked());
-        mView.setLayerDisplay(albumFile.isDisable());
+        MediaFile mediaFile = sMediaFiles.get(position);
+        mView.setChecked(mediaFile.isChecked());
+        mView.setLayerDisplay(mediaFile.isDisable());
 
-        if (albumFile.getMediaType() == AlbumFile.TYPE_VIDEO) {
-            mView.setDuration(AlbumUtils.convertDuration(albumFile.getDuration()));
+        if (mediaFile.getMediaType() == MediaFile.TYPE_VIDEO) {
+            mView.setDuration(MediaUtils.convertDuration(mediaFile.getDuration()));
             mView.setDurationDisplay(true);
         } else {
             mView.setDurationDisplay(false);
@@ -81,25 +89,21 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
 
     @Override
     public void onCheckedChanged() {
-        AlbumFile albumFile = sAlbumFiles.get(sCurrentPosition);
-        if (albumFile.isChecked()) {
-            albumFile.setChecked(false);
-            sCallback.onPreviewChanged(albumFile);
+        MediaFile mediaFile = sMediaFiles.get(sCurrentPosition);
+        if (mediaFile.isChecked()) {
+            mediaFile.setChecked(false);
+            sCallback.onPreviewChanged(mediaFile);
             sCheckedCount--;
         } else {
             if (sCheckedCount >= mAllowSelectCount) {
                 int messageRes;
                 switch (mFunction) {
-                    case Album.FUNCTION_CHOICE_IMAGE: {
-                        messageRes = R.plurals.album_check_image_limit;
+                    case Media.FUNCTION_CHOICE_IMAGE: {
+                        messageRes = R.plurals.media_check_image_limit;
                         break;
                     }
-                    case Album.FUNCTION_CHOICE_VIDEO: {
-                        messageRes = R.plurals.album_check_video_limit;
-                        break;
-                    }
-                    case Album.FUNCTION_CHOICE_ALBUM: {
-                        messageRes = R.plurals.album_check_album_limit;
+                    case Media.FUNCTION_CHOICE_VIDEO: {
+                        messageRes = R.plurals.media_check_video_limit;
                         break;
                     }
                     default: {
@@ -109,8 +113,8 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
                 mView.toast(getResources().getQuantityString(messageRes, mAllowSelectCount, mAllowSelectCount));
                 mView.setChecked(false);
             } else {
-                albumFile.setChecked(true);
-                sCallback.onPreviewChanged(albumFile);
+                mediaFile.setChecked(true);
+                sCallback.onPreviewChanged(mediaFile);
                 sCheckedCount++;
             }
         }
@@ -123,16 +127,12 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
         if (sCheckedCount == 0) {
             int messageRes;
             switch (mFunction) {
-                case Album.FUNCTION_CHOICE_IMAGE: {
-                    messageRes = R.string.album_check_image_little;
+                case Media.FUNCTION_CHOICE_IMAGE: {
+                    messageRes = R.string.media_check_image_little;
                     break;
                 }
-                case Album.FUNCTION_CHOICE_VIDEO: {
-                    messageRes = R.string.album_check_video_little;
-                    break;
-                }
-                case Album.FUNCTION_CHOICE_ALBUM: {
-                    messageRes = R.string.album_check_album_little;
+                case Media.FUNCTION_CHOICE_VIDEO: {
+                    messageRes = R.string.media_check_video_little;
                     break;
                 }
                 default: {
@@ -153,7 +153,7 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
 
     @Override
     public void finish() {
-        sAlbumFiles = null;
+        sMediaFiles = null;
         sCheckedCount = 0;
         sCurrentPosition = 0;
         sCallback = null;
@@ -169,8 +169,8 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
         /**
          * Check or uncheck a item.
          *
-         * @param albumFile target item.
+         * @param mediaFile target item.
          */
-        void onPreviewChanged(AlbumFile albumFile);
+        void onPreviewChanged(MediaFile mediaFile);
     }
 }

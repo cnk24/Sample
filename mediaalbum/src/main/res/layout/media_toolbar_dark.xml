@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2017 YanZhenjie.
+    Copyright 2018 Seo Jeonggyu.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 -->
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/app_bar_layout"
-    style="@style/Album.AppBar.General">
+    style="@style/MediaAlbum.AppBar.General">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/Album.Toolbar.Dark" />
+        style="@style/MediaAlbum.Toolbar.Dark" />
 
 </android.support.design.widget.AppBarLayout>

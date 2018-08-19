@@ -48,9 +48,9 @@ public class FolderDialog extends BottomSheetDialog
     private int mCurrentPosition = 0;
     private OnItemClickListener mItemClickListener;
 
-    public FolderDialog(Context context, Widget widget, List<AlbumFolder> albumFolders, OnItemClickListener itemClickListener) {
-        super(context, R.style.Album_Dialog_Folder);
-        setContentView(R.layout.album_dialog_floder);
+    public FolderDialog(Context context, Widget widget, List<MediaFolder> albumFolders, OnItemClickListener itemClickListener) {
+        super(context, R.style.MediaAlbum_Dialog_Folder);
+        setContentView(R.layout.media_dialog_floder);
         this.mWidget = widget;
         this.mAlbumFolders = albumFolders;
         this.mItemClickListener = itemClickListener;

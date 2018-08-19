@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2017 Yan Zhenjie.
+    Copyright 2018 Seo Jeonggyu.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,55 +14,55 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<com.yanzhenjie.album.widget.SquareCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Album.Item.Card.MatchParent">
+<com.cnk24.mediaalbum.widget.SquareCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MediaAlbum.Item.Card.MatchParent">
 
-    <RelativeLayout style="@style/Album.MatchParent">
+    <RelativeLayout style="@style/MediaAlbum.MatchParent">
 
         <ImageView
             android:id="@+id/iv_album_content_image"
-            style="@style/Album.MatchParent"
-            android:contentDescription="@string/album_title"
+            style="@style/MediaAlbum.MatchParent"
+            android:contentDescription="@string/media_title"
             android:scaleType="centerCrop" />
 
-        <com.yanzhenjie.album.widget.TransferLayout
-            style="@style/Album.WrapContent.Transfer"
+        <com.cnk24.mediaalbum.widget.TransferLayout
+            style="@style/MediaAlbum.WrapContent.Transfer"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true">
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/check_box"
-                style="@style/Album.CheckBox.WrapContent" />
-        </com.yanzhenjie.album.widget.TransferLayout>
+                style="@style/MediaAlbum.CheckBox.WrapContent" />
+        </com.cnk24.mediaalbum.widget.TransferLayout>
 
         <TextView
             android:id="@+id/tv_duration"
-            style="@style/Album.WrapContent"
+            style="@style/MediaAlbum.WrapContent"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/album_dp_6"
-            android:layout_marginLeft="@dimen/album_dp_6"
-            android:layout_marginStart="@dimen/album_dp_6"
-            android:drawableLeft="@drawable/album_tag_video_white"
-            android:drawablePadding="@dimen/album_dp_4"
-            android:drawableStart="@drawable/album_tag_video_white"
+            android:layout_marginBottom="@dimen/media_dp_6"
+            android:layout_marginLeft="@dimen/media_dp_6"
+            android:layout_marginStart="@dimen/media_dp_6"
+            android:drawableLeft="@drawable/media_tag_video_white"
+            android:drawablePadding="@dimen/media_dp_4"
+            android:drawableStart="@drawable/media_tag_video_white"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/albumFontLight" />
+            android:textColor="@color/mediaFontLight" />
 
     </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/layout_layer"
-        style="@style/Album.MatchParent"
-        android:background="@color/albumSheetLayer">
+        style="@style/MediaAlbum.MatchParent"
+        android:background="@color/mediaSheetLayer">
 
         <TextView
-            style="@style/Album.WrapContent"
+            style="@style/MediaAlbum.WrapContent"
             android:layout_gravity="center"
-            android:text="@string/album_item_unavailable"
-            android:textColor="@color/albumFontLight"
-            android:textSize="@dimen/album_sp_16" />
+            android:text="@string/media_item_unavailable"
+            android:textColor="@color/mediaFontLight"
+            android:textSize="@dimen/media_sp_16" />
 
     </FrameLayout>
-</com.yanzhenjie.album.widget.SquareCardView>
+</com.cnk24.mediaalbum.widget.SquareCardView>

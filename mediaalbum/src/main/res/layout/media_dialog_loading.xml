@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2017 Yan Zhenjie.
+    Copyright 2018 Seo Jeonggyu.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,23 +15,23 @@
     limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Album.WrapContent"
+    style="@style/MediaAlbum.WrapContent"
     android:gravity="center"
-    android:paddingBottom="@dimen/album_dp_20"
-    android:paddingLeft="@dimen/album_dp_35"
-    android:paddingRight="@dimen/album_dp_35"
-    android:paddingTop="@dimen/album_dp_20">
+    android:paddingBottom="@dimen/media_dp_20"
+    android:paddingLeft="@dimen/media_dp_35"
+    android:paddingRight="@dimen/media_dp_35"
+    android:paddingTop="@dimen/media_dp_20">
 
-    <com.yanzhenjie.album.widget.ColorProgressBar
+    <com.cnk24.meidaalbum.widget.ColorProgressBar
         android:id="@+id/progress_bar"
-        style="@style/Album.Progress.Loading" />
+        style="@style/MediaAlbum.Progress.Loading" />
 
     <TextView
         android:id="@+id/tv_message"
-        style="@style/Album.WrapContent"
-        android:layout_marginLeft="@dimen/album_dp_20"
-        android:layout_marginStart="@dimen/album_dp_20"
-        android:textColor="@color/albumFontHint"
-        android:textSize="@dimen/album_sp_16" />
+        style="@style/MediaAlbum.WrapContent"
+        android:layout_marginLeft="@dimen/media_dp_20"
+        android:layout_marginStart="@dimen/media_dp_20"
+        android:textColor="@color/mediaFontHint"
+        android:textSize="@dimen/media_sp_16" />
 
 </LinearLayout>

@@ -22,6 +22,7 @@ import android.widget.CompoundButton;
 
 import com.cnk24.mediaalbum.*;
 import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.app.media.PreviewAdapter;
 import com.cnk24.mediaalbum.mvp.*;
 
 /**
@@ -111,7 +112,7 @@ public final class Contract
          *
          * @param albumFolder {@link MediaFolder}.
          */
-        public abstract void bindAlbumFolder(MediaFolder albumFolder);
+        public abstract void bindMediaFolder(MediaFolder albumFolder);
 
         /**
          * Notify item was inserted.
