@@ -44,23 +44,23 @@
 
     <LinearLayout
         android:id="@+id/layout_loading"
-        style="@style/Album.MatchParent"
+        style="@style/MediaAlbum.MatchParent"
         android:layout_below="@id/app_bar_layout"
-        android:background="@color/albumPageLight"
+        android:background="@color/mediaPageLight"
         android:gravity="center"
         android:visibility="gone">
 
-        <com.yanzhenjie.album.widget.ColorProgressBar
+        <com.cnk24.mediaalbum.widget.ColorProgressBar
             android:id="@+id/progress_bar"
-            style="@style/Album.Progress.Loading" />
+            style="@style/MediaAlbum.Progress.Loading" />
 
         <TextView
-            style="@style/Album.WrapContent"
-            android:layout_marginLeft="@dimen/album_dp_20"
-            android:layout_marginStart="@dimen/album_dp_20"
-            android:text="@string/album_loading"
-            android:textColor="@color/albumFontHint"
-            android:textSize="@dimen/album_sp_16" />
+            style="@style/MediaAlbum.WrapContent"
+            android:layout_marginLeft="@dimen/media_dp_20"
+            android:layout_marginStart="@dimen/media_dp_20"
+            android:text="@string/media_loading"
+            android:textColor="@color/mediaFontHint"
+            android:textSize="@dimen/media_sp_16" />
 
     </LinearLayout>
 </merge>

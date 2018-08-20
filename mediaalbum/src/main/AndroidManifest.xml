@@ -24,39 +24,27 @@
 
     <application>
         <activity
-            android:name=".app.mediaalbum.AlbumActivity"
+            android:name=".app.media.MediaActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Album.Theme.Activity"
+            android:theme="@style/MediaAlbum.Theme.Activity"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity
-            android:name=".app.album.GalleryActivity"
+            android:name=".app.media.GalleryActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Album.Theme.Activity"
+            android:theme="@style/MediaAlbum.Theme.Activity"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity
-            android:name=".app.album.NullActivity"
+            android:name=".app.media.NullActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Album.Theme.Activity"
-            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
-
-        <activity
-            android:name=".app.gallery.GalleryActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Album.Theme.Activity"
-            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
-
-        <activity
-            android:name=".app.gallery.GalleryAlbumActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Album.Theme.Activity"
+            android:theme="@style/MediaAlbum.Theme.Activity"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity
             android:name=".app.camera.CameraActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Album.Theme.Activity.Transparent"
+            android:theme="@style/MediaAlbum.Theme.Activity.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <provider
@@ -67,7 +55,7 @@
             android:multiprocess="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/album_camera_provider" />
+                android:resource="@xml/media_camera_provider" />
         </provider>
     </application>
 

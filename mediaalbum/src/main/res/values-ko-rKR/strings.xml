@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2018 Seo Jeonggyu.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+    <string name="media_loading">로딩 중&#8230;</string>
+    <string name="media_converting">로딩 중&#8230;</string>
+    <string name="media_thumbnail">미리보기 생성중&#8230;</string>
+
+    <string name="media_not_found_image">사진이 없습니다</string>
+    <string name="media_not_found_video">동영상이 없습니다</string>
+    <string name="media_not_found_album">미디어 파일이 없습니다</string>
+
+    <string name="media_camera_image_capture">사진 촬영</string>
+    <string name="media_camera_video_capture">동영상 촬영</string>
+
+    <string name="media_title">미디어 앨범</string>
+    <string name="media_all_images">전체 사진</string>
+    <string name="media_all_videos">전체 동영상</string>
+    <string name="media_all_images_videos">전체 사진/동영상</string>
+
+    <string name="media_ok">OK</string>
+    <string name="media_confirm">확인</string>
+    <string name="media_cancel">취소</string>
+
+    <string name="media_check_image_little">사진을 선택하세요.</string>
+    <string name="media_check_video_little">동영상을 선택하세요.</string>
+    <string name="media_check_album_little">미디어를 선택하세요.</string>
+    <string name="media_menu_finish">완료</string>
+    <string name="media_check">선택됨</string>
+
+    <string name="media_title_permission_failed">권한이 없습니다</string>
+    <string name="media_permission_storage_failed_hint">스토리지 접근 권한이 없습니다. 사용하기 전에 권한을 부여하십시오.</string>
+    <string name="media_permission_camera_image_failed_hint">카메라 접근 권한이나 저장 권한이 없습니다. 사용하기 전에 권한을 부여하십시오.</string>
+    <string name="media_permission_camera_video_failed_hint">카메라 사용 권한, 저장 권한 또는 마이크 사용 권한이 없습니다. 사용하기 전에 권한을 부여하십시오.</string>
+
+    <plurals name="media_check_image_limit">
+        <item quantity="one">%1$d개 사진만 선택할 수 있습니다.</item>
+        <item quantity="other">%1$d개 사진만 선택할 수 있습니다.</item>
+    </plurals>
+
+    <plurals name="media_check_image_limit_camera">
+        <item quantity="one">%1$d개 사진만 선택할 수 있으며, 카메라를 사용할 수 없습니다.</item>
+        <item quantity="other">%1$d개 사진만 선택할 수 있으며, 카메라를 사용할 수 없습니다.</item>
+    </plurals>
+
+    <plurals name="media_check_video_limit">
+        <item quantity="one">%1$d개 동영상만 선택할 수 있습니다.</item>
+        <item quantity="other">%1$d개 동영상만 선택할 수 있습니다.</item>
+    </plurals>
+
+    <plurals name="media_check_video_limit_camera">
+        <item quantity="one">%1$d개 동영상만 선택할 수 있으며, 카메라를 사용할 수 없습니다.</item>
+        <item quantity="other">%1$d개 동영상만 선택할 수 있으며, 카메라를 사용할 수 없습니다.</item>
+    </plurals>
+
+    <plurals name="media_check_album_limit">
+        <item quantity="one">%1$d개 미디어만 선택할 수 있습니다.</item>
+        <item quantity="other">%1$d개 미디어만 선택할 수 있습니다.</item>
+    </plurals>
+
+    <plurals name="media_check_album_limit_camera">
+        <item quantity="one">%1$d개 미디어만 선택할 수 있으며, 카메라를 사용할 수 없습니다.</item>
+        <item quantity="other">%1$d개 미디어만 선택할 수 있으며, 카메라를 사용할 수 없습니다.</item>
+    </plurals>
+
+    <string name="media_item_unavailable">사용할 수 없음</string>
+    <string name="media_take_file_unavailable">파일을 사용할 수 없습니다. 다시 시도하십시오.</string>
+</resources>

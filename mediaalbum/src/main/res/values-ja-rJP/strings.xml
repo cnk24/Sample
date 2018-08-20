@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2018 Seo Jeonggyu.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+    <string name="media_loading">ローディング中&#8230;</string>
+    <string name="media_converting">ローディング中&#8230;</string>
+    <string name="media_thumbnail">サムネールの生成&#8230;</string>
+
+    <string name="media_not_found_image">イメージアイテムが見つかりませんでした</string>
+    <string name="media_not_found_video">ビデオアイテムが見つからない.</string>
+    <string name="media_not_found_album">メディアアイテムが見つかりませんでした</string>
+
+    <string name="media_camera_image_capture">写真を撮る</string>
+    <string name="media_camera_video_capture">ビデオの記録</string>
+
+    <string name="media_title">メディアアルバム</string>
+    <string name="media_all_images">すべてのイメージ</string>
+    <string name="media_all_videos">すべてのビデオ</string>
+    <string name="media_all_images_videos">すべての画像/ビデオ</string>
+
+    <string name="media_ok">OK。</string>
+    <string name="media_confirm">確認</string>
+    <string name="media_cancel">キャンセル</string>
+
+    <string name="media_check_image_little">画像アイテムを選択してください.</string>
+    <string name="media_check_video_little">ビデオアイテムを選択してください.</string>
+    <string name="media_check_album_little">メディアアイテムを選択してください.</string>
+    <string name="media_menu_finish">仕上げ</string>
+    <string name="media_check">選択された</string>
+
+    <string name="media_title_permission_failed">権限がありません。</string>
+    <string name="media_permission_storage_failed_hint">保管許可がありません.使用前に許可してください.</string>
+    <string name="media_permission_camera_image_failed_hint">カメラの許可や保存の許可がありません.使用前に許可してください.</string>
+    <string name="media_permission_camera_video_failed_hint">カメラ使用許可,ストレージ使用許可,マイク使用許可はありません.使用前に許可してください.</string>
+
+    <plurals name="media_check_image_limit">
+        <item quantity="one">%1$dつのイメージ項目だけを選択できます.</item>
+        <item quantity="other">%1$dつのイメージ項目だけを選択できます.</item>
+    </plurals>
+
+    <plurals name="media_check_image_limit_camera">
+        <item quantity="one">%1$dつの画像のみ選択でき,カメラは使用できません.</item>
+        <item quantity="other">%1$dつの画像のみ選択でき,カメラは使用できません.</item>
+    </plurals>
+
+    <plurals name="media_check_video_limit">
+        <item quantity="one">%1$dつのビデオ項目だけを選択できます.</item>
+        <item quantity="other">%1$dつのビデオ項目だけを選択できます.</item>
+    </plurals>
+
+    <plurals name="media_check_video_limit_camera">
+        <item quantity="one">%1$dつの動画だけを選択でき,カメラは使用できません.</item>
+        <item quantity="other">%1$dつの動画だけを選択でき,カメラは使用できません.</item>
+    </plurals>
+
+    <plurals name="media_check_album_limit">
+        <item quantity="one">%1$dつのメディア項目だけを選択できます.</item>
+        <item quantity="other">%1$dつのメディア項目だけを選択できます.</item>
+    </plurals>
+
+    <plurals name="media_check_album_limit_camera">
+        <item quantity="one">メディアは%1$dつだけ選択でき,カメラは使用できません.</item>
+        <item quantity="other">メディアは%1$dつだけ選択でき,カメラは使用できません.</item>
+    </plurals>
+
+    <string name="media_item_unavailable">利用できない</string>
+    <string name="media_take_file_unavailable">使用できないファイルがあります.もう一度実行してください.</string>
+</resources>
