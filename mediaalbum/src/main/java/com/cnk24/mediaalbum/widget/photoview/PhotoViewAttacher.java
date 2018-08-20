@@ -32,6 +32,10 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
+import com.cnk24.mediaalbum.widget.photoview.gestures.OnGestureListener;
+import com.cnk24.mediaalbum.widget.photoview.gestures.VersionedGestureDetector;
+import com.cnk24.mediaalbum.widget.photoview.scrollerproxy.ScrollerProxy;
+
 import java.lang.ref.WeakReference;
 
 import static android.view.MotionEvent.ACTION_CANCEL;
@@ -116,7 +120,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
 
     // Gesture Detectors
     private GestureDetector mGestureDetector;
-    private com.yanzhenjie.album.widget.photoview.gestures.GestureDetector mScaleDragDetector;
+    private com.cnk24.mediaalbum.widget.photoview.gestures.GestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
     private final Matrix mBaseMatrix = new Matrix();

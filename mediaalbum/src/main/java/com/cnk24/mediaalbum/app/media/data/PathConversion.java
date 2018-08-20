@@ -20,6 +20,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
+import com.cnk24.mediaalbum.Filter;
+import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.util.MediaUtils;
+
 import java.io.File;
 
 /**
@@ -39,51 +43,51 @@ public class PathConversion
 
     @WorkerThread
     @NonNull
-    public AlbumFile convert(String filePath) {
+    public MediaFile convert(String filePath) {
         File file = new File(filePath);
 
-        AlbumFile albumFile = new AlbumFile();
-        albumFile.setPath(filePath);
+        MediaFile mediaFile = new MediaFile();
+        mediaFile.setPath(filePath);
 
         File parentFile = file.getParentFile();
-        albumFile.setBucketName(parentFile.getName());
+        mediaFile.setBucketName(parentFile.getName());
 
-        String mimeType = AlbumUtils.getMimeType(filePath);
-        albumFile.setMimeType(mimeType);
+        String mimeType = MediaUtils.getMimeType(filePath);
+        mediaFile.setMimeType(mimeType);
         long nowTime = System.currentTimeMillis();
-        albumFile.setAddDate(nowTime);
-        albumFile.setSize(file.length());
+        mediaFile.setAddDate(nowTime);
+        mediaFile.setSize(file.length());
         int mediaType = 0;
         if (!TextUtils.isEmpty(mimeType)) {
             if (mimeType.contains("video"))
-                mediaType = AlbumFile.TYPE_VIDEO;
+                mediaType = MediaFile.TYPE_VIDEO;
             if (mimeType.contains("image"))
-                mediaType = AlbumFile.TYPE_IMAGE;
+                mediaType = MediaFile.TYPE_IMAGE;
         }
-        albumFile.setMediaType(mediaType);
+        mediaFile.setMediaType(mediaType);
 
         if (mSizeFilter != null && mSizeFilter.filter(file.length())) {
-            albumFile.setDisable(true);
+            mediaFile.setDisable(true);
         }
         if (mMimeFilter != null && mMimeFilter.filter(mimeType)) {
-            albumFile.setDisable(true);
+            mediaFile.setDisable(true);
         }
 
-        if (mediaType == AlbumFile.TYPE_VIDEO) {
+        if (mediaType == MediaFile.TYPE_VIDEO) {
             MediaPlayer player = new MediaPlayer();
             try {
                 player.setDataSource(filePath);
                 player.prepare();
-                albumFile.setDuration(player.getDuration());
+                mediaFile.setDuration(player.getDuration());
             } catch (Exception ignored) {
             } finally {
                 player.release();
             }
 
-            if (mDurationFilter != null && mDurationFilter.filter(albumFile.getDuration())) {
-                albumFile.setDisable(true);
+            if (mDurationFilter != null && mDurationFilter.filter(mediaFile.getDuration())) {
+                mediaFile.setDisable(true);
             }
         }
-        return albumFile;
+        return mediaFile;
     }
 }

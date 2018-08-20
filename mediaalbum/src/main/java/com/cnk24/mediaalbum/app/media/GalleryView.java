@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,14 +63,14 @@ public class GalleryView<Data> extends Contract.GalleryView<Data> implements Vie
 
     @Override
     protected void onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.album_menu_gallery, menu);
-        mCompleteMenu = menu.findItem(R.id.album_menu_finish);
+        getMenuInflater().inflate(R.menu.media_menu_gallery, menu);
+        mCompleteMenu = menu.findItem(R.id.media_menu_finish);
     }
 
     @Override
     protected void onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.album_menu_finish) {
+        if (id == R.id.media_menu_finish) {
             getPresenter().complete();
         }
     }
@@ -88,6 +89,7 @@ public class GalleryView<Data> extends Contract.GalleryView<Data> implements Vie
         } else {
             ColorStateList itemSelector = widget.getMediaItemCheckSelector();
             mCheckBox.setSupportButtonTintList(itemSelector);
+            //CompoundButtonCompat.setButtonTintList(mCheckBox, itemSelector);
             mCheckBox.setTextColor(itemSelector);
         }
 

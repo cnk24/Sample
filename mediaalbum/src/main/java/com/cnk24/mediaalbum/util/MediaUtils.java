@@ -38,6 +38,9 @@ import android.text.style.ForegroundColorSpan;
 import android.webkit.MimeTypeMap;
 
 import com.cnk24.mediaalbum.provider.CameraFileProvider;
+import com.cnk24.mediaalbum.widget.divider.Api20ItemDivider;
+import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
+import com.cnk24.mediaalbum.widget.divider.Divider;
 
 import java.io.File;
 import java.security.MessageDigest;

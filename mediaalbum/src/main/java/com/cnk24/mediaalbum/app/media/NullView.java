@@ -23,6 +23,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cnk24.mediaalbum.R;
+import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.app.Contract;
+import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.SystemBar;
+
 /**
  * 20180819 SJK: Created
  */
@@ -52,15 +58,15 @@ class NullView extends Contract.NullView implements View.OnClickListener
         mToolbar.setBackgroundColor(widget.getToolBarColor());
 
         int statusBarColor = widget.getStatusBarColor();
-        Drawable navigationIcon = getDrawable(R.drawable.album_ic_back_white);
+        Drawable navigationIcon = getDrawable(R.drawable.media_ic_back_white);
         if (widget.getUiStyle() == Widget.STYLE_LIGHT) {
             if (SystemBar.setStatusBarDarkFont(mActivity, true)) {
                 SystemBar.setStatusBarColor(mActivity, statusBarColor);
             } else {
-                SystemBar.setStatusBarColor(mActivity, getColor(R.color.albumColorPrimaryBlack));
+                SystemBar.setStatusBarColor(mActivity, getColor(R.color.mediaColorPrimaryBlack));
             }
 
-            AlbumUtils.setDrawableTint(navigationIcon, getColor(R.color.albumIconDark));
+            MediaUtils.setDrawableTint(navigationIcon, getColor(R.color.mediaIconDark));
             setHomeAsUpIndicator(navigationIcon);
         } else {
             SystemBar.setStatusBarColor(mActivity, statusBarColor);
@@ -74,14 +80,14 @@ class NullView extends Contract.NullView implements View.OnClickListener
         mBtnTakeVideo.setSupportBackgroundTintList(buttonSelector);
         if (buttonStyle.getUiStyle() == Widget.STYLE_LIGHT) {
             Drawable drawable = mBtnTakeImage.getCompoundDrawables()[0];
-            AlbumUtils.setDrawableTint(drawable, getColor(R.color.albumIconDark));
+            MediaUtils.setDrawableTint(drawable, getColor(R.color.mediaIconDark));
             mBtnTakeImage.setCompoundDrawables(drawable, null, null, null);
 
             drawable = mBtnTakeVideo.getCompoundDrawables()[0];
-            AlbumUtils.setDrawableTint(drawable, getColor(R.color.albumIconDark));
+            MediaUtils.setDrawableTint(drawable, getColor(R.color.mediaIconDark));
             mBtnTakeVideo.setCompoundDrawables(drawable, null, null, null);
-            mBtnTakeImage.setTextColor(getColor(R.color.albumFontDark));
-            mBtnTakeVideo.setTextColor(getColor(R.color.albumFontDark));
+            mBtnTakeImage.setTextColor(getColor(R.color.mediaFontDark));
+            mBtnTakeVideo.setTextColor(getColor(R.color.mediaFontDark));
         }
     }
 

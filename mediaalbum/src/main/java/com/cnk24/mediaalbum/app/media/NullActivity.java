@@ -20,6 +20,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.cnk24.mediaalbum.Action;
+import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.R;
+import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.app.Contract;
+import com.cnk24.mediaalbum.mvp.BaseActivity;
+
 /**
  * 20180819 SJK: Created
  */
@@ -41,35 +48,31 @@ public class NullActivity extends BaseActivity implements Contract.NullPresenter
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.album_activity_null);
+        setContentView(R.layout.media_activity_null);
         mView = new NullView(this, this);
 
         Bundle argument = getIntent().getExtras();
         assert argument != null;
-        int function = argument.getInt(Album.KEY_INPUT_FUNCTION);
-        boolean hasCamera = argument.getBoolean(Album.KEY_INPUT_ALLOW_CAMERA);
+        int function = argument.getInt(Media.KEY_INPUT_FUNCTION);
+        boolean hasCamera = argument.getBoolean(Media.KEY_INPUT_ALLOW_CAMERA);
 
-        mQuality = argument.getInt(Album.KEY_INPUT_CAMERA_QUALITY);
-        mLimitDuration = argument.getLong(Album.KEY_INPUT_CAMERA_DURATION);
-        mLimitBytes = argument.getLong(Album.KEY_INPUT_CAMERA_BYTES);
+        mQuality = argument.getInt(Media.KEY_INPUT_CAMERA_QUALITY);
+        mLimitDuration = argument.getLong(Media.KEY_INPUT_CAMERA_DURATION);
+        mLimitBytes = argument.getLong(Media.KEY_INPUT_CAMERA_BYTES);
 
-        mWidget = argument.getParcelable(Album.KEY_INPUT_WIDGET);
+        mWidget = argument.getParcelable(Media.KEY_INPUT_WIDGET);
         mView.setupViews(mWidget);
         mView.setTitle(mWidget.getTitle());
 
         switch (function) {
-            case Album.FUNCTION_CHOICE_IMAGE: {
-                mView.setMessage(R.string.album_not_found_image);
+            case Media.FUNCTION_CHOICE_IMAGE: {
+                mView.setMessage(R.string.media_not_found_image);
                 mView.setMakeVideoDisplay(false);
                 break;
             }
-            case Album.FUNCTION_CHOICE_VIDEO: {
-                mView.setMessage(R.string.album_not_found_video);
+            case Media.FUNCTION_CHOICE_VIDEO: {
+                mView.setMessage(R.string.media_not_found_video);
                 mView.setMakeImageDisplay(false);
-                break;
-            }
-            case Album.FUNCTION_CHOICE_ALBUM: {
-                mView.setMessage(R.string.album_not_found_album);
                 break;
             }
             default: {
@@ -85,7 +88,7 @@ public class NullActivity extends BaseActivity implements Contract.NullPresenter
 
     @Override
     public void takePicture() {
-        Album.camera(this)
+        Media.camera(this)
                 .image()
                 .onResult(mCameraAction)
                 .start();
@@ -93,7 +96,7 @@ public class NullActivity extends BaseActivity implements Contract.NullPresenter
 
     @Override
     public void takeVideo() {
-        Album.camera(this)
+        Media.camera(this)
                 .video()
                 .quality(mQuality)
                 .limitDuration(mLimitDuration)

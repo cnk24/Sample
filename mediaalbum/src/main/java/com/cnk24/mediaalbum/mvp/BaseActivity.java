@@ -25,6 +25,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 
+import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.util.MediaUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -41,8 +44,8 @@ public class BaseActivity extends AppCompatActivity implements Bye
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = Album.getAlbumConfig().getLocale();
-        AlbumUtils.applyLanguageForContext(this, locale);
+        Locale locale = Media.getMediaConfig().getLocale();
+        MediaUtils.applyLanguageForContext(this, locale);
     }
 
     /**

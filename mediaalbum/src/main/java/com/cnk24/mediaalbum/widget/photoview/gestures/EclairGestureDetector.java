@@ -19,6 +19,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.MotionEvent;
 
+import com.cnk24.mediaalbum.widget.photoview.Compat;
+
 /**
  * 20180817 SJK: Created
  */

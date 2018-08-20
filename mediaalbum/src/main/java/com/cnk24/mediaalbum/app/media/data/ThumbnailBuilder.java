@@ -26,6 +26,8 @@ import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 
+import com.cnk24.mediaalbum.util.MediaUtils;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,7 +46,7 @@ public class ThumbnailBuilder
     private File mCacheDir;
 
     public ThumbnailBuilder(Context context) {
-        this.mCacheDir = AlbumUtils.getAlbumRootPath(context);
+        this.mCacheDir = MediaUtils.getMediaRootPath(context);
         if (mCacheDir.exists() && mCacheDir.isFile()) mCacheDir.delete();
         if (!mCacheDir.exists()) mCacheDir.mkdirs();
     }
@@ -117,7 +119,7 @@ public class ThumbnailBuilder
     }
 
     private File randomPath(String filePath) {
-        String outFilePath = AlbumUtils.getMD5ForString(filePath) + ".album";
+        String outFilePath = MediaUtils.getMD5ForString(filePath) + ".album";
         return new File(mCacheDir, outFilePath);
     }
 

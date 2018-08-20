@@ -29,6 +29,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +40,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.cnk24.mediaalbum.R;
 
 /**
  * 20180817 SJK: Created
@@ -270,7 +273,7 @@ public abstract class BaseView<Presenter extends BasePresenter>
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(R.string.album_ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.media_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -295,12 +298,12 @@ public abstract class BaseView<Presenter extends BasePresenter>
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle(title)
                 .setMessage(message)
-                .setNegativeButton(R.string.album_cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.media_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .setPositiveButton(R.string.album_confirm, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.media_confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         confirmClickListener.onClick(which);
@@ -330,13 +333,13 @@ public abstract class BaseView<Presenter extends BasePresenter>
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle(title)
                 .setMessage(message)
-                .setNegativeButton(R.string.album_cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.media_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         cancelClickListener.onClick(which);
                     }
                 })
-                .setPositiveButton(R.string.album_confirm, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.media_confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         confirmClickListener.onClick(which);
@@ -361,7 +364,7 @@ public abstract class BaseView<Presenter extends BasePresenter>
     public void snackBar(CharSequence message) {
         Snackbar snackbar = Snackbar.make(mSource.getView(), message, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
-        view.setBackgroundColor(getColor(R.color.albumColorPrimaryBlack));
+        view.setBackgroundColor(getColor(R.color.mediaColorPrimaryBlack));
         TextView textView = view.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
@@ -370,7 +373,7 @@ public abstract class BaseView<Presenter extends BasePresenter>
     public void snackBar(@StringRes int message) {
         Snackbar snackbar = Snackbar.make(mSource.getView(), message, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
-        view.setBackgroundColor(getColor(R.color.albumColorPrimaryBlack));
+        view.setBackgroundColor(getColor(R.color.mediaColorPrimaryBlack));
         TextView textView = view.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();

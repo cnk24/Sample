@@ -19,6 +19,9 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,10 +30,22 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.cnk24.mediaalbum.MediaFolder;
+import com.cnk24.mediaalbum.R;
+import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.app.Contract;
+import com.cnk24.mediaalbum.impl.DoubleClickWrapper;
+import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
+import com.cnk24.mediaalbum.impl.OnItemClickListener;
+import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.SystemBar;
+import com.cnk24.mediaalbum.widget.ColorProgressBar;
+import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
+
 /**
  * 20180819 SJK: Created
  */
-class MediaView extends Contract.AlbumView implements View.OnClickListener
+class MediaView extends Contract.MediaView implements View.OnClickListener
 {
     private Activity mActivity;
 
@@ -39,7 +54,7 @@ class MediaView extends Contract.AlbumView implements View.OnClickListener
 
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
-    private AlbumAdapter mAdapter;
+    private MediaAdapter mAdapter;
 
     private Button mBtnPreview;
     private Button mBtnSwitchFolder;
@@ -47,7 +62,7 @@ class MediaView extends Contract.AlbumView implements View.OnClickListener
     private LinearLayout mLayoutLoading;
     private ColorProgressBar mProgressBar;
 
-    public AlbumView(Activity activity, Contract.AlbumPresenter presenter) {
+    public MediaView(Activity activity, Contract.MediaPresenter presenter) {
         super(activity, presenter);
         this.mActivity = activity;
 
@@ -67,14 +82,14 @@ class MediaView extends Contract.AlbumView implements View.OnClickListener
 
     @Override
     protected void onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.album_menu_album, menu);
-        mCompleteMenu = menu.findItem(R.id.album_menu_finish);
+        getMenuInflater().inflate(R.menu.media_menu_album, menu);
+        mCompleteMenu = menu.findItem(R.id.media_menu_finish);
     }
 
     @Override
     protected void onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.album_menu_finish) {
+        if (itemId == R.id.media_menu_finish) {
             getPresenter().complete();
         }
     }
@@ -88,31 +103,31 @@ class MediaView extends Contract.AlbumView implements View.OnClickListener
             if (SystemBar.setStatusBarDarkFont(mActivity, true)) {
                 SystemBar.setStatusBarColor(mActivity, statusBarColor);
             } else {
-                SystemBar.setStatusBarColor(mActivity, getColor(R.color.albumColorPrimaryBlack));
+                SystemBar.setStatusBarColor(mActivity, getColor(R.color.mediaColorPrimaryBlack));
             }
 
-            mProgressBar.setColorFilter(getColor(R.color.albumLoadingDark));
+            mProgressBar.setColorFilter(getColor(R.color.mediaLoadingDark));
 
-            Drawable navigationIcon = getDrawable(R.drawable.album_ic_back_white);
-            AlbumUtils.setDrawableTint(navigationIcon, getColor(R.color.albumIconDark));
+            Drawable navigationIcon = getDrawable(R.drawable.media_ic_back_white);
+            MediaUtils.setDrawableTint(navigationIcon, getColor(R.color.mediaIconDark));
             setHomeAsUpIndicator(navigationIcon);
 
             Drawable completeIcon = mCompleteMenu.getIcon();
-            AlbumUtils.setDrawableTint(completeIcon, getColor(R.color.albumIconDark));
+            MediaUtils.setDrawableTint(completeIcon, getColor(R.color.mediaIconDark));
             mCompleteMenu.setIcon(completeIcon);
         } else {
             mProgressBar.setColorFilter(widget.getToolBarColor());
             SystemBar.setStatusBarColor(mActivity, statusBarColor);
-            setHomeAsUpIndicator(R.drawable.album_ic_back_white);
+            setHomeAsUpIndicator(R.drawable.media_ic_back_white);
         }
         mToolbar.setBackgroundColor(widget.getToolBarColor());
 
         Configuration config = mActivity.getResources().getConfiguration();
         mLayoutManager = new GridLayoutManager(getContext(), column, getOrientation(config), false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        int dividerSize = getResources().getDimensionPixelSize(R.dimen.album_dp_4);
+        int dividerSize = getResources().getDimensionPixelSize(R.dimen.media_dp_4);
         mRecyclerView.addItemDecoration(new Api21ItemDivider(Color.TRANSPARENT, dividerSize, dividerSize));
-        mAdapter = new AlbumAdapter(getContext(), hasCamera, choiceMode, widget.getMediaItemCheckSelector());
+        mAdapter = new MediaAdapter(getContext(), hasCamera, choiceMode, widget.getMediaItemCheckSelector());
         mAdapter.setAddClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -168,10 +183,10 @@ class MediaView extends Contract.AlbumView implements View.OnClickListener
     }
 
     @Override
-    public void bindAlbumFolder(AlbumFolder albumFolder) {
-        mBtnSwitchFolder.setText(albumFolder.getName());
+    public void bindMediaFolder(MediaFolder mediaFolder) {
+        mBtnSwitchFolder.setText(mediaFolder.getName());
 
-        mAdapter.setAlbumFiles(albumFolder.getAlbumFiles());
+        mAdapter.setMediaFiles(mediaFolder.getMediaFiles());
         mAdapter.notifyDataSetChanged();
         mRecyclerView.scrollToPosition(0);
     }

@@ -34,10 +34,10 @@ public class LoadingDialog extends Dialog
     private TextView mTvMessage;
 
     public LoadingDialog(@NonNull Context context) {
-        super(context, R.style.Album_Dialog);
+        super(context, R.style.MediaAlbum_Dialog);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
-        setContentView(R.layout.album_dialog_loading);
+        setContentView(R.layout.media_dialog_loading);
         mProgressBar = findViewById(R.id.progress_bar);
         mTvMessage = findViewById(R.id.tv_message);
     }
@@ -49,7 +49,7 @@ public class LoadingDialog extends Dialog
      */
     public void setupViews(Widget widget) {
         if (widget.getUiStyle() == Widget.STYLE_LIGHT) {
-            int color = ContextCompat.getColor(getContext(), R.color.albumLoadingDark);
+            int color = ContextCompat.getColor(getContext(), R.color.mediaLoadingDark);
             mProgressBar.setColorFilter(color);
         } else {
             mProgressBar.setColorFilter(widget.getToolBarColor());

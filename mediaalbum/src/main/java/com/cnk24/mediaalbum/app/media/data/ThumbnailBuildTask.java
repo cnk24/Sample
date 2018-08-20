@@ -18,12 +18,14 @@ package com.cnk24.mediaalbum.app.media.data;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.cnk24.mediaalbum.MediaFile;
+
 import java.util.ArrayList;
 
 /**
  * 20180819 SJK: Created
  */
-public class ThumbnailBuildTask extends AsyncTask<Void, Void, ArrayList<AlbumFile>>
+public class ThumbnailBuildTask extends AsyncTask<Void, Void, ArrayList<MediaFile>>
 {
     public interface Callback {
         /**
@@ -34,18 +36,18 @@ public class ThumbnailBuildTask extends AsyncTask<Void, Void, ArrayList<AlbumFil
         /**
          * Callback results.
          *
-         * @param albumFiles result.
+         * @param mediaFiles result.
          */
-        void onThumbnailCallback(ArrayList<AlbumFile> albumFiles);
+        void onThumbnailCallback(ArrayList<MediaFile> mediaFiles);
     }
 
-    private ArrayList<AlbumFile> mAlbumFiles;
+    private ArrayList<MediaFile> mMediaFiles;
     private Callback mCallback;
 
     private ThumbnailBuilder mThumbnailBuilder;
 
-    public ThumbnailBuildTask(Context context, ArrayList<AlbumFile> albumFiles, Callback callback) {
-        this.mAlbumFiles = albumFiles;
+    public ThumbnailBuildTask(Context context, ArrayList<MediaFile> mediaFiles, Callback callback) {
+        this.mMediaFiles = mediaFiles;
         this.mCallback = callback;
         this.mThumbnailBuilder = new ThumbnailBuilder(context);
     }
@@ -56,20 +58,20 @@ public class ThumbnailBuildTask extends AsyncTask<Void, Void, ArrayList<AlbumFil
     }
 
     @Override
-    protected ArrayList<AlbumFile> doInBackground(Void... params) {
-        for (AlbumFile albumFile : mAlbumFiles) {
-            int mediaType = albumFile.getMediaType();
-            if (mediaType == AlbumFile.TYPE_IMAGE) {
-                albumFile.setThumbPath(mThumbnailBuilder.createThumbnailForImage(albumFile.getPath()));
-            } else if (mediaType == AlbumFile.TYPE_VIDEO) {
-                albumFile.setThumbPath(mThumbnailBuilder.createThumbnailForVideo(albumFile.getPath()));
+    protected ArrayList<MediaFile> doInBackground(Void... params) {
+        for (MediaFile mediaFile : mMediaFiles) {
+            int mediaType = mediaFile.getMediaType();
+            if (mediaType == MediaFile.TYPE_IMAGE) {
+                mediaFile.setThumbPath(mThumbnailBuilder.createThumbnailForImage(mediaFile.getPath()));
+            } else if (mediaType == MediaFile.TYPE_VIDEO) {
+                mediaFile.setThumbPath(mThumbnailBuilder.createThumbnailForVideo(mediaFile.getPath()));
             }
         }
-        return mAlbumFiles;
+        return mMediaFiles;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<AlbumFile> albumFiles) {
-        mCallback.onThumbnailCallback(albumFiles);
+    protected void onPostExecute(ArrayList<MediaFile> mediaFiles) {
+        mCallback.onThumbnailCallback(mediaFiles);
     }
 }

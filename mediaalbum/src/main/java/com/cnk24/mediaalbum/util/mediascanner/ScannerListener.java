@@ -13,26 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.widget.divider;
+package com.cnk24.mediaalbum.util.mediascanner;
 
-import android.support.v7.widget.RecyclerView;
+import android.net.Uri;
 
 /**
- * 20180817 SJK: Created
+ * 20180820 SJK: Created
  */
-public abstract class Divider extends RecyclerView.ItemDecoration
+public interface ScannerListener
 {
-    /**
-     * Get the height of the divider.
-     *
-     * @return height of the divider.
-     */
-    public abstract int getHeight();
+    void oneComplete(String path, Uri uri);
 
-    /**
-     * Get the width of the divider.
-     *
-     * @return width of the divider.
-     */
-    public abstract int getWidth();
+    void allComplete(String[] filePaths);
 }
