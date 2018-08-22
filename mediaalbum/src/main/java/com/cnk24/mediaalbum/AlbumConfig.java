@@ -22,8 +22,8 @@ import java.util.Locale;
 /**
  * 20180814 SJK: Created
  */
-public class MediaConfig
-{
+public class AlbumConfig {
+
     /**
      * Create a new builder.
      */
@@ -31,20 +31,20 @@ public class MediaConfig
         return new Builder(context);
     }
 
-    private MediaLoader mLoader;
+    private AlbumLoader mLoader;
     private Locale mLocale;
 
-    private MediaConfig(Builder builder) {
-        this.mLoader = builder.mLoader == null ? MediaLoader.DEFAULT : builder.mLoader;
+    private AlbumConfig(Builder builder) {
+        this.mLoader = builder.mLoader == null ? AlbumLoader.DEFAULT : builder.mLoader;
         this.mLocale = builder.mLocale == null ? Locale.getDefault() : builder.mLocale;
     }
 
     /**
-     * Get {@link MediaLoader}.
+     * Get {@link AlbumLoader}.
      *
-     * @return {@link MediaLoader}.
+     * @return {@link AlbumLoader}.
      */
-    public MediaLoader getMediaLoader() {
+    public AlbumLoader getAlbumLoader() {
         return mLoader;
     }
 
@@ -59,7 +59,7 @@ public class MediaConfig
 
     public static final class Builder {
 
-        private MediaLoader mLoader;
+        private AlbumLoader mLoader;
         private Locale mLocale;
 
         private Builder(Context context) {
@@ -68,10 +68,10 @@ public class MediaConfig
         /**
          * Set album loader.
          *
-         * @param loader {@link MediaLoader}.
+         * @param loader {@link AlbumLoader}.
          * @return {@link Builder}.
          */
-        public Builder setMediaLoader(MediaLoader loader) {
+        public Builder setAlbumLoader(AlbumLoader loader) {
             this.mLoader = loader;
             return this;
         }
@@ -90,10 +90,11 @@ public class MediaConfig
         /**
          * Create AlbumConfig.
          *
-         * @return {@link MediaConfig}.
+         * @return {@link AlbumConfig}.
          */
-        public MediaConfig build() {
-            return new MediaConfig(this);
+        public AlbumConfig build() {
+            return new AlbumConfig(this);
         }
     }
+
 }

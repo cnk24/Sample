@@ -20,8 +20,7 @@ import android.content.Context;
 /**
  * 20180817 SJK: Created
  */
-public interface ItemAction<T>
-{
+public interface ItemAction<T> {
     /**
      * When the action responds.
      *

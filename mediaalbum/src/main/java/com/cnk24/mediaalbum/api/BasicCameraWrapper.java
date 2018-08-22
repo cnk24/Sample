@@ -23,8 +23,8 @@ import com.cnk24.mediaalbum.Action;
 /**
  * 20180817 SJK: Created
  */
-public abstract class BasicCameraWrapper<Returner extends BasicCameraWrapper>
-{
+public abstract class BasicCameraWrapper<Returner extends BasicCameraWrapper> {
+
     Context mContext;
     Action<String> mResult;
     Action<String> mCancel;
@@ -68,4 +68,5 @@ public abstract class BasicCameraWrapper<Returner extends BasicCameraWrapper>
      * Start up.
      */
     public abstract void start();
+
 }

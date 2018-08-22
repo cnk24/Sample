@@ -16,7 +16,7 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MediaAlbum.MatchParent"
-    android:background="@color/mediaPageLight">
+    android:background="@color/albumPageLight">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -24,9 +24,9 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/MediaAlbum.Toolbar.Light" />
+            style="@style/MediaAlbum.Toolbar.Dark" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/media_content_album"/>
+    <include layout="@layout/album_content_album"/>
 </RelativeLayout>

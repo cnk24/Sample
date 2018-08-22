@@ -20,11 +20,11 @@ import android.widget.ImageView;
 /**
  * 20180817 SJK: Created
  */
-public interface MediaLoader
-{
-    MediaLoader DEFAULT = new MediaLoader() {
+public interface AlbumLoader {
+
+    AlbumLoader DEFAULT = new AlbumLoader() {
         @Override
-        public void load(ImageView imageView, MediaFile mediaFile) {
+        public void load(ImageView imageView, AlbumFile albumFile) {
         }
 
         @Override
@@ -36,9 +36,9 @@ public interface MediaLoader
      * Load a preview of the album file.
      *
      * @param imageView {@link ImageView}.
-     * @param mediaFile the media object may be a picture or video.
+     * @param albumFile the media object may be a picture or video.
      */
-    void load(ImageView imageView, MediaFile mediaFile);
+    void load(ImageView imageView, AlbumFile albumFile);
 
     /**
      * Load thumbnails of pictures or videos, either local file or remote file.
@@ -47,4 +47,5 @@ public interface MediaLoader
      * @param url       The url of the file, local path or remote path.
      */
     void load(ImageView imageView, String url);
+
 }

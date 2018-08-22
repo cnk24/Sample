@@ -18,8 +18,8 @@ package com.cnk24.mediaalbum;
 /**
  * 20180819 SJK: Created
  */
-public interface Filter<T>
-{
+public interface Filter<T> {
+
     /**
      * Filter the file.
      *
@@ -27,4 +27,5 @@ public interface Filter<T>
      * @return filter returns true, otherwise false.
      */
     boolean filter(T attributes);
+
 }

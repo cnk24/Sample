@@ -6,7 +6,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+       http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,25 +15,25 @@
     limitations under the License.
 -->
 <resources>
-    <dimen name="media_sp_14">14sp</dimen>
-    <dimen name="media_sp_16">16sp</dimen>
-    <dimen name="media_sp_18">18sp</dimen>
-    <dimen name="media_sp_20">20sp</dimen>
+    <dimen name="album_sp_14">14sp</dimen>
+    <dimen name="album_sp_16">16sp</dimen>
+    <dimen name="album_sp_18">18sp</dimen>
+    <dimen name="album_sp_20">20sp</dimen>
 
-    <dimen name="media_dp_0">0dp</dimen>
-    <dimen name="media_dp_1">1dp</dimen>
-    <dimen name="media_dp_2">2dp</dimen>
-    <dimen name="media_dp_4">4dp</dimen>
-    <dimen name="media_dp_6">6dp</dimen>
-    <dimen name="media_dp_10">10dp</dimen>
-    <dimen name="media_dp_15">15dp</dimen>
-    <dimen name="media_dp_20">20dp</dimen>
-    <dimen name="media_dp_30">30dp</dimen>
-    <dimen name="media_dp_35">35dp</dimen>
-    <dimen name="media_dp_40">35dp</dimen>
-    <dimen name="media_dp_45">45dp</dimen>
-    <dimen name="media_dp_50">50dp</dimen>
-    <dimen name="media_dp_80">80dp</dimen>
-    <dimen name="media_dp_100">100dp</dimen>
-    <dimen name="media_dp_200">200dp</dimen>
+    <dimen name="album_dp_0">0dp</dimen>
+    <dimen name="album_dp_1">1dp</dimen>
+    <dimen name="album_dp_2">2dp</dimen>
+    <dimen name="album_dp_4">4dp</dimen>
+    <dimen name="album_dp_6">6dp</dimen>
+    <dimen name="album_dp_10">10dp</dimen>
+    <dimen name="album_dp_15">15dp</dimen>
+    <dimen name="album_dp_20">20dp</dimen>
+    <dimen name="album_dp_30">30dp</dimen>
+    <dimen name="album_dp_35">35dp</dimen>
+    <dimen name="album_dp_40">35dp</dimen>
+    <dimen name="album_dp_45">45dp</dimen>
+    <dimen name="album_dp_50">50dp</dimen>
+    <dimen name="album_dp_80">80dp</dimen>
+    <dimen name="album_dp_100">100dp</dimen>
+    <dimen name="album_dp_200">200dp</dimen>
 </resources>

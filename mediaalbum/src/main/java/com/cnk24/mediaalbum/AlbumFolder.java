@@ -23,8 +23,8 @@ import java.util.ArrayList;
 /**
  * 20180817 SJK: Created
  */
-public class MediaFolder implements Parcelable
-{
+public class AlbumFolder implements Parcelable {
+
     /**
      * Folder name.
      */
@@ -32,13 +32,13 @@ public class MediaFolder implements Parcelable
     /**
      * Image list in folder.
      */
-    private ArrayList<MediaFile> mMediaFiles = new ArrayList<>();
+    private ArrayList<AlbumFile> mAlbumFiles = new ArrayList<>();
     /**
      * checked.
      */
     private boolean isChecked;
 
-    public MediaFolder() {
+    public AlbumFolder() {
     }
 
     public String getName() {
@@ -49,12 +49,12 @@ public class MediaFolder implements Parcelable
         this.name = name;
     }
 
-    public ArrayList<MediaFile> getMediaFiles() {
-        return mMediaFiles;
+    public ArrayList<AlbumFile> getAlbumFiles() {
+        return mAlbumFiles;
     }
 
-    public void addMediaFile(MediaFile mediaFile) {
-        mMediaFiles.add(mediaFile);
+    public void addAlbumFile(AlbumFile albumFile) {
+        mAlbumFiles.add(albumFile);
     }
 
     public boolean isChecked() {
@@ -65,16 +65,16 @@ public class MediaFolder implements Parcelable
         isChecked = checked;
     }
 
-    protected MediaFolder(Parcel in) {
+    protected AlbumFolder(Parcel in) {
         name = in.readString();
-        mMediaFiles = in.createTypedArrayList(MediaFile.CREATOR);
+        mAlbumFiles = in.createTypedArrayList(AlbumFile.CREATOR);
         isChecked = in.readByte() != 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeTypedList(mMediaFiles);
+        dest.writeTypedList(mAlbumFiles);
         dest.writeByte((byte) (isChecked ? 1 : 0));
     }
 
@@ -83,15 +83,15 @@ public class MediaFolder implements Parcelable
         return 0;
     }
 
-    public static final Creator<MediaFolder> CREATOR = new Creator<MediaFolder>() {
+    public static final Creator<AlbumFolder> CREATOR = new Creator<AlbumFolder>() {
         @Override
-        public MediaFolder createFromParcel(Parcel in) {
-            return new MediaFolder(in);
+        public AlbumFolder createFromParcel(Parcel in) {
+            return new AlbumFolder(in);
         }
 
         @Override
-        public MediaFolder[] newArray(int size) {
-            return new MediaFolder[size];
+        public AlbumFolder[] newArray(int size) {
+            return new AlbumFolder[size];
         }
     };
 }

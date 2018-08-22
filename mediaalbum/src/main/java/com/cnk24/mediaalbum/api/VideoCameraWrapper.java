@@ -19,14 +19,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.IntRange;
 
-import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.app.camera.CameraActivity;
 
 /**
  * 20180817 SJK: Created
  */
-public class VideoCameraWrapper extends BasicCameraWrapper<VideoCameraWrapper>
-{
+public class VideoCameraWrapper extends BasicCameraWrapper<VideoCameraWrapper> {
+
     private int mQuality = 1;
     private long mLimitDuration = Integer.MAX_VALUE;
     private long mLimitBytes = Integer.MAX_VALUE;
@@ -70,11 +70,11 @@ public class VideoCameraWrapper extends BasicCameraWrapper<VideoCameraWrapper>
         CameraActivity.sCancel = mCancel;
         Intent intent = new Intent(mContext, CameraActivity.class);
 
-        intent.putExtra(Media.KEY_INPUT_FUNCTION, Media.FUNCTION_CAMERA_VIDEO);
-        intent.putExtra(Media.KEY_INPUT_FILE_PATH, mFilePath);
-        intent.putExtra(Media.KEY_INPUT_CAMERA_QUALITY, mQuality);
-        intent.putExtra(Media.KEY_INPUT_CAMERA_DURATION, mLimitDuration);
-        intent.putExtra(Media.KEY_INPUT_CAMERA_BYTES, mLimitBytes);
+        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CAMERA_VIDEO);
+        intent.putExtra(Album.KEY_INPUT_FILE_PATH, mFilePath);
+        intent.putExtra(Album.KEY_INPUT_CAMERA_QUALITY, mQuality);
+        intent.putExtra(Album.KEY_INPUT_CAMERA_DURATION, mLimitDuration);
+        intent.putExtra(Album.KEY_INPUT_CAMERA_BYTES, mLimitBytes);
         mContext.startActivity(intent);
     }
 }

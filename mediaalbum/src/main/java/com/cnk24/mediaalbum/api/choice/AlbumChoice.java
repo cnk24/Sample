@@ -17,28 +17,27 @@ package com.cnk24.mediaalbum.api.choice;
 
 import android.content.Context;
 
-import com.cnk24.mediaalbum.api.ImageMultipleWrapper;
-import com.cnk24.mediaalbum.api.ImageSingleWrapper;
+import com.cnk24.mediaalbum.api.AlbumMultipleWrapper;
+import com.cnk24.mediaalbum.api.AlbumSingleWrapper;
 
 /**
  * 20180817 SJK: Created
  */
-public final class ImageChoice implements Choice<ImageMultipleWrapper, ImageSingleWrapper> {
+public final class AlbumChoice implements Choice<AlbumMultipleWrapper, AlbumSingleWrapper> {
 
     private Context mContext;
 
-    public ImageChoice(Context context) {
+    public AlbumChoice(Context context) {
         mContext = context;
     }
 
     @Override
-    public ImageMultipleWrapper multipleChoice() {
-        return new ImageMultipleWrapper(mContext);
+    public AlbumMultipleWrapper multipleChoice() {
+        return new AlbumMultipleWrapper(mContext);
     }
 
     @Override
-    public ImageSingleWrapper singleChoice() {
-        return new ImageSingleWrapper(mContext);
+    public AlbumSingleWrapper singleChoice() {
+        return new AlbumSingleWrapper(mContext);
     }
-
 }

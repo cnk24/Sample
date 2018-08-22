@@ -21,9 +21,23 @@ import android.content.Context;
 import android.support.annotation.IntDef;
 import android.util.Log;
 
-import com.cnk24.mediaalbum.api.*;
-import com.cnk24.mediaalbum.api.camera.*;
-import com.cnk24.mediaalbum.api.choice.*;
+import com.cnk24.mediaalbum.api.AlbumMultipleWrapper;
+import com.cnk24.mediaalbum.api.AlbumSingleWrapper;
+import com.cnk24.mediaalbum.api.BasicGalleryWrapper;
+import com.cnk24.mediaalbum.api.GalleryAlbumWrapper;
+import com.cnk24.mediaalbum.api.GalleryWrapper;
+import com.cnk24.mediaalbum.api.ImageCameraWrapper;
+import com.cnk24.mediaalbum.api.ImageMultipleWrapper;
+import com.cnk24.mediaalbum.api.ImageSingleWrapper;
+import com.cnk24.mediaalbum.api.VideoCameraWrapper;
+import com.cnk24.mediaalbum.api.VideoMultipleWrapper;
+import com.cnk24.mediaalbum.api.VideoSingleWrapper;
+import com.cnk24.mediaalbum.api.camera.AlbumCamera;
+import com.cnk24.mediaalbum.api.camera.Camera;
+import com.cnk24.mediaalbum.api.choice.AlbumChoice;
+import com.cnk24.mediaalbum.api.choice.Choice;
+import com.cnk24.mediaalbum.api.choice.ImageChoice;
+import com.cnk24.mediaalbum.api.choice.VideoChoice;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,8 +45,8 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 20180817 SJK: Created
  */
-public class Media
-{
+public final class Album {
+
     // All.
     public static final String KEY_INPUT_WIDGET = "KEY_INPUT_WIDGET";
     public static final String KEY_INPUT_CHECKED_LIST = "KEY_INPUT_CHECKED_LIST";
@@ -41,6 +55,7 @@ public class Media
     public static final String KEY_INPUT_FUNCTION = "KEY_INPUT_FUNCTION";
     public static final int FUNCTION_CHOICE_IMAGE = 0;
     public static final int FUNCTION_CHOICE_VIDEO = 1;
+    public static final int FUNCTION_CHOICE_ALBUM = 2;
 
     public static final int FUNCTION_CAMERA_IMAGE = 0;
     public static final int FUNCTION_CAMERA_VIDEO = 1;
@@ -52,13 +67,20 @@ public class Media
     public static final String KEY_INPUT_ALLOW_CAMERA = "KEY_INPUT_ALLOW_CAMERA";
     public static final String KEY_INPUT_LIMIT_COUNT = "KEY_INPUT_LIMIT_COUNT";
 
+    // Gallery.
+    public static final String KEY_INPUT_CURRENT_POSITION = "KEY_INPUT_CURRENT_POSITION";
+    public static final String KEY_INPUT_GALLERY_CHECKABLE = "KEY_INPUT_GALLERY_CHECKABLE";
+
     // Camera.
     public static final String KEY_INPUT_FILE_PATH = "KEY_INPUT_FILE_PATH";
     public static final String KEY_INPUT_CAMERA_QUALITY = "KEY_INPUT_CAMERA_QUALITY";
     public static final String KEY_INPUT_CAMERA_DURATION = "KEY_INPUT_CAMERA_DURATION";
     public static final String KEY_INPUT_CAMERA_BYTES = "KEY_INPUT_CAMERA_BYTES";
 
-    @IntDef({FUNCTION_CHOICE_IMAGE, FUNCTION_CHOICE_VIDEO})
+    // Filter.
+    public static final String KEY_INPUT_FILTER_VISIBILITY = "KEY_INPUT_FILTER_VISIBILITY";
+
+    @IntDef({FUNCTION_CHOICE_IMAGE, FUNCTION_CHOICE_VIDEO, FUNCTION_CHOICE_ALBUM})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChoiceFunction {
     }
@@ -73,33 +95,33 @@ public class Media
     public @interface ChoiceMode {
     }
 
-    private static MediaConfig sMediaConfig;
+    private static AlbumConfig sAlbumConfig;
 
     /**
-     * Initialize Media.
+     * Initialize Album.
      *
-     * @param mediaConfig {@link MediaConfig}.
+     * @param albumConfig {@link AlbumConfig}.
      */
-    public static void initialize(MediaConfig mediaConfig) {
-        if (sMediaConfig == null) sMediaConfig = mediaConfig;
-        else Log.w("Media", new IllegalStateException("Illegal operation, only allowed to configure once."));
+    public static void initialize(AlbumConfig albumConfig) {
+        if (sAlbumConfig == null) sAlbumConfig = albumConfig;
+        else Log.w("Album", new IllegalStateException("Illegal operation, only allowed to configure once."));
     }
 
     /**
      * Get the album configuration.
      */
-    public static MediaConfig getMediaConfig() {
-        if (sMediaConfig == null) {
-            sMediaConfig = MediaConfig.newBuilder(null).build();
+    public static AlbumConfig getAlbumConfig() {
+        if (sAlbumConfig == null) {
+            sAlbumConfig = AlbumConfig.newBuilder(null).build();
         }
-        return sMediaConfig;
+        return sAlbumConfig;
     }
 
     /**
      * Open the camera from the activity.
      */
     public static Camera<ImageCameraWrapper, VideoCameraWrapper> camera(Context context) {
-        return new MediaCamera(context);
+        return new AlbumCamera(context);
     }
 
     /**
@@ -117,24 +139,31 @@ public class Media
     }
 
     /**
+     * Select images and videos.
+     */
+    public static Choice<AlbumMultipleWrapper, AlbumSingleWrapper> album(Context context) {
+        return new AlbumChoice(context);
+    }
+
+    /**
      * Preview picture.
      */
-    //public static GalleryWrapper gallery(Context context) {
-    //    return new GalleryWrapper(context);
-    //}
+    public static GalleryWrapper gallery(Context context) {
+        return new GalleryWrapper(context);
+    }
 
     /**
      * Preview Album.
      */
-    //public static GalleryAlbumWrapper galleryAlbum(Context context) {
-    //    return new GalleryAlbumWrapper(context);
-    //}
+    public static GalleryAlbumWrapper galleryAlbum(Context context) {
+        return new GalleryAlbumWrapper(context);
+    }
 
     /**
      * Open the camera from the activity.
      */
     public static Camera<ImageCameraWrapper, VideoCameraWrapper> camera(Activity activity) {
-        return new MediaCamera(activity);
+        return new AlbumCamera(activity);
     }
 
     /**
@@ -152,24 +181,31 @@ public class Media
     }
 
     /**
+     * Select images and videos.
+     */
+    public static Choice<AlbumMultipleWrapper, AlbumSingleWrapper> album(Activity activity) {
+        return new AlbumChoice(activity);
+    }
+
+    /**
      * Preview picture.
      */
-    //public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Activity activity) {
-    //    return new GalleryWrapper(activity);
-    //}
+    public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Activity activity) {
+        return new GalleryWrapper(activity);
+    }
 
     /**
      * Preview Album.
      */
-    //public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Activity activity) {
-    //    return new GalleryAlbumWrapper(activity);
-    //}
+    public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Activity activity) {
+        return new GalleryAlbumWrapper(activity);
+    }
 
     /**
      * Open the camera from the activity.
      */
     public static Camera<ImageCameraWrapper, VideoCameraWrapper> camera(Fragment fragment) {
-        return new MediaCamera(fragment.getActivity());
+        return new AlbumCamera(fragment.getActivity());
     }
 
     /**
@@ -187,24 +223,31 @@ public class Media
     }
 
     /**
+     * Select images and videos.
+     */
+    public static Choice<AlbumMultipleWrapper, AlbumSingleWrapper> album(Fragment fragment) {
+        return new AlbumChoice(fragment.getActivity());
+    }
+
+    /**
      * Preview picture.
      */
-    //public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Fragment fragment) {
-    //    return new GalleryWrapper(fragment.getActivity());
-    //}
+    public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(Fragment fragment) {
+        return new GalleryWrapper(fragment.getActivity());
+    }
 
     /**
      * Preview Album.
      */
-    //public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Fragment fragment) {
-    //    return new GalleryAlbumWrapper(fragment.getActivity());
-    //}
+    public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(Fragment fragment) {
+        return new GalleryAlbumWrapper(fragment.getActivity());
+    }
 
     /**
      * Open the camera from the activity.
      */
     public static Camera<ImageCameraWrapper, VideoCameraWrapper> camera(android.support.v4.app.Fragment fragment) {
-        return new MediaCamera(fragment.getContext());
+        return new AlbumCamera(fragment.getContext());
     }
 
     /**
@@ -222,16 +265,23 @@ public class Media
     }
 
     /**
+     * Select images and videos.
+     */
+    public static Choice<AlbumMultipleWrapper, AlbumSingleWrapper> album(android.support.v4.app.Fragment fragment) {
+        return new AlbumChoice(fragment.getContext());
+    }
+
+    /**
      * Preview picture.
      */
-    //public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(android.support.v4.app.Fragment fragment) {
-    //    return new GalleryWrapper(fragment.getContext());
-    //}
+    public static BasicGalleryWrapper<GalleryWrapper, String, String, String> gallery(android.support.v4.app.Fragment fragment) {
+        return new GalleryWrapper(fragment.getContext());
+    }
 
     /**
      * Preview Album.
      */
-    //public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(android.support.v4.app.Fragment fragment) {
-    //    return new GalleryAlbumWrapper(fragment.getContext());
-    //}
+    public static BasicGalleryWrapper<GalleryAlbumWrapper, AlbumFile, String, AlbumFile> galleryAlbum(android.support.v4.app.Fragment fragment) {
+        return new GalleryAlbumWrapper(fragment.getContext());
+    }
 }

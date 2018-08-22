@@ -23,13 +23,15 @@ import com.cnk24.mediaalbum.Filter;
 /**
  * 20180819 SJK: Created
  */
-public abstract class BasicChoiceWrapper<Returner extends BasicChoiceWrapper, Result, Cancel, Checked> extends BasicMediaWrapper<Returner, Result, Cancel, Checked>
-{
+public abstract class BasicChoiceWrapper<Returner extends BasicChoiceWrapper, Result, Cancel, Checked> extends BasicAlbumWrapper<Returner, Result, Cancel, Checked> {
+
     boolean mHasCamera = true;
     int mColumnCount = 2;
 
     Filter<Long> mSizeFilter;
     Filter<String> mMimeTypeFilter;
+
+    boolean mFilterVisibility = true;
 
     BasicChoiceWrapper(Context context) {
         super(context);
@@ -72,4 +74,15 @@ public abstract class BasicChoiceWrapper<Returner extends BasicChoiceWrapper, Re
         this.mMimeTypeFilter = filter;
         return (Returner) this;
     }
+
+    /**
+     * The visibility of the filtered file.
+     *
+     * @param visibility true is displayed, false is not displayed.
+     */
+    public Returner afterFilterVisibility(boolean visibility) {
+        this.mFilterVisibility = visibility;
+        return (Returner) this;
+    }
+
 }

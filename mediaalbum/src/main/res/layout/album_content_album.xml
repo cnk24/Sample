@@ -23,30 +23,30 @@
     <RelativeLayout
         style="@style/MediaAlbum.MatchParent.SheetBottom"
         android:layout_alignParentBottom="true"
-        android:background="@color/mediaSheetBottom">
+        android:background="@color/albumSheetBottom">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_switch_dir"
             style="@style/MediaAlbum.TextButton.WrapContent.SheetBottom"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:drawableEnd="@drawable/media_abc_spinner_white"
-            android:drawableRight="@drawable/media_abc_spinner_white" />
+            android:drawableEnd="@drawable/album_abc_spinner_white"
+            android:drawableRight="@drawable/album_abc_spinner_white" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_preview"
             style="@style/MediaAlbum.TextButton.WrapContent.SheetBottom"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/media_ic_eye_white"
-            android:drawableStart="@drawable/media_ic_eye_white" />
+            android:drawableLeft="@drawable/album_ic_eye_white"
+            android:drawableStart="@drawable/album_ic_eye_white" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_loading"
         style="@style/MediaAlbum.MatchParent"
         android:layout_below="@id/app_bar_layout"
-        android:background="@color/mediaPageLight"
+        android:background="@color/albumPageLight"
         android:gravity="center"
         android:visibility="gone">
 
@@ -56,11 +56,11 @@
 
         <TextView
             style="@style/MediaAlbum.WrapContent"
-            android:layout_marginLeft="@dimen/media_dp_20"
-            android:layout_marginStart="@dimen/media_dp_20"
+            android:layout_marginLeft="@dimen/album_dp_20"
+            android:layout_marginStart="@dimen/album_dp_20"
             android:text="@string/media_loading"
-            android:textColor="@color/mediaFontHint"
-            android:textSize="@dimen/media_sp_16" />
+            android:textColor="@color/albumFontHint"
+            android:textSize="@dimen/album_sp_16" />
 
     </LinearLayout>
 </merge>

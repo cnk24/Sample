@@ -19,24 +19,29 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.cnk24.mediaalbum.Album;
-import com.cnk24.mediaalbum.app.camera.CameraActivity;
+import com.cnk24.mediaalbum.app.gallery.GalleryActivity;
+import com.cnk24.mediaalbum.app.gallery.GalleryAlbumActivity;
 
 /**
- * 20180817 SJK: Created
+ * 20180822 SJK: Created
  */
-public class ImageCameraWrapper extends BasicCameraWrapper<ImageCameraWrapper> {
+public class GalleryWrapper extends BasicGalleryWrapper<GalleryWrapper, String, String, String> {
 
-    public ImageCameraWrapper(Context context) {
+    public GalleryWrapper(Context context) {
         super(context);
     }
 
+    @Override
     public void start() {
-        CameraActivity.sResult = mResult;
-        CameraActivity.sCancel = mCancel;
-        Intent intent = new Intent(mContext, CameraActivity.class);
-
-        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CAMERA_IMAGE);
-        intent.putExtra(Album.KEY_INPUT_FILE_PATH, mFilePath);
+        GalleryActivity.sResult = mResult;
+        GalleryActivity.sCancel = mCancel;
+        GalleryActivity.sClick = mItemClick;
+        GalleryActivity.sLongClick = mItemLongClick;
+        Intent intent = new Intent(mContext, GalleryActivity.class);
+        intent.putExtra(Album.KEY_INPUT_WIDGET, mWidget);
+        intent.putStringArrayListExtra(Album.KEY_INPUT_CHECKED_LIST, mChecked);
+        intent.putExtra(Album.KEY_INPUT_CURRENT_POSITION, mCurrentPosition);
+        intent.putExtra(Album.KEY_INPUT_GALLERY_CHECKABLE, mCheckable);
         mContext.startActivity(intent);
     }
 }

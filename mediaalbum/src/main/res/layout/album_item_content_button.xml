@@ -17,7 +17,7 @@
 <com.cnk24.mediaalbum.widget.SquareCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MediaAlbum.Item.Card.MatchParent"
-    app:cardBackgroundColor="@color/mediaColorPrimaryBlack">
+    app:cardBackgroundColor="@color/albumColorPrimaryBlack">
 
     <com.cnk24.mediaalbum.widget.SquareImageView
         android:id="@+id/iv_album_content_button"
@@ -25,6 +25,6 @@
         android:background="?selectableItemBackground"
         android:contentDescription="@string/media_title"
         android:scaleType="center"
-        android:src="@drawable/media_ic_add_photo_white" />
+        android:src="@drawable/album_ic_add_photo_white" />
 
 </com.cnk24.mediaalbum.widget.SquareCardView>

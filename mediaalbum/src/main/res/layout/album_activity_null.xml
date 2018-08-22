@@ -16,7 +16,7 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MediaAlbum.MatchParent"
-    android:background="@color/mediaPageLight">
+    android:background="@color/albumPageLight">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -37,29 +37,29 @@
         <TextView
             android:id="@+id/tv_message"
             style="@style/MediaAlbum.WrapContent"
-            android:textColor="@color/mediaFontHint" />
+            android:textColor="@color/albumFontHint" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_camera_image"
             style="@style/MediaAlbum.Button.WrapContent"
-            android:layout_marginTop="@dimen/media_dp_15"
-            android:drawableLeft="@drawable/media_ic_image_camera_white"
-            android:drawablePadding="@dimen/media_dp_6"
-            android:drawableStart="@drawable/media_ic_image_camera_white"
+            android:layout_marginTop="@dimen/album_dp_15"
+            android:drawableLeft="@drawable/album_ic_image_camera_white"
+            android:drawablePadding="@dimen/album_dp_6"
+            android:drawableStart="@drawable/album_ic_image_camera_white"
             android:gravity="center"
             android:text="@string/media_camera_image_capture"
-            android:textColor="@color/mediaFontLight" />
+            android:textColor="@color/albumFontLight" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_camera_video"
             style="@style/MediaAlbum.Button.WrapContent"
-            android:layout_marginTop="@dimen/media_dp_15"
-            android:drawableLeft="@drawable/media_ic_video_camera_white"
-            android:drawablePadding="@dimen/media_dp_6"
-            android:drawableStart="@drawable/media_ic_video_camera_white"
+            android:layout_marginTop="@dimen/album_dp_15"
+            android:drawableLeft="@drawable/album_ic_video_camera_white"
+            android:drawablePadding="@dimen/album_dp_6"
+            android:drawableStart="@drawable/album_ic_video_camera_white"
             android:gravity="center"
             android:text="@string/media_camera_video_capture"
-            android:textColor="@color/mediaFontLight" />
+            android:textColor="@color/albumFontLight" />
 
     </LinearLayout>
 </RelativeLayout>

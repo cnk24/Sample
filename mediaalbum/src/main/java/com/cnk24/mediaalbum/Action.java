@@ -20,8 +20,7 @@ import android.support.annotation.NonNull;
 /**
  * 20180814 SJK: Created
  */
-public interface Action<T>
-{
+public interface Action<T> {
 
     /**
      * When the action responds.

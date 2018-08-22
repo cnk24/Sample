@@ -22,17 +22,17 @@ import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.api.widget.Widget;
 
 /**
- * 20180819 SJK: Created
+ * 20180822 SJK: Created
  */
-public abstract class BasicMediaWrapper<Returner extends BasicMediaWrapper, Result, Cancel, Checked>
-{
+public abstract class BasicAlbumWrapper<Returner extends BasicAlbumWrapper, Result, Cancel, Checked> {
+
     final Context mContext;
     Action<Result> mResult;
     Action<Cancel> mCancel;
     Widget mWidget;
     Checked mChecked;
 
-    BasicMediaWrapper(Context context) {
+    BasicAlbumWrapper(Context context) {
         this.mContext = context;
         mWidget = Widget.getDefaultWidget(context);
     }

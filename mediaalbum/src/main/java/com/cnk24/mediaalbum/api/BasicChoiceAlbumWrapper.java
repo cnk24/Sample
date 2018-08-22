@@ -19,11 +19,11 @@ import android.content.Context;
 import android.support.annotation.IntRange;
 
 /**
- * 20180819 SJK: Created
+ * 20180822 SJK: Created
  */
-public abstract class BasicChoiceVideoWrapper<Returner extends BasicChoiceVideoWrapper, Result, Cancel, Checked> extends BasicChoiceWrapper<Returner, Result, Cancel, Checked> {
+public abstract class BasicChoiceAlbumWrapper<Returner extends BasicChoiceAlbumWrapper, Result, Cancel, Checked> extends BasicChoiceWrapper<Returner, Result, Cancel, Checked> {
 
-    BasicChoiceVideoWrapper(Context context) {
+    BasicChoiceAlbumWrapper(Context context) {
         super(context);
     }
 
@@ -36,27 +36,27 @@ public abstract class BasicChoiceVideoWrapper<Returner extends BasicChoiceVideoW
      *
      * @param quality should be 0 or 1.
      */
-    public Returner quality(@IntRange(from = 0, to = 1) int quality) {
+    public Returner cameraVideoQuality(@IntRange(from = 0, to = 1) int quality) {
         this.mQuality = quality;
         return (Returner) this;
     }
 
     /**
-     * Specify the maximum allowed recording duration in seconds.
+     * Set the maximum number of seconds to take video.
      *
-     * @param duration the maximum number of seconds.
+     * @param duration seconds.
      */
-    public Returner limitDuration(@IntRange(from = 1) long duration) {
+    public Returner cameraVideoLimitDuration(@IntRange(from = 1) long duration) {
         this.mLimitDuration = duration;
         return (Returner) this;
     }
 
     /**
-     * Specify the maximum allowed size.
+     * Set the maximum file size when taking video.
      *
      * @param bytes the size of the byte.
      */
-    public Returner limitBytes(@IntRange(from = 1) long bytes) {
+    public Returner cameraVideoLimitBytes(@IntRange(from = 1) long bytes) {
         this.mLimitBytes = bytes;
         return (Returner) this;
     }

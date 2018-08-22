@@ -14,19 +14,17 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MediaAlbum.MatchParent"
-    android:background="@color/mediaPageLight">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        style="@style/MediaAlbum.AppBar.General">
+    <item
+        android:id="@+id/album_menu_camera_image"
+        android:title="@string/media_camera_image_capture"
+        app:showAsAction="always|withText"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/MediaAlbum.Toolbar.Dark" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/media_content_album"/>
-</RelativeLayout>
+    <item
+        android:id="@+id/album_menu_camera_video"
+        android:title="@string/media_camera_video_capture"
+        app:showAsAction="always|withText"/>
+</menu>

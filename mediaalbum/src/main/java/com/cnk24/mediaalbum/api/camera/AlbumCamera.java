@@ -23,11 +23,11 @@ import com.cnk24.mediaalbum.api.VideoCameraWrapper;
 /**
  * 20180817 SJK: Created
  */
-public class MediaCamera implements Camera<ImageCameraWrapper, VideoCameraWrapper>
-{
+public class AlbumCamera implements Camera<ImageCameraWrapper, VideoCameraWrapper> {
+
     private Context mContext;
 
-    public MediaCamera(Context context) {
+    public AlbumCamera(Context context) {
         mContext = context;
     }
 
@@ -40,4 +40,5 @@ public class MediaCamera implements Camera<ImageCameraWrapper, VideoCameraWrappe
     public VideoCameraWrapper video() {
         return new VideoCameraWrapper(mContext);
     }
+
 }

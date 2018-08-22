@@ -14,12 +14,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<menu
+<android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:id="@+id/media_menu_finish"
-        android:title="@string/media_menu_finish"
-        app:showAsAction="always|withText"/>
-</menu>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rv_content_list"
+    style="@style/MediaAlbum.WrapContent.WidthMatchParent"
+    android:background="@color/albumPageLight"
+    app:behavior_hideable="true"/>

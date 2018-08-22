@@ -19,8 +19,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/media_menu_finish"
-        android:icon="@drawable/media_ic_done_white"
+        android:id="@+id/album_menu_finish"
+        android:icon="@drawable/album_ic_done_white"
         android:title="@string/media_menu_finish"
         app:showAsAction="always|withText"/>
 </menu>

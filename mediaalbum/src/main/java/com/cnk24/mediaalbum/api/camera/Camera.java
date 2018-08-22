@@ -18,8 +18,8 @@ package com.cnk24.mediaalbum.api.camera;
 /**
  * 20180817 SJK: Created
  */
-public interface Camera<Image, Video>
-{
+public interface Camera<Image, Video> {
+
     /**
      * Take picture.
      */
@@ -29,4 +29,5 @@ public interface Camera<Image, Video>
      * Take video.
      */
     Video video();
+
 }

@@ -24,19 +24,31 @@
 
     <application>
         <activity
-            android:name=".app.media.MediaActivity"
+            android:name=".app.album.AlbumActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/MediaAlbum.Theme.Activity"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity
-            android:name=".app.media.GalleryActivity"
+            android:name=".app.album.GalleryActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/MediaAlbum.Theme.Activity"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity
-            android:name=".app.media.NullActivity"
+            android:name=".app.album.NullActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/MediaAlbum.Theme.Activity"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
+
+        <activity
+            android:name=".app.gallery.GalleryActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/MediaAlbum.Theme.Activity"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
+
+        <activity
+            android:name=".app.gallery.GalleryAlbumActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/MediaAlbum.Theme.Activity"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
@@ -55,7 +67,7 @@
             android:multiprocess="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/media_camera_provider" />
+                android:resource="@xml/album_camera_provider" />
         </provider>
     </application>
 

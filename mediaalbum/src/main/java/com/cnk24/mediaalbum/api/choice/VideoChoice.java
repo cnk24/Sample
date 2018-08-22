@@ -23,8 +23,8 @@ import com.cnk24.mediaalbum.api.VideoSingleWrapper;
 /**
  * 20180817 SJK: Created
  */
-public final class VideoChoice implements Choice<VideoMultipleWrapper, VideoSingleWrapper>
-{
+public final class VideoChoice implements Choice<VideoMultipleWrapper, VideoSingleWrapper> {
+
     private Context mContext;
 
     public VideoChoice(Context context) {
@@ -40,4 +40,5 @@ public final class VideoChoice implements Choice<VideoMultipleWrapper, VideoSing
     public VideoSingleWrapper singleChoice() {
         return new VideoSingleWrapper(mContext);
     }
+
 }

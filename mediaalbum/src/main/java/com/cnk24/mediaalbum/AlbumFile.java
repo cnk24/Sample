@@ -25,8 +25,8 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 20180817 SJK: Created
  */
-public class MediaFile implements Parcelable, Comparable<MediaFile>
-{
+public class AlbumFile implements Parcelable, Comparable<AlbumFile> {
+
     public static final int TYPE_IMAGE = 1;
     public static final int TYPE_VIDEO = 2;
 
@@ -84,11 +84,11 @@ public class MediaFile implements Parcelable, Comparable<MediaFile>
      */
     private boolean isDisable;
 
-    public MediaFile() {
+    public AlbumFile() {
     }
 
     @Override
-    public int compareTo(MediaFile o) {
+    public int compareTo(AlbumFile o) {
         long time = o.getAddDate() - getAddDate();
         if (time > Integer.MAX_VALUE)
             return Integer.MAX_VALUE;
@@ -99,8 +99,8 @@ public class MediaFile implements Parcelable, Comparable<MediaFile>
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof MediaFile) {
-            MediaFile o = (MediaFile) obj;
+        if (obj != null && obj instanceof AlbumFile) {
+            AlbumFile o = (AlbumFile) obj;
             String inPath = o.getPath();
             if (mPath != null && inPath != null) {
                 return mPath.equals(inPath);
@@ -211,7 +211,7 @@ public class MediaFile implements Parcelable, Comparable<MediaFile>
         this.isDisable = disable;
     }
 
-    protected MediaFile(Parcel in) {
+    protected AlbumFile(Parcel in) {
         mPath = in.readString();
         mBucketName = in.readString();
         mMimeType = in.readString();
@@ -247,15 +247,16 @@ public class MediaFile implements Parcelable, Comparable<MediaFile>
         return 0;
     }
 
-    public static final Creator<MediaFile> CREATOR = new Creator<MediaFile>() {
+    public static final Creator<AlbumFile> CREATOR = new Creator<AlbumFile>() {
         @Override
-        public MediaFile createFromParcel(Parcel in) {
-            return new MediaFile(in);
+        public AlbumFile createFromParcel(Parcel in) {
+            return new AlbumFile(in);
         }
 
         @Override
-        public MediaFile[] newArray(int size) {
-            return new MediaFile[size];
+        public AlbumFile[] newArray(int size) {
+            return new AlbumFile[size];
         }
     };
+
 }

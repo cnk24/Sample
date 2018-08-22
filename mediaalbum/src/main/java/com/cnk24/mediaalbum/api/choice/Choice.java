@@ -18,8 +18,8 @@ package com.cnk24.mediaalbum.api.choice;
 /**
  * 20180817 SJK: Created
  */
-public interface Choice<Multiple, Single>
-{
+public interface Choice<Multiple, Single> {
+
     /**
      * Multiple choice.
      */
@@ -29,4 +29,5 @@ public interface Choice<Multiple, Single>
      * Single choice.
      */
     Single singleChoice();
+
 }

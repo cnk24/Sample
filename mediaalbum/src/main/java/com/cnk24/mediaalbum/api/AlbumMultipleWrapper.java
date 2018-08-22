@@ -21,19 +21,20 @@ import android.support.annotation.IntRange;
 
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.Filter;
 import com.cnk24.mediaalbum.app.album.AlbumActivity;
 
 import java.util.ArrayList;
 
 /**
- * 20180817 SJK: Created
+ * 20180822 SJK: Created
  */
-public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultipleWrapper, ArrayList<AlbumFile>, String, ArrayList<AlbumFile>> {
+public class AlbumMultipleWrapper extends BasicChoiceAlbumWrapper<AlbumMultipleWrapper, ArrayList<AlbumFile>, String, ArrayList<AlbumFile>> {
 
-    @IntRange(from = 1, to = Integer.MAX_VALUE)
     private int mLimitCount = Integer.MAX_VALUE;
+    private Filter<Long> mDurationFilter;
 
-    public ImageMultipleWrapper(Context context) {
+    public AlbumMultipleWrapper(Context context) {
         super(context);
     }
 
@@ -42,7 +43,7 @@ public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultiple
      *
      * @param checked the data list.
      */
-    public final ImageMultipleWrapper checkedList(ArrayList<AlbumFile> checked) {
+    public final AlbumMultipleWrapper checkedList(ArrayList<AlbumFile> checked) {
         this.mChecked = checked;
         return this;
     }
@@ -52,8 +53,18 @@ public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultiple
      *
      * @param count the maximum number.
      */
-    public ImageMultipleWrapper selectCount(@IntRange(from = 1, to = Integer.MAX_VALUE) int count) {
+    public AlbumMultipleWrapper selectCount(@IntRange(from = 1, to = Integer.MAX_VALUE) int count) {
         this.mLimitCount = count;
+        return this;
+    }
+
+    /**
+     * Filter video duration.
+     *
+     * @param filter filter.
+     */
+    public AlbumMultipleWrapper filterDuration(Filter<Long> filter) {
+        this.mDurationFilter = filter;
         return this;
     }
 
@@ -61,18 +72,22 @@ public final class ImageMultipleWrapper extends BasicChoiceWrapper<ImageMultiple
     public void start() {
         AlbumActivity.sSizeFilter = mSizeFilter;
         AlbumActivity.sMimeFilter = mMimeTypeFilter;
+        AlbumActivity.sDurationFilter = mDurationFilter;
         AlbumActivity.sResult = mResult;
         AlbumActivity.sCancel = mCancel;
         Intent intent = new Intent(mContext, AlbumActivity.class);
         intent.putExtra(Album.KEY_INPUT_WIDGET, mWidget);
         intent.putParcelableArrayListExtra(Album.KEY_INPUT_CHECKED_LIST, mChecked);
 
-        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CHOICE_IMAGE);
+        intent.putExtra(Album.KEY_INPUT_FUNCTION, Album.FUNCTION_CHOICE_ALBUM);
         intent.putExtra(Album.KEY_INPUT_CHOICE_MODE, Album.MODE_MULTIPLE);
         intent.putExtra(Album.KEY_INPUT_COLUMN_COUNT, mColumnCount);
         intent.putExtra(Album.KEY_INPUT_ALLOW_CAMERA, mHasCamera);
         intent.putExtra(Album.KEY_INPUT_LIMIT_COUNT, mLimitCount);
         intent.putExtra(Album.KEY_INPUT_FILTER_VISIBILITY, mFilterVisibility);
+        intent.putExtra(Album.KEY_INPUT_CAMERA_QUALITY, mQuality);
+        intent.putExtra(Album.KEY_INPUT_CAMERA_DURATION, mLimitDuration);
+        intent.putExtra(Album.KEY_INPUT_CAMERA_BYTES, mLimitBytes);
         mContext.startActivity(intent);
     }
 }
