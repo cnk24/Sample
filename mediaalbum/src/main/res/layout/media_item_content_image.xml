@@ -20,7 +20,7 @@
     <RelativeLayout style="@style/MediaAlbum.MatchParent">
 
         <ImageView
-            android:id="@+id/iv_album_content_image"
+            android:id="@+id/iv_media_content_image"
             style="@style/MediaAlbum.MatchParent"
             android:contentDescription="@string/media_title"
             android:scaleType="centerCrop" />

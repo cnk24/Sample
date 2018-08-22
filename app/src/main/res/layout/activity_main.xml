@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MediaAlbum.MatchParent">
 
+    <include layout="@layout/toolbar_scroll" />
+
     <android.support.v4.widget.NestedScrollView
         style="@style/MediaAlbum.MatchParent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

@@ -44,6 +44,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".app.ImageActivity"
+            android:label="@string/title_image_select"
+            android:screenOrientation="portrait"
+            android:theme="@style/MediaAlbum.AppTheme" />
+
     </application>
 
 </manifest>

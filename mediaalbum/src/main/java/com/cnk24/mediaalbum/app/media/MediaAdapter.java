@@ -200,7 +200,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.mItemClickListener = itemClickListener;
             this.mCheckedClickListener = checkedClickListener;
 
-            mIvImage = itemView.findViewById(R.id.iv_album_content_image);
+            mIvImage = itemView.findViewById(R.id.iv_media_content_image);
             mCheckBox = itemView.findViewById(R.id.check_box);
             mLayoutLayer = itemView.findViewById(R.id.layout_layer);
 
@@ -254,7 +254,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.mItemClickListener = itemClickListener;
             this.mCheckedClickListener = checkedClickListener;
 
-            mIvImage = itemView.findViewById(R.id.iv_album_content_image);
+            mIvImage = itemView.findViewById(R.id.iv_media_content_image);
             mCheckBox = itemView.findViewById(R.id.check_box);
             mTvDuration = itemView.findViewById(R.id.tv_duration);
             mLayoutLayer = itemView.findViewById(R.id.layout_layer);

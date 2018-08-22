@@ -15,12 +15,17 @@
  */
 package com.cnk24.sample;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import com.cnk24.sample.app.ImageActivity;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
+{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +37,27 @@ public class MainActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        findViewById(R.id.btn_camera).setOnClickListener(this);
+        //findViewById(R.id.btn_camera).setOnClickListener(this);
         findViewById(R.id.btn_image).setOnClickListener(this);
-        findViewById(R.id.btn_video).setOnClickListener(this);
-        findViewById(R.id.btn_album).setOnClickListener(this);
-        findViewById(R.id.btn_gallery).setOnClickListener(this);
-        findViewById(R.id.btn_chang_ui).setOnClickListener(this);
-        findViewById(R.id.btn_filter).setOnClickListener(this);
+        //findViewById(R.id.btn_video).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            //case R.id.btn_camera: {
+            //    startActivity(new Intent(this, CameraActivity.class));
+            //    break;
+            //}
+            case R.id.btn_image: {
+                startActivity(new Intent(this, ImageActivity.class));
+                break;
+            }
+            //case R.id.btn_video: {
+            //    startActivity(new Intent(this, VideoActivity.class));
+            //    break;
+            //}
+        }
     }
 }
