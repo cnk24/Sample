@@ -95,7 +95,7 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
             if (albumFile.isChecked()) checkedCount += 1;
         }
 
-        String completeText = getString(R.string.album_menu_finish);
+        String completeText = getString(R.string.media_menu_finish);
         completeText += "(" + checkedCount + " / " + mAlbumFiles.size() + ")";
         mView.setCompleteText(completeText);
     }

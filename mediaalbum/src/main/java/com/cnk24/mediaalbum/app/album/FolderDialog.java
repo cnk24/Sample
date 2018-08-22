@@ -49,7 +49,7 @@ public class FolderDialog extends BottomSheetDialog {
     private OnItemClickListener mItemClickListener;
 
     public FolderDialog(Context context, Widget widget, List<AlbumFolder> albumFolders, OnItemClickListener itemClickListener) {
-        super(context, R.style.Album_Dialog_Folder);
+        super(context, R.style.MediaAlbum_Dialog_Folder);
         setContentView(R.layout.album_dialog_floder);
         this.mWidget = widget;
         this.mAlbumFolders = albumFolders;

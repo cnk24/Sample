@@ -163,9 +163,9 @@ public class AlbumActivity extends BaseActivity implements
     protected void onPermissionDenied(int code) {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
-                .setTitle(R.string.album_title_permission_failed)
-                .setMessage(R.string.album_permission_storage_failed_hint)
-                .setPositiveButton(R.string.album_ok, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.media_title_permission_failed)
+                .setMessage(R.string.media_permission_storage_failed_hint)
+                .setPositiveButton(R.string.media_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         callbackCancel();
@@ -253,15 +253,15 @@ public class AlbumActivity extends BaseActivity implements
             int messageRes;
             switch (mFunction) {
                 case Album.FUNCTION_CHOICE_IMAGE: {
-                    messageRes = R.plurals.album_check_image_limit_camera;
+                    messageRes = R.plurals.media_check_image_limit_camera;
                     break;
                 }
                 case Album.FUNCTION_CHOICE_VIDEO: {
-                    messageRes = R.plurals.album_check_video_limit_camera;
+                    messageRes = R.plurals.media_check_video_limit_camera;
                     break;
                 }
                 case Album.FUNCTION_CHOICE_ALBUM: {
-                    messageRes = R.plurals.album_check_album_limit_camera;
+                    messageRes = R.plurals.media_check_album_limit_camera;
                     break;
                 }
                 default: {
@@ -364,7 +364,7 @@ public class AlbumActivity extends BaseActivity implements
         albumFile.setChecked(!albumFile.isDisable());
         if (albumFile.isDisable()) {
             if (mFilterVisibility) addFileToList(albumFile);
-            else mView.toast(getString(R.string.album_take_file_unavailable));
+            else mView.toast(getString(R.string.media_take_file_unavailable));
         } else {
             addFileToList(albumFile);
         }
@@ -417,15 +417,15 @@ public class AlbumActivity extends BaseActivity implements
                 int messageRes;
                 switch (mFunction) {
                     case Album.FUNCTION_CHOICE_IMAGE: {
-                        messageRes = R.plurals.album_check_image_limit;
+                        messageRes = R.plurals.media_check_image_limit;
                         break;
                     }
                     case Album.FUNCTION_CHOICE_VIDEO: {
-                        messageRes = R.plurals.album_check_video_limit;
+                        messageRes = R.plurals.media_check_video_limit;
                         break;
                     }
                     case Album.FUNCTION_CHOICE_ALBUM: {
-                        messageRes = R.plurals.album_check_album_limit;
+                        messageRes = R.plurals.media_check_album_limit;
                         break;
                     }
                     default: {
@@ -520,15 +520,15 @@ public class AlbumActivity extends BaseActivity implements
             int messageRes;
             switch (mFunction) {
                 case Album.FUNCTION_CHOICE_IMAGE: {
-                    messageRes = R.string.album_check_image_little;
+                    messageRes = R.string.media_check_image_little;
                     break;
                 }
                 case Album.FUNCTION_CHOICE_VIDEO: {
-                    messageRes = R.string.album_check_video_little;
+                    messageRes = R.string.media_check_video_little;
                     break;
                 }
                 case Album.FUNCTION_CHOICE_ALBUM: {
-                    messageRes = R.string.album_check_album_little;
+                    messageRes = R.string.media_check_album_little;
                     break;
                 }
                 default: {

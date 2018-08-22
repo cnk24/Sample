@@ -101,15 +101,15 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
                 int messageRes;
                 switch (mFunction) {
                     case Album.FUNCTION_CHOICE_IMAGE: {
-                        messageRes = R.plurals.album_check_image_limit;
+                        messageRes = R.plurals.media_check_image_limit;
                         break;
                     }
                     case Album.FUNCTION_CHOICE_VIDEO: {
-                        messageRes = R.plurals.album_check_video_limit;
+                        messageRes = R.plurals.media_check_video_limit;
                         break;
                     }
                     case Album.FUNCTION_CHOICE_ALBUM: {
-                        messageRes = R.plurals.album_check_album_limit;
+                        messageRes = R.plurals.media_check_album_limit;
                         break;
                     }
                     default: {
@@ -134,15 +134,15 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
             int messageRes;
             switch (mFunction) {
                 case Album.FUNCTION_CHOICE_IMAGE: {
-                    messageRes = R.string.album_check_image_little;
+                    messageRes = R.string.media_check_image_little;
                     break;
                 }
                 case Album.FUNCTION_CHOICE_VIDEO: {
-                    messageRes = R.string.album_check_video_little;
+                    messageRes = R.string.media_check_video_little;
                     break;
                 }
                 case Album.FUNCTION_CHOICE_ALBUM: {
-                    messageRes = R.string.album_check_album_little;
+                    messageRes = R.string.media_check_album_little;
                     break;
                 }
                 default: {

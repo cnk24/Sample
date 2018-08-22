@@ -209,7 +209,7 @@ public class MediaReader {
         Map<String, AlbumFolder> albumFolderMap = new HashMap<>();
         AlbumFolder allFileFolder = new AlbumFolder();
         allFileFolder.setChecked(true);
-        allFileFolder.setName(mContext.getString(R.string.album_all_images));
+        allFileFolder.setName(mContext.getString(R.string.media_all_images));
 
         scanImageFile(albumFolderMap, allFileFolder);
 
@@ -233,7 +233,7 @@ public class MediaReader {
         Map<String, AlbumFolder> albumFolderMap = new HashMap<>();
         AlbumFolder allFileFolder = new AlbumFolder();
         allFileFolder.setChecked(true);
-        allFileFolder.setName(mContext.getString(R.string.album_all_videos));
+        allFileFolder.setName(mContext.getString(R.string.media_all_videos));
 
         scanVideoFile(albumFolderMap, allFileFolder);
 
@@ -257,7 +257,7 @@ public class MediaReader {
         Map<String, AlbumFolder> albumFolderMap = new HashMap<>();
         AlbumFolder allFileFolder = new AlbumFolder();
         allFileFolder.setChecked(true);
-        allFileFolder.setName(mContext.getString(R.string.album_all_images_videos));
+        allFileFolder.setName(mContext.getString(R.string.media_all_images_videos));
 
         scanImageFile(albumFolderMap, allFileFolder);
         scanVideoFile(albumFolderMap, allFileFolder);

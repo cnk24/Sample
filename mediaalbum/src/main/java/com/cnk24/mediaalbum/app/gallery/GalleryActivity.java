@@ -104,7 +104,7 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
             if (entry.getValue()) checkedCount += 1;
         }
 
-        String completeText = getString(R.string.album_menu_finish);
+        String completeText = getString(R.string.media_menu_finish);
         completeText += "(" + checkedCount + " / " + mPathList.size() + ")";
         mView.setCompleteText(completeText);
     }

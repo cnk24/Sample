@@ -34,7 +34,7 @@ public class LoadingDialog extends Dialog {
     private TextView mTvMessage;
 
     public LoadingDialog(@NonNull Context context) {
-        super(context, R.style.Album_Dialog);
+        super(context, R.style.MediaAlbum_Dialog);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         setContentView(R.layout.album_dialog_loading);

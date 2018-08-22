@@ -130,7 +130,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         VideoViewHolder(View itemView, OnItemClickListener itemClickListener) {
             super(itemView);
             this.mItemClickListener = itemClickListener;
-            this.mIvImage = itemView.findViewById(com.cnk24.mediaalbum.R.id.iv_media_content_image);
+            this.mIvImage = itemView.findViewById(com.cnk24.mediaalbum.R.id.iv_album_content_image);
             this.mTvDuration = itemView.findViewById(com.cnk24.mediaalbum.R.id.tv_duration);
             itemView.setOnClickListener(this);
         }
