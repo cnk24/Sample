@@ -25,8 +25,8 @@ import android.widget.ImageView;
 /**
  * 20180817 SJK: Created
  */
-public interface IPhotoView
-{
+public interface IPhotoView {
+
     float DEFAULT_MAX_SCALE = 3.0f;
     float DEFAULT_MID_SCALE = 1.75f;
     float DEFAULT_MIN_SCALE = 1.0f;

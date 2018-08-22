@@ -25,8 +25,8 @@ import com.cnk24.mediaalbum.widget.photoview.Compat;
  * 20180817 SJK: Created
  */
 @TargetApi(5)
-public class EclairGestureDetector extends CupcakeGestureDetector
-{
+public class EclairGestureDetector extends CupcakeGestureDetector {
+
     private static final int INVALID_POINTER_ID = -1;
     private int mActivePointerId = INVALID_POINTER_ID;
     private int mActivePointerIndex = 0;

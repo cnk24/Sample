@@ -20,17 +20,19 @@ import android.content.res.Configuration;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.cnk24.mediaalbum.*;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumFolder;
 import com.cnk24.mediaalbum.api.widget.Widget;
-import com.cnk24.mediaalbum.app.media.PreviewAdapter;
-import com.cnk24.mediaalbum.mvp.*;
+import com.cnk24.mediaalbum.app.gallery.PreviewAdapter;
+import com.cnk24.mediaalbum.mvp.BasePresenter;
+import com.cnk24.mediaalbum.mvp.BaseView;
 
 /**
  * 20180817 SJK: Created
  */
-public final class Contract
-{
-    public interface MediaPresenter extends BasePresenter {
+public final class Contract {
+
+    public interface AlbumPresenter extends BasePresenter {
 
         /**
          * Click the folder switch.
@@ -69,9 +71,9 @@ public final class Contract
 
     }
 
-    public static abstract class MediaView extends BaseView<MediaPresenter> {
+    public static abstract class AlbumView extends BaseView<AlbumPresenter> {
 
-        public MediaView(Activity activity, MediaPresenter presenter) {
+        public AlbumView(Activity activity, AlbumPresenter presenter) {
             super(activity, presenter);
         }
 
@@ -81,8 +83,9 @@ public final class Contract
          * @param widget     {@link Widget}.
          * @param column     the count of columns.
          * @param hasCamera  the camera is enabled.
-         * @param choiceMode choice mode, one of {@link Media#FUNCTION_CHOICE_IMAGE},
-         *                   {@link Media#FUNCTION_CHOICE_VIDEO}.
+         * @param choiceMode choice mode, one of {@link Album#FUNCTION_CHOICE_ALBUM},
+         *                   {@link Album#FUNCTION_CHOICE_IMAGE}
+         *                   or {@link Album#FUNCTION_CHOICE_VIDEO}.
          */
         public abstract void setupViews(Widget widget, int column, boolean hasCamera, int choiceMode);
 
@@ -110,9 +113,9 @@ public final class Contract
         /**
          * Bind folder.
          *
-         * @param albumFolder {@link MediaFolder}.
+         * @param albumFolder {@link AlbumFolder}.
          */
-        public abstract void bindMediaFolder(MediaFolder albumFolder);
+        public abstract void bindAlbumFolder(AlbumFolder albumFolder);
 
         /**
          * Notify item was inserted.
@@ -270,4 +273,5 @@ public final class Contract
          */
         public abstract void setCompleteText(String text);
     }
+
 }

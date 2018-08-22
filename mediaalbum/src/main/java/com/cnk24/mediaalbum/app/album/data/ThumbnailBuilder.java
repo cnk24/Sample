@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media.data;
+package com.cnk24.mediaalbum.app.album.data;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,7 +26,7 @@ import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,15 +38,15 @@ import java.util.HashMap;
 /**
  * 20180819 SJK: Created
  */
-public class ThumbnailBuilder
-{
+public class ThumbnailBuilder {
+
     private static final int THUMBNAIL_SIZE = 360;
     private static final int THUMBNAIL_QUALITY = 80;
 
     private File mCacheDir;
 
     public ThumbnailBuilder(Context context) {
-        this.mCacheDir = MediaUtils.getMediaRootPath(context);
+        this.mCacheDir = AlbumUtils.getAlbumRootPath(context);
         if (mCacheDir.exists() && mCacheDir.isFile()) mCacheDir.delete();
         if (!mCacheDir.exists()) mCacheDir.mkdirs();
     }
@@ -119,7 +119,7 @@ public class ThumbnailBuilder
     }
 
     private File randomPath(String filePath) {
-        String outFilePath = MediaUtils.getMD5ForString(filePath) + ".album";
+        String outFilePath = AlbumUtils.getMD5ForString(filePath) + ".album";
         return new File(mCacheDir, outFilePath);
     }
 

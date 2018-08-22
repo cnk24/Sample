@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.album;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -25,9 +25,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.MediaFile;
-import com.cnk24.mediaalbum.MediaFolder;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.AlbumFolder;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 
@@ -36,18 +36,18 @@ import java.util.List;
 /**
  * 20180819 SJK: Created
  */
-class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder>
-{
+class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder> {
+
     private LayoutInflater mInflater;
-    private List<MediaFolder> mMediaFolders;
+    private List<AlbumFolder> mAlbumFolders;
     private ColorStateList mSelector;
 
     private OnItemClickListener mItemClickListener;
 
-    public FolderAdapter(Context context, List<MediaFolder> mMediaFolders, ColorStateList buttonTint) {
+    public FolderAdapter(Context context, List<AlbumFolder> mAlbumFolders, ColorStateList buttonTint) {
         this.mInflater = LayoutInflater.from(context);
         this.mSelector = buttonTint;
-        this.mMediaFolders = mMediaFolders;
+        this.mAlbumFolders = mAlbumFolders;
     }
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
@@ -56,7 +56,7 @@ class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder>
 
     @Override
     public FolderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new FolderViewHolder(mInflater.inflate(R.layout.media_item_dialog_folder, parent, false),
+        return new FolderViewHolder(mInflater.inflate(R.layout.album_item_dialog_folder, parent, false),
                 mSelector,
                 new OnItemClickListener() {
 
@@ -67,10 +67,10 @@ class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder>
                         if (mItemClickListener != null)
                             mItemClickListener.onItemClick(view, position);
 
-                        MediaFolder mediaFolder = mMediaFolders.get(position);
-                        if (!mediaFolder.isChecked()) {
-                            mediaFolder.setChecked(true);
-                            mMediaFolders.get(oldPosition).setChecked(false);
+                        AlbumFolder albumFolder = mAlbumFolders.get(position);
+                        if (!albumFolder.isChecked()) {
+                            albumFolder.setChecked(true);
+                            mAlbumFolders.get(oldPosition).setChecked(false);
                             notifyItemChanged(oldPosition);
                             notifyItemChanged(position);
                             oldPosition = position;
@@ -82,12 +82,12 @@ class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder>
     @Override
     public void onBindViewHolder(FolderViewHolder holder, int position) {
         final int newPosition = holder.getAdapterPosition();
-        holder.setData(mMediaFolders.get(newPosition));
+        holder.setData(mAlbumFolders.get(newPosition));
     }
 
     @Override
     public int getItemCount() {
-        return mMediaFolders == null ? 0 : mMediaFolders.size();
+        return mAlbumFolders == null ? 0 : mAlbumFolders.size();
     }
 
     static class FolderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -112,12 +112,12 @@ class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder>
             mCheckBox.setSupportButtonTintList(selector);
         }
 
-        public void setData(MediaFolder mediaFolder) {
-            List<MediaFile> mediaFiles = mediaFolder.getMediaFiles();
-            mTvTitle.setText("(" + mediaFiles.size() + ") " + mediaFolder.getName());
-            mCheckBox.setChecked(mediaFolder.isChecked());
+        public void setData(AlbumFolder albumFolder) {
+            List<AlbumFile> albumFiles = albumFolder.getAlbumFiles();
+            mTvTitle.setText("(" + albumFiles.size() + ") " + albumFolder.getName());
+            mCheckBox.setChecked(albumFolder.isChecked());
 
-            Media.getMediaConfig().getMediaLoader().load(mIvImage, mediaFiles.get(0));
+            Album.getAlbumConfig().getAlbumLoader().load(mIvImage, albumFiles.get(0));
         }
 
         @Override
@@ -126,4 +126,5 @@ class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderViewHolder>
                 mItemClickListener.onItemClick(v, getAdapterPosition());
         }
     }
+
 }

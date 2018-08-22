@@ -21,8 +21,8 @@ import android.os.Build;
 /**
  * 20180817 SJK: Created
  */
-public final class VersionedGestureDetector
-{
+public final class VersionedGestureDetector {
+
     public static GestureDetector newInstance(Context context,
                                               OnGestureListener listener) {
         final int sdkVersion = Build.VERSION.SDK_INT;
@@ -40,4 +40,5 @@ public final class VersionedGestureDetector
 
         return detector;
     }
+
 }

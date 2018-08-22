@@ -21,8 +21,8 @@ import android.widget.Scroller;
 /**
  * 20180817 SJK: Created
  */
-public class PreGingerScroller extends ScrollerProxy
-{
+public class PreGingerScroller extends ScrollerProxy {
+
     private final Scroller mScroller;
 
     public PreGingerScroller(Context context) {

@@ -52,9 +52,9 @@ import java.util.UUID;
 /**
  * 20180817 SJK: Created
  */
-public class MediaUtils
-{
-    private static final String CACHE_DIRECTORY = "MediaCache";
+public class AlbumUtils {
+
+    private static final String CACHE_DIRECTORY = "AlbumCache";
 
     /**
      * Get a writable root directory.
@@ -63,7 +63,7 @@ public class MediaUtils
      * @return {@link File}.
      */
     @NonNull
-    public static File getMediaRootPath(Context context) {
+    public static File getAlbumRootPath(Context context) {
         if (sdCardIsAvailable()) {
             return new File(Environment.getExternalStorageDirectory(), CACHE_DIRECTORY);
         } else {
@@ -252,7 +252,7 @@ public class MediaUtils
     private static String randomMediaPath(File bucket, String extension) {
         if (bucket.exists() && bucket.isFile()) bucket.delete();
         if (!bucket.exists()) bucket.mkdirs();
-        String outFilePath = MediaUtils.getNowDateTime("yyyyMMdd_HHmmssSSS") + "_" + getMD5ForString(UUID.randomUUID().toString()) + extension;
+        String outFilePath = AlbumUtils.getNowDateTime("yyyyMMdd_HHmmssSSS") + "_" + getMD5ForString(UUID.randomUUID().toString()) + extension;
         File file = new File(bucket, outFilePath);
         return file.getAbsolutePath();
     }

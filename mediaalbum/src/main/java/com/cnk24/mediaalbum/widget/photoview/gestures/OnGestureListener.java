@@ -18,11 +18,12 @@ package com.cnk24.mediaalbum.widget.photoview.gestures;
 /**
  * 20180817 SJK: Created
  */
-public interface OnGestureListener
-{
+public interface OnGestureListener {
+
     void onDrag(float dx, float dy);
 
     void onFling(float startX, float startY, float velocityX, float velocityY);
 
     void onScale(float scaleFactor, float focusX, float focusY);
+
 }

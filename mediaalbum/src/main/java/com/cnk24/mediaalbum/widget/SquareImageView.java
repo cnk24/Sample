@@ -23,8 +23,8 @@ import android.util.AttributeSet;
 /**
  * 20180817 SJK: Created
  */
-public class SquareImageView extends android.support.v7.widget.AppCompatImageView
-{
+public class SquareImageView extends android.support.v7.widget.AppCompatImageView {
+
     private Configuration mConfig;
 
     public SquareImageView(Context context) {

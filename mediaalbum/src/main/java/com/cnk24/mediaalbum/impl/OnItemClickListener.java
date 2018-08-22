@@ -20,8 +20,8 @@ import android.view.View;
 /**
  * 20180817 SJK: Created
  */
-public interface OnItemClickListener
-{
+public interface OnItemClickListener {
+
     /**
      * When Item is clicked.
      *

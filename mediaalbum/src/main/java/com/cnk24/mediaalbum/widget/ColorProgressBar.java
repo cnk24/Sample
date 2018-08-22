@@ -25,8 +25,8 @@ import android.widget.ProgressBar;
 /**
  * 20180817 SJK: Created
  */
-public class ColorProgressBar extends ProgressBar
-{
+public class ColorProgressBar extends ProgressBar {
+
     public ColorProgressBar(Context context) {
         super(context);
     }

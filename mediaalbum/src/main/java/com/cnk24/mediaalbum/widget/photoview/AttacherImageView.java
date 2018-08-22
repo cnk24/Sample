@@ -23,8 +23,8 @@ import android.util.AttributeSet;
 /**
  * 20180817 SJK: Created
  */
-public class AttacherImageView extends android.support.v7.widget.AppCompatImageView
-{
+public class AttacherImageView extends android.support.v7.widget.AppCompatImageView {
+
     private PhotoViewAttacher mAttacher;
 
     public AttacherImageView(Context context) {

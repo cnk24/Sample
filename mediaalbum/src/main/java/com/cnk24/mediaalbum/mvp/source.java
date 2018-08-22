@@ -28,8 +28,8 @@ import android.view.View;
 /**
  * 20180820 SJK: Created
  */
-abstract class Source<Host>
-{
+abstract class Source<Host> {
+
     private Host mHost;
 
     public Source(Host host) {

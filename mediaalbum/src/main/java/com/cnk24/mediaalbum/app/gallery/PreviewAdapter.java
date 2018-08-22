@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.gallery;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -29,11 +29,11 @@ import com.cnk24.mediaalbum.widget.photoview.PhotoViewAttacher;
 import java.util.List;
 
 /**
- * 20180819 SJK: Created
+ * 20180822 SJK Created.
  */
 public abstract class PreviewAdapter<T> extends PagerAdapter
-        implements View.OnClickListener, View.OnLongClickListener
-{
+        implements View.OnClickListener, View.OnLongClickListener {
+
     private Context mContext;
     private List<T> mPreviewList;
 

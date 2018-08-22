@@ -27,8 +27,7 @@ import android.view.ViewGroup;
 /**
  * 20180817 SJK: Created
  */
-public class BaseFragment extends Fragment implements Bye
-{
+public class BaseFragment extends Fragment implements Bye {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

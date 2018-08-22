@@ -22,8 +22,8 @@ import android.support.annotation.ColorInt;
 /**
  * 20180817 SJK: Created
  */
-class ColorDrawer extends Drawer
-{
+class ColorDrawer extends Drawer {
+
     public ColorDrawer(int color, int width, int height) {
         super(new ColorDrawable(opaqueColor(color)), width, height);
     }

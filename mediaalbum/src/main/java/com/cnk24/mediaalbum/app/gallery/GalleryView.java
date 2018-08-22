@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.gallery;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,16 +27,16 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cnk24.mediaalbum.app.Contract;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.app.Contract;
 import com.cnk24.mediaalbum.util.SystemBar;
 
 /**
- * 20180819 SJK: Created
+ * 20180822 SJK Created.
  */
-public class GalleryView<Data> extends Contract.GalleryView<Data> implements View.OnClickListener
-{
+public class GalleryView<Data> extends Contract.GalleryView<Data> implements View.OnClickListener {
+
     private Activity mActivity;
 
     private MenuItem mCompleteMenu;
@@ -63,14 +62,14 @@ public class GalleryView<Data> extends Contract.GalleryView<Data> implements Vie
 
     @Override
     protected void onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.media_menu_gallery, menu);
-        mCompleteMenu = menu.findItem(R.id.media_menu_finish);
+        getMenuInflater().inflate(R.menu.album_menu_gallery, menu);
+        mCompleteMenu = menu.findItem(R.id.album_menu_finish);
     }
 
     @Override
     protected void onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.media_menu_finish) {
+        if (id == R.id.album_menu_finish) {
             getPresenter().complete();
         }
     }
@@ -80,16 +79,15 @@ public class GalleryView<Data> extends Contract.GalleryView<Data> implements Vie
         SystemBar.invasionStatusBar(mActivity);
         SystemBar.invasionNavigationBar(mActivity);
         SystemBar.setStatusBarColor(mActivity, Color.TRANSPARENT);
-        SystemBar.setNavigationBarColor(mActivity, getColor(R.color.mediaSheetBottom));
+        SystemBar.setNavigationBarColor(mActivity, getColor(R.color.albumSheetBottom));
 
-        setHomeAsUpIndicator(R.drawable.media_ic_back_white);
+        setHomeAsUpIndicator(R.drawable.album_ic_back_white);
         if (!checkable) {
             mCompleteMenu.setVisible(false);
             mCheckBox.setVisibility(View.GONE);
         } else {
             ColorStateList itemSelector = widget.getMediaItemCheckSelector();
             mCheckBox.setSupportButtonTintList(itemSelector);
-            //CompoundButtonCompat.setButtonTintList(mCheckBox, itemSelector);
             mCheckBox.setTextColor(itemSelector);
         }
 

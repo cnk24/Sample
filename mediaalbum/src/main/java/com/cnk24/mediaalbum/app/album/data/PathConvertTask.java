@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media.data;
+package com.cnk24.mediaalbum.app.album.data;
 
 import android.os.AsyncTask;
 
-import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.AlbumFile;
 
 /**
  * 20180819 SJK: Created
  */
-public class PathConvertTask extends AsyncTask<String, Void, MediaFile>
-{
+public class PathConvertTask extends AsyncTask<String, Void, AlbumFile> {
+
     public interface Callback {
         /**
          * The task begins.
@@ -33,9 +33,9 @@ public class PathConvertTask extends AsyncTask<String, Void, MediaFile>
         /**
          * Callback results.
          *
-         * @param mediaFile result.
+         * @param albumFile result.
          */
-        void onConvertCallback(MediaFile mediaFile);
+        void onConvertCallback(AlbumFile albumFile);
     }
 
     private PathConversion mConversion;
@@ -52,12 +52,12 @@ public class PathConvertTask extends AsyncTask<String, Void, MediaFile>
     }
 
     @Override
-    protected MediaFile doInBackground(String... params) {
+    protected AlbumFile doInBackground(String... params) {
         return mConversion.convert(params[0]);
     }
 
     @Override
-    protected void onPostExecute(MediaFile file) {
+    protected void onPostExecute(AlbumFile file) {
         mCallback.onConvertCallback(file);
     }
 }

@@ -23,8 +23,8 @@ import android.view.MotionEvent;
 /**
  * 20180817 SJK: Created
  */
-public class FixViewPager extends ViewPager
-{
+public class FixViewPager extends ViewPager {
+
     public FixViewPager(Context context) {
         super(context);
     }

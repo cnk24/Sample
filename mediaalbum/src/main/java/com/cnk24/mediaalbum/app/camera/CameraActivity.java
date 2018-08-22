@@ -24,10 +24,10 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
 import com.cnk24.mediaalbum.Action;
-import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.mvp.BaseActivity;
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.mediaalbum.util.SystemBar;
 
 import java.io.File;
@@ -35,8 +35,8 @@ import java.io.File;
 /**
  * 20180819 SJK: Created
  */
-public class CameraActivity extends BaseActivity
-{
+public class CameraActivity extends BaseActivity {
+
     private static final String INSTANCE_CAMERA_FUNCTION = "INSTANCE_CAMERA_FUNCTION";
     private static final String INSTANCE_CAMERA_FILE_PATH = "INSTANCE_CAMERA_FILE_PATH";
     private static final String INSTANCE_CAMERA_QUALITY = "INSTANCE_CAMERA_QUALITY";
@@ -74,22 +74,22 @@ public class CameraActivity extends BaseActivity
         } else {
             Bundle bundle = getIntent().getExtras();
             assert bundle != null;
-            mFunction = bundle.getInt(Media.KEY_INPUT_FUNCTION);
-            mCameraFilePath = bundle.getString(Media.KEY_INPUT_FILE_PATH);
-            mQuality = bundle.getInt(Media.KEY_INPUT_CAMERA_QUALITY);
-            mLimitDuration = bundle.getLong(Media.KEY_INPUT_CAMERA_DURATION);
-            mLimitBytes = bundle.getLong(Media.KEY_INPUT_CAMERA_BYTES);
+            mFunction = bundle.getInt(Album.KEY_INPUT_FUNCTION);
+            mCameraFilePath = bundle.getString(Album.KEY_INPUT_FILE_PATH);
+            mQuality = bundle.getInt(Album.KEY_INPUT_CAMERA_QUALITY);
+            mLimitDuration = bundle.getLong(Album.KEY_INPUT_CAMERA_DURATION);
+            mLimitBytes = bundle.getLong(Album.KEY_INPUT_CAMERA_BYTES);
 
             switch (mFunction) {
-                case Media.FUNCTION_CAMERA_IMAGE: {
+                case Album.FUNCTION_CAMERA_IMAGE: {
                     if (TextUtils.isEmpty(mCameraFilePath))
-                        mCameraFilePath = MediaUtils.randomJPGPath(this);
+                        mCameraFilePath = AlbumUtils.randomJPGPath(this);
                     requestPermission(PERMISSION_TAKE_PICTURE, CODE_PERMISSION_IMAGE);
                     break;
                 }
-                case Media.FUNCTION_CAMERA_VIDEO: {
+                case Album.FUNCTION_CAMERA_VIDEO: {
                     if (TextUtils.isEmpty(mCameraFilePath))
-                        mCameraFilePath = MediaUtils.randomMP4Path(this);
+                        mCameraFilePath = AlbumUtils.randomMP4Path(this);
                     requestPermission(PERMISSION_TAKE_VIDEO, CODE_PERMISSION_VIDEO);
                     break;
                 }
@@ -114,11 +114,11 @@ public class CameraActivity extends BaseActivity
     protected void onPermissionGranted(int code) {
         switch (code) {
             case CODE_PERMISSION_IMAGE: {
-                MediaUtils.takeImage(this, CODE_ACTIVITY_TAKE_IMAGE, new File(mCameraFilePath));
+                AlbumUtils.takeImage(this, CODE_ACTIVITY_TAKE_IMAGE, new File(mCameraFilePath));
                 break;
             }
             case CODE_PERMISSION_VIDEO: {
-                MediaUtils.takeVideo(this, CODE_ACTIVITY_TAKE_VIDEO, new File(mCameraFilePath), mQuality, mLimitDuration, mLimitBytes);
+                AlbumUtils.takeVideo(this, CODE_ACTIVITY_TAKE_VIDEO, new File(mCameraFilePath), mQuality, mLimitDuration, mLimitBytes);
                 break;
             }
             default: {
@@ -131,11 +131,11 @@ public class CameraActivity extends BaseActivity
     protected void onPermissionDenied(int code) {
         int messageRes;
         switch (mFunction) {
-            case Media.FUNCTION_CAMERA_IMAGE: {
+            case Album.FUNCTION_CAMERA_IMAGE: {
                 messageRes = R.string.media_permission_camera_image_failed_hint;
                 break;
             }
-            case Media.FUNCTION_CAMERA_VIDEO: {
+            case Album.FUNCTION_CAMERA_VIDEO: {
                 messageRes = R.string.media_permission_camera_video_failed_hint;
                 break;
             }

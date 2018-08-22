@@ -24,8 +24,8 @@ import android.widget.FrameLayout;
 /**
  * 20180817 SJK: Created
  */
-public class TransferLayout extends FrameLayout
-{
+public class TransferLayout extends FrameLayout {
+
     public TransferLayout(@NonNull Context context) {
         super(context);
     }

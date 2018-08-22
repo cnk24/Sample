@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media.data;
+package com.cnk24.mediaalbum.app.album.data;
 
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
+import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.Filter;
-import com.cnk24.mediaalbum.MediaFile;
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 
 import java.io.File;
 
 /**
  * 20180819 SJK: Created
  */
-public class PathConversion
-{
+public class PathConversion {
+
     private Filter<Long> mSizeFilter;
     private Filter<String> mMimeFilter;
     private Filter<Long> mDurationFilter;
@@ -43,51 +43,52 @@ public class PathConversion
 
     @WorkerThread
     @NonNull
-    public MediaFile convert(String filePath) {
+    public AlbumFile convert(String filePath) {
         File file = new File(filePath);
 
-        MediaFile mediaFile = new MediaFile();
-        mediaFile.setPath(filePath);
+        AlbumFile albumFile = new AlbumFile();
+        albumFile.setPath(filePath);
 
         File parentFile = file.getParentFile();
-        mediaFile.setBucketName(parentFile.getName());
+        albumFile.setBucketName(parentFile.getName());
 
-        String mimeType = MediaUtils.getMimeType(filePath);
-        mediaFile.setMimeType(mimeType);
+        String mimeType = AlbumUtils.getMimeType(filePath);
+        albumFile.setMimeType(mimeType);
         long nowTime = System.currentTimeMillis();
-        mediaFile.setAddDate(nowTime);
-        mediaFile.setSize(file.length());
+        albumFile.setAddDate(nowTime);
+        albumFile.setSize(file.length());
         int mediaType = 0;
         if (!TextUtils.isEmpty(mimeType)) {
             if (mimeType.contains("video"))
-                mediaType = MediaFile.TYPE_VIDEO;
+                mediaType = AlbumFile.TYPE_VIDEO;
             if (mimeType.contains("image"))
-                mediaType = MediaFile.TYPE_IMAGE;
+                mediaType = AlbumFile.TYPE_IMAGE;
         }
-        mediaFile.setMediaType(mediaType);
+        albumFile.setMediaType(mediaType);
 
         if (mSizeFilter != null && mSizeFilter.filter(file.length())) {
-            mediaFile.setDisable(true);
+            albumFile.setDisable(true);
         }
         if (mMimeFilter != null && mMimeFilter.filter(mimeType)) {
-            mediaFile.setDisable(true);
+            albumFile.setDisable(true);
         }
 
-        if (mediaType == MediaFile.TYPE_VIDEO) {
+        if (mediaType == AlbumFile.TYPE_VIDEO) {
             MediaPlayer player = new MediaPlayer();
             try {
                 player.setDataSource(filePath);
                 player.prepare();
-                mediaFile.setDuration(player.getDuration());
+                albumFile.setDuration(player.getDuration());
             } catch (Exception ignored) {
             } finally {
                 player.release();
             }
 
-            if (mDurationFilter != null && mDurationFilter.filter(mediaFile.getDuration())) {
-                mediaFile.setDisable(true);
+            if (mDurationFilter != null && mDurationFilter.filter(albumFile.getDuration())) {
+                albumFile.setDisable(true);
             }
         }
-        return mediaFile;
+        return albumFile;
     }
+
 }

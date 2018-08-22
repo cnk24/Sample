@@ -20,8 +20,8 @@ import android.support.v7.widget.RecyclerView;
 /**
  * 20180817 SJK: Created
  */
-public abstract class Divider extends RecyclerView.ItemDecoration
-{
+public abstract class Divider extends RecyclerView.ItemDecoration {
+
     /**
      * Get the height of the divider.
      *
@@ -35,4 +35,5 @@ public abstract class Divider extends RecyclerView.ItemDecoration
      * @return width of the divider.
      */
     public abstract int getWidth();
+
 }

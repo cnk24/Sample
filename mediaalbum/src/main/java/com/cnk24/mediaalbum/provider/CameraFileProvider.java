@@ -21,8 +21,8 @@ import android.support.v4.content.FileProvider;
 /**
  * 20180817 SJK: Created
  */
-public class CameraFileProvider extends FileProvider
-{
+public class CameraFileProvider extends FileProvider {
+
     /**
      * Get the provider of the external file path.
      *
@@ -32,4 +32,5 @@ public class CameraFileProvider extends FileProvider
     public static String getProviderName(Context context) {
         return context.getPackageName() + ".app.file.provider";
     }
+
 }

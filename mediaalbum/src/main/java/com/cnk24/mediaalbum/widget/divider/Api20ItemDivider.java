@@ -18,17 +18,17 @@ package com.cnk24.mediaalbum.widget.divider;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.ColorInt;
-import android.view.View;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 /**
  * 20180817 SJK: Created
  */
-public class Api20ItemDivider extends Divider
-{
+public class Api20ItemDivider extends Divider {
+
     private final int mWidth;
     private final int mHeight;
     private final Drawer mDrawer;

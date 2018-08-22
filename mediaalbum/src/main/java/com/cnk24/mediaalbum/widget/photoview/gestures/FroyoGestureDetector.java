@@ -24,8 +24,8 @@ import android.view.ScaleGestureDetector;
  * 20180817 SJK: Created
  */
 @TargetApi(8)
-public class FroyoGestureDetector extends EclairGestureDetector
-{
+public class FroyoGestureDetector extends EclairGestureDetector {
+
     protected final ScaleGestureDetector mDetector;
 
     public FroyoGestureDetector(Context context) {

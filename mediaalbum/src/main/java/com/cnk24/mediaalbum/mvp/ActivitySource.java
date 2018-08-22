@@ -34,8 +34,8 @@ import com.cnk24.mediaalbum.R;
 /**
  * 20180820 SJK: Created
  */
-class ActivitySource extends Source<Activity>
-{
+class ActivitySource extends Source<Activity> {
+
     private View mView;
 
     private Toolbar mActionBar;

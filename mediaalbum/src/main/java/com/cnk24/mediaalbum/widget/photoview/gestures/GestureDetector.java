@@ -20,8 +20,8 @@ import android.view.MotionEvent;
 /**
  * 20180817 SJK: Created
  */
-public interface GestureDetector
-{
+public interface GestureDetector {
+
     boolean onTouchEvent(MotionEvent ev);
 
     boolean isScaling();
@@ -29,4 +29,5 @@ public interface GestureDetector
     boolean isDragging();
 
     void setOnGestureListener(OnGestureListener listener);
+
 }

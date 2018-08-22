@@ -33,8 +33,8 @@ import com.cnk24.mediaalbum.R;
 /**
  * 20180820 SJK: Created
  */
-class ViewSource extends Source<View>
-{
+class ViewSource extends Source<View> {
+
     private Toolbar mActionBar;
     private Drawable mActionBarIcon;
     private MenuClickListener mMenuItemSelectedListener;

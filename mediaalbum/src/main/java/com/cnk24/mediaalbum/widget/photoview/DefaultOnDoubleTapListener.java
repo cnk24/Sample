@@ -23,8 +23,8 @@ import android.widget.ImageView;
 /**
  * 20180817 SJK: Created
  */
-public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapListener
-{
+public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
+
     private PhotoViewAttacher photoViewAttacher;
 
     /**
@@ -109,4 +109,5 @@ public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapLi
         // Wait for the confirmed onDoubleTap() instead
         return false;
     }
+
 }

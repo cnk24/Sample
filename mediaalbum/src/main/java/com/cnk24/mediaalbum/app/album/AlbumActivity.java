@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.album;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,20 +29,20 @@ import android.widget.CompoundButton;
 
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Filter;
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.MediaFile;
-import com.cnk24.mediaalbum.MediaFolder;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.AlbumFolder;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.app.Contract;
-import com.cnk24.mediaalbum.app.media.data.MediaReadTask;
-import com.cnk24.mediaalbum.app.media.data.MediaReader;
-import com.cnk24.mediaalbum.app.media.data.PathConversion;
-import com.cnk24.mediaalbum.app.media.data.PathConvertTask;
-import com.cnk24.mediaalbum.app.media.data.ThumbnailBuildTask;
+import com.cnk24.mediaalbum.app.album.data.MediaReadTask;
+import com.cnk24.mediaalbum.app.album.data.MediaReader;
+import com.cnk24.mediaalbum.app.album.data.PathConversion;
+import com.cnk24.mediaalbum.app.album.data.PathConvertTask;
+import com.cnk24.mediaalbum.app.album.data.ThumbnailBuildTask;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.mvp.BaseActivity;
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.mediaalbum.util.mediascanner.MediaScanner;
 import com.cnk24.mediaalbum.widget.LoadingDialog;
 
@@ -53,13 +53,13 @@ import java.util.List;
 /**
  * 20180819 SJK: Created
  */
-public class MediaActivity extends BaseActivity implements
-                                        Contract.MediaPresenter,
-                                        MediaReadTask.Callback,
-                                        GalleryActivity.Callback,
-                                        PathConvertTask.Callback,
-                                        ThumbnailBuildTask.Callback
-{
+public class AlbumActivity extends BaseActivity implements
+        Contract.AlbumPresenter,
+        MediaReadTask.Callback,
+        GalleryActivity.Callback,
+        PathConvertTask.Callback,
+        ThumbnailBuildTask.Callback {
+
     private static final int CODE_ACTIVITY_NULL = 1;
     private static final int CODE_PERMISSION_STORAGE = 1;
 
@@ -67,10 +67,10 @@ public class MediaActivity extends BaseActivity implements
     public static Filter<String> sMimeFilter;
     public static Filter<Long> sDurationFilter;
 
-    public static Action<ArrayList<MediaFile>> sResult;
+    public static Action<ArrayList<AlbumFile>> sResult;
     public static Action<String> sCancel;
 
-    private List<MediaFolder> mMediaFolders;
+    private List<AlbumFolder> mAlbumFolders;
     private int mCurrentFolder;
 
     private Widget mWidget;
@@ -84,10 +84,12 @@ public class MediaActivity extends BaseActivity implements
     private long mLimitDuration;
     private long mLimitBytes;
 
-    private ArrayList<MediaFile> mCheckedList;
+    private boolean mFilterVisibility;
+
+    private ArrayList<AlbumFile> mCheckedList;
     private MediaScanner mMediaScanner;
 
-    private Contract.MediaView mView;
+    private Contract.AlbumView mView;
     private FolderDialog mFolderDialog;
     private PopupMenu mCameraPopupMenu;
     private LoadingDialog mLoadingDialog;
@@ -99,7 +101,7 @@ public class MediaActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         initializeArgument();
         setContentView(createView());
-        mView = new MediaView(this, this);
+        mView = new AlbumView(this, this);
         mView.setupViews(mWidget, mColumnCount, mHasCamera, mChoiceMode);
         mView.setTitle(mWidget.getTitle());
         mView.setCompleteDisplay(false);
@@ -111,15 +113,16 @@ public class MediaActivity extends BaseActivity implements
     private void initializeArgument() {
         Bundle argument = getIntent().getExtras();
         assert argument != null;
-        mWidget = argument.getParcelable(Media.KEY_INPUT_WIDGET);
-        mFunction = argument.getInt(Media.KEY_INPUT_FUNCTION);
-        mChoiceMode = argument.getInt(Media.KEY_INPUT_CHOICE_MODE);
-        mColumnCount = argument.getInt(Media.KEY_INPUT_COLUMN_COUNT);
-        mHasCamera = argument.getBoolean(Media.KEY_INPUT_ALLOW_CAMERA);
-        mLimitCount = argument.getInt(Media.KEY_INPUT_LIMIT_COUNT);
-        mQuality = argument.getInt(Media.KEY_INPUT_CAMERA_QUALITY);
-        mLimitDuration = argument.getLong(Media.KEY_INPUT_CAMERA_DURATION);
-        mLimitBytes = argument.getLong(Media.KEY_INPUT_CAMERA_BYTES);
+        mWidget = argument.getParcelable(Album.KEY_INPUT_WIDGET);
+        mFunction = argument.getInt(Album.KEY_INPUT_FUNCTION);
+        mChoiceMode = argument.getInt(Album.KEY_INPUT_CHOICE_MODE);
+        mColumnCount = argument.getInt(Album.KEY_INPUT_COLUMN_COUNT);
+        mHasCamera = argument.getBoolean(Album.KEY_INPUT_ALLOW_CAMERA);
+        mLimitCount = argument.getInt(Album.KEY_INPUT_LIMIT_COUNT);
+        mQuality = argument.getInt(Album.KEY_INPUT_CAMERA_QUALITY);
+        mLimitDuration = argument.getLong(Album.KEY_INPUT_CAMERA_DURATION);
+        mLimitBytes = argument.getLong(Album.KEY_INPUT_CAMERA_BYTES);
+        mFilterVisibility = argument.getBoolean(Album.KEY_INPUT_FILTER_VISIBILITY);
     }
 
     /**
@@ -130,10 +133,10 @@ public class MediaActivity extends BaseActivity implements
     private int createView() {
         switch (mWidget.getUiStyle()) {
             case Widget.STYLE_DARK: {
-                return R.layout.media_activity_album_dark;
+                return R.layout.album_activity_album_dark;
             }
             case Widget.STYLE_LIGHT: {
-                return R.layout.media_activity_album_light;
+                return R.layout.album_activity_album_light;
             }
             default: {
                 throw new AssertionError("This should not be the case.");
@@ -150,8 +153,8 @@ public class MediaActivity extends BaseActivity implements
 
     @Override
     protected void onPermissionGranted(int code) {
-        ArrayList<MediaFile> checkedList = getIntent().getParcelableArrayListExtra(Media.KEY_INPUT_CHECKED_LIST);
-        MediaReader mediaReader = new MediaReader(this, sSizeFilter, sMimeFilter, sDurationFilter);
+        ArrayList<AlbumFile> checkedList = getIntent().getParcelableArrayListExtra(Album.KEY_INPUT_CHECKED_LIST);
+        MediaReader mediaReader = new MediaReader(this, sSizeFilter, sMimeFilter, sDurationFilter, mFilterVisibility);
         mMediaReadTask = new MediaReadTask(mFunction, checkedList, mediaReader, this);
         mMediaReadTask.execute();
     }
@@ -160,9 +163,9 @@ public class MediaActivity extends BaseActivity implements
     protected void onPermissionDenied(int code) {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
-                .setTitle(R.string.media_title_permission_failed)
-                .setMessage(R.string.media_permission_storage_failed_hint)
-                .setPositiveButton(R.string.media_ok, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.album_title_permission_failed)
+                .setMessage(R.string.album_permission_storage_failed_hint)
+                .setPositiveButton(R.string.album_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         callbackCancel();
@@ -172,14 +175,14 @@ public class MediaActivity extends BaseActivity implements
     }
 
     @Override
-    public void onScanCallback(ArrayList<MediaFolder> mediaFolders, ArrayList<MediaFile> checkedFiles) {
+    public void onScanCallback(ArrayList<AlbumFolder> albumFolders, ArrayList<AlbumFile> checkedFiles) {
         mMediaReadTask = null;
         switch (mChoiceMode) {
-            case Media.MODE_MULTIPLE: {
+            case Album.MODE_MULTIPLE: {
                 mView.setCompleteDisplay(true);
                 break;
             }
-            case Media.MODE_SINGLE: {
+            case Album.MODE_SINGLE: {
                 mView.setCompleteDisplay(false);
                 break;
             }
@@ -189,10 +192,10 @@ public class MediaActivity extends BaseActivity implements
         }
 
         mView.setLoadingDisplay(false);
-        mMediaFolders = mediaFolders;
+        mAlbumFolders = albumFolders;
         mCheckedList = checkedFiles;
 
-        if (mMediaFolders.get(0).getMediaFiles().isEmpty()) {
+        if (mAlbumFolders.get(0).getAlbumFiles().isEmpty()) {
             Intent intent = new Intent(this, NullActivity.class);
             intent.putExtras(getIntent());
             startActivityForResult(intent, CODE_ACTIVITY_NULL);
@@ -210,7 +213,7 @@ public class MediaActivity extends BaseActivity implements
             case CODE_ACTIVITY_NULL: {
                 if (resultCode == RESULT_OK) {
                     String imagePath = NullActivity.parsePath(data);
-                    String mimeType = MediaUtils.getMimeType(imagePath);
+                    String mimeType = AlbumUtils.getMimeType(imagePath);
                     if (!TextUtils.isEmpty(mimeType)) mCameraAction.onAction(imagePath);
                 } else {
                     callbackCancel();
@@ -223,7 +226,7 @@ public class MediaActivity extends BaseActivity implements
     @Override
     public void clickFolderSwitch() {
         if (mFolderDialog == null) {
-            mFolderDialog = new FolderDialog(this, mWidget, mMediaFolders, new OnItemClickListener() {
+            mFolderDialog = new FolderDialog(this, mWidget, mAlbumFolders, new OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     mCurrentFolder = position;
@@ -239,8 +242,8 @@ public class MediaActivity extends BaseActivity implements
      */
     private void showFolderAlbumFiles(int position) {
         this.mCurrentFolder = position;
-        MediaFolder mediaFolder = mMediaFolders.get(position);
-        mView.bindMediaFolder(mediaFolder);
+        AlbumFolder albumFolder = mAlbumFolders.get(position);
+        mView.bindAlbumFolder(albumFolder);
     }
 
     @Override
@@ -249,12 +252,16 @@ public class MediaActivity extends BaseActivity implements
         if (hasCheckSize >= mLimitCount) {
             int messageRes;
             switch (mFunction) {
-                case Media.FUNCTION_CHOICE_IMAGE: {
-                    messageRes = R.plurals.media_check_image_limit_camera;
+                case Album.FUNCTION_CHOICE_IMAGE: {
+                    messageRes = R.plurals.album_check_image_limit_camera;
                     break;
                 }
-                case Media.FUNCTION_CHOICE_VIDEO: {
-                    messageRes = R.plurals.media_check_video_limit_camera;
+                case Album.FUNCTION_CHOICE_VIDEO: {
+                    messageRes = R.plurals.album_check_video_limit_camera;
+                    break;
+                }
+                case Album.FUNCTION_CHOICE_ALBUM: {
+                    messageRes = R.plurals.album_check_album_limit_camera;
                     break;
                 }
                 default: {
@@ -264,15 +271,15 @@ public class MediaActivity extends BaseActivity implements
             mView.toast(getResources().getQuantityString(messageRes, mLimitCount, mLimitCount));
         } else {
             switch (mFunction) {
-                case Media.FUNCTION_CHOICE_IMAGE: {
+                case Album.FUNCTION_CHOICE_IMAGE: {
                     takePicture();
                     break;
                 }
-                case Media.FUNCTION_CHOICE_VIDEO: {
+                case Album.FUNCTION_CHOICE_VIDEO: {
                     takeVideo();
                     break;
                 }
-                /*case Media.FUNCTION_CHOICE_ALBUM: {
+                case Album.FUNCTION_CHOICE_ALBUM: {
                     if (mCameraPopupMenu == null) {
                         mCameraPopupMenu = new PopupMenu(this, v);
                         mCameraPopupMenu.getMenuInflater().inflate(R.menu.album_menu_item_camera, mCameraPopupMenu.getMenu());
@@ -291,7 +298,7 @@ public class MediaActivity extends BaseActivity implements
                     }
                     mCameraPopupMenu.show();
                     break;
-                }*/
+                }
                 default: {
                     throw new AssertionError("This should not be the case.");
                 }
@@ -302,12 +309,12 @@ public class MediaActivity extends BaseActivity implements
     private void takePicture() {
         String filePath;
         if (mCurrentFolder == 0) {
-            filePath = MediaUtils.randomJPGPath();
+            filePath = AlbumUtils.randomJPGPath();
         } else {
-            File file = new File(mMediaFolders.get(mCurrentFolder).getMediaFiles().get(0).getPath());
-            filePath = MediaUtils.randomJPGPath(file.getParentFile());
+            File file = new File(mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(0).getPath());
+            filePath = AlbumUtils.randomJPGPath(file.getParentFile());
         }
-        Media.camera(this)
+        Album.camera(this)
                 .image()
                 .filePath(filePath)
                 .onResult(mCameraAction)
@@ -317,12 +324,12 @@ public class MediaActivity extends BaseActivity implements
     private void takeVideo() {
         String filePath;
         if (mCurrentFolder == 0) {
-            filePath = MediaUtils.randomMP4Path();
+            filePath = AlbumUtils.randomMP4Path();
         } else {
-            File file = new File(mMediaFolders.get(mCurrentFolder).getMediaFiles().get(0).getPath());
-            filePath = MediaUtils.randomMP4Path(file.getParentFile());
+            File file = new File(mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(0).getPath());
+            filePath = AlbumUtils.randomMP4Path(file.getParentFile());
         }
-        Media.camera(this)
+        Album.camera(this)
                 .video()
                 .filePath(filePath)
                 .quality(mQuality)
@@ -336,12 +343,12 @@ public class MediaActivity extends BaseActivity implements
         @Override
         public void onAction(@NonNull String result) {
             if (mMediaScanner == null) {
-                mMediaScanner = new MediaScanner(MediaActivity.this);
+                mMediaScanner = new MediaScanner(AlbumActivity.this);
             }
             mMediaScanner.scan(result);
 
             PathConversion conversion = new PathConversion(sSizeFilter, sMimeFilter, sDurationFilter);
-            PathConvertTask task = new PathConvertTask(conversion, MediaActivity.this);
+            PathConvertTask task = new PathConvertTask(conversion, AlbumActivity.this);
             task.execute(result);
         }
     };
@@ -353,46 +360,46 @@ public class MediaActivity extends BaseActivity implements
     }
 
     @Override
-    public void onConvertCallback(MediaFile mediaFile) {
-        mediaFile.setChecked(!mediaFile.isDisable());
-        //if (mediaFile.isDisable()) {
-        //    if (mFilterVisibility) addFileToList(albumFile);
-        //    else mView.toast(getString(R.string.media_take_file_unavailable));
-        //} else {
-            addFileToList(mediaFile);
-        //}
+    public void onConvertCallback(AlbumFile albumFile) {
+        albumFile.setChecked(!albumFile.isDisable());
+        if (albumFile.isDisable()) {
+            if (mFilterVisibility) addFileToList(albumFile);
+            else mView.toast(getString(R.string.album_take_file_unavailable));
+        } else {
+            addFileToList(albumFile);
+        }
 
         dismissLoadingDialog();
     }
 
-    private void addFileToList(MediaFile mediaFile) {
+    private void addFileToList(AlbumFile albumFile) {
         if (mCurrentFolder != 0) {
-            List<MediaFile> mediaFiles = mMediaFolders.get(0).getMediaFiles();
-            if (mediaFiles.size() > 0) mediaFiles.add(0, mediaFile);
-            else mediaFiles.add(mediaFile);
+            List<AlbumFile> albumFiles = mAlbumFolders.get(0).getAlbumFiles();
+            if (albumFiles.size() > 0) albumFiles.add(0, albumFile);
+            else albumFiles.add(albumFile);
         }
 
-        MediaFolder mediaFolder = mMediaFolders.get(mCurrentFolder);
-        List<MediaFile> mediaFiles = mediaFolder.getMediaFiles();
-        if (mediaFiles.isEmpty()) {
-            mediaFiles.add(mediaFile);
-            mView.bindMediaFolder(mediaFolder);
+        AlbumFolder albumFolder = mAlbumFolders.get(mCurrentFolder);
+        List<AlbumFile> albumFiles = albumFolder.getAlbumFiles();
+        if (albumFiles.isEmpty()) {
+            albumFiles.add(albumFile);
+            mView.bindAlbumFolder(albumFolder);
         } else {
-            mediaFiles.add(0, mediaFile);
+            albumFiles.add(0, albumFile);
             mView.notifyInsertItem(mHasCamera ? 1 : 0);
         }
 
-        mCheckedList.add(mediaFile);
+        mCheckedList.add(albumFile);
         int count = mCheckedList.size();
         mView.setCheckedCount(count);
         mView.setSubTitle(count + "/" + mLimitCount);
 
         switch (mChoiceMode) {
-            case Media.MODE_SINGLE: {
+            case Album.MODE_SINGLE: {
                 callbackResult();
                 break;
             }
-            case Media.MODE_MULTIPLE: {
+            case Album.MODE_MULTIPLE: {
                 // Nothing.
                 break;
             }
@@ -404,17 +411,21 @@ public class MediaActivity extends BaseActivity implements
 
     @Override
     public void tryCheckItem(CompoundButton button, int position) {
-        MediaFile mediaFile = mMediaFolders.get(mCurrentFolder).getMediaFiles().get(position);
+        AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(position);
         if (button.isChecked()) {
             if (mCheckedList.size() >= mLimitCount) {
                 int messageRes;
                 switch (mFunction) {
-                    case Media.FUNCTION_CHOICE_IMAGE: {
-                        messageRes = R.plurals.media_check_image_limit;
+                    case Album.FUNCTION_CHOICE_IMAGE: {
+                        messageRes = R.plurals.album_check_image_limit;
                         break;
                     }
-                    case Media.FUNCTION_CHOICE_VIDEO: {
-                        messageRes = R.plurals.media_check_video_limit;
+                    case Album.FUNCTION_CHOICE_VIDEO: {
+                        messageRes = R.plurals.album_check_video_limit;
+                        break;
+                    }
+                    case Album.FUNCTION_CHOICE_ALBUM: {
+                        messageRes = R.plurals.album_check_album_limit;
                         break;
                     }
                     default: {
@@ -424,13 +435,13 @@ public class MediaActivity extends BaseActivity implements
                 mView.toast(getResources().getQuantityString(messageRes, mLimitCount, mLimitCount));
                 button.setChecked(false);
             } else {
-                mediaFile.setChecked(true);
-                mCheckedList.add(mediaFile);
+                albumFile.setChecked(true);
+                mCheckedList.add(albumFile);
                 setCheckedCount();
             }
         } else {
-            mediaFile.setChecked(false);
-            mCheckedList.remove(mediaFile);
+            albumFile.setChecked(false);
+            mCheckedList.remove(albumFile);
             setCheckedCount();
         }
     }
@@ -444,18 +455,18 @@ public class MediaActivity extends BaseActivity implements
     @Override
     public void tryPreviewItem(int position) {
         switch (mChoiceMode) {
-            case Media.MODE_SINGLE: {
-                MediaFile mediaFile = mMediaFolders.get(mCurrentFolder).getMediaFiles().get(position);
+            case Album.MODE_SINGLE: {
+                AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(position);
 //                albumFile.setChecked(true);
 //                mView.notifyItem(position);
-                mCheckedList.add(mediaFile);
+                mCheckedList.add(albumFile);
                 setCheckedCount();
 
                 callbackResult();
                 break;
             }
-            case Media.MODE_MULTIPLE: {
-                GalleryActivity.sMediaFiles = mMediaFolders.get(mCurrentFolder).getMediaFiles();
+            case Album.MODE_MULTIPLE: {
+                GalleryActivity.sAlbumFiles = mAlbumFolders.get(mCurrentFolder).getAlbumFiles();
                 GalleryActivity.sCheckedCount = mCheckedList.size();
                 GalleryActivity.sCurrentPosition = position;
                 GalleryActivity.sCallback = this;
@@ -473,7 +484,7 @@ public class MediaActivity extends BaseActivity implements
     @Override
     public void tryPreviewChecked() {
         if (mCheckedList.size() > 0) {
-            GalleryActivity.sMediaFiles = new ArrayList<>(mCheckedList);
+            GalleryActivity.sAlbumFiles = new ArrayList<>(mCheckedList);
             GalleryActivity.sCheckedCount = mCheckedList.size();
             GalleryActivity.sCurrentPosition = 0;
             GalleryActivity.sCallback = this;
@@ -489,16 +500,16 @@ public class MediaActivity extends BaseActivity implements
     }
 
     @Override
-    public void onPreviewChanged(MediaFile mediaFile) {
-        ArrayList<MediaFile> mediaFiles = mMediaFolders.get(mCurrentFolder).getMediaFiles();
-        int position = mediaFiles.indexOf(mediaFile);
+    public void onPreviewChanged(AlbumFile albumFile) {
+        ArrayList<AlbumFile> albumFiles = mAlbumFolders.get(mCurrentFolder).getAlbumFiles();
+        int position = albumFiles.indexOf(albumFile);
         int notifyPosition = mHasCamera ? position + 1 : position;
         mView.notifyItem(notifyPosition);
 
-        if (mediaFile.isChecked()) {
-            if (!mCheckedList.contains(mediaFile)) mCheckedList.add(mediaFile);
+        if (albumFile.isChecked()) {
+            if (!mCheckedList.contains(albumFile)) mCheckedList.add(albumFile);
         } else {
-            if (mCheckedList.contains(mediaFile)) mCheckedList.remove(mediaFile);
+            if (mCheckedList.contains(albumFile)) mCheckedList.remove(albumFile);
         }
         setCheckedCount();
     }
@@ -508,12 +519,16 @@ public class MediaActivity extends BaseActivity implements
         if (mCheckedList.isEmpty()) {
             int messageRes;
             switch (mFunction) {
-                case Media.FUNCTION_CHOICE_IMAGE: {
-                    messageRes = R.string.media_check_image_little;
+                case Album.FUNCTION_CHOICE_IMAGE: {
+                    messageRes = R.string.album_check_image_little;
                     break;
                 }
-                case Media.FUNCTION_CHOICE_VIDEO: {
-                    messageRes = R.string.media_check_video_little;
+                case Album.FUNCTION_CHOICE_VIDEO: {
+                    messageRes = R.string.album_check_video_little;
+                    break;
+                }
+                case Album.FUNCTION_CHOICE_ALBUM: {
+                    messageRes = R.string.album_check_album_little;
                     break;
                 }
                 default: {
@@ -547,8 +562,8 @@ public class MediaActivity extends BaseActivity implements
     }
 
     @Override
-    public void onThumbnailCallback(ArrayList<MediaFile> mediaFiles) {
-        if (sResult != null) sResult.onAction(mediaFiles);
+    public void onThumbnailCallback(ArrayList<AlbumFile> albumFiles) {
+        if (sResult != null) sResult.onAction(albumFiles);
         dismissLoadingDialog();
         finish();
     }

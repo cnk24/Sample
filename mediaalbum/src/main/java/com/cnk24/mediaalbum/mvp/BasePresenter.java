@@ -20,6 +20,5 @@ import android.arch.lifecycle.LifecycleOwner;
 /**
  * 20180817 SJK: Created
  */
-public interface BasePresenter extends LifecycleOwner, Bye
-{
+public interface BasePresenter extends LifecycleOwner, Bye {
 }

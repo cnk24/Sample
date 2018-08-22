@@ -13,27 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.gallery;
 
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.Album;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 20180819 SJK: Created
+ * 20180822 SJK Created.
  */
-public class PreviewMediaAdapter extends PreviewAdapter<MediaFile>
-{
-    public PreviewMediaAdapter(Context context, ArrayList<MediaFile> previewList) {
+public class PreviewPathAdapter extends PreviewAdapter<String> {
+
+    public PreviewPathAdapter(Context context, List<String> previewList) {
         super(context, previewList);
     }
 
     @Override
-    protected void loadPreview(ImageView imageView, MediaFile item, int position) {
-        Media.getMediaConfig().getMediaLoader().load(imageView, item);
+    protected void loadPreview(ImageView imageView, String item, int position) {
+        Album.getAlbumConfig().getAlbumLoader().load(imageView, item);
     }
 }

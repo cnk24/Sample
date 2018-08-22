@@ -25,8 +25,8 @@ import android.util.AttributeSet;
 /**
  * 20180817 SJK: Created
  */
-public class SquareCardView extends CardView
-{
+public class SquareCardView extends CardView {
+
     private Configuration mConfig;
 
     public SquareCardView(@NonNull Context context) {

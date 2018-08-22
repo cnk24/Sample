@@ -22,8 +22,8 @@ import android.view.View;
 /**
  * 20180817 SJK: Created
  */
-class Drawer
-{
+class Drawer {
+
     private final Drawable mDivider;
     private final int mWidth;
     private final int mHeight;

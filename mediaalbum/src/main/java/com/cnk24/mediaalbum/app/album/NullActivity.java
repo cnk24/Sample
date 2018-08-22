@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.album;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.cnk24.mediaalbum.Action;
-import com.cnk24.mediaalbum.Media;
+import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.app.Contract;
@@ -30,8 +30,8 @@ import com.cnk24.mediaalbum.mvp.BaseActivity;
 /**
  * 20180819 SJK: Created
  */
-public class NullActivity extends BaseActivity implements Contract.NullPresenter
-{
+public class NullActivity extends BaseActivity implements Contract.NullPresenter {
+
     private static final String KEY_OUTPUT_IMAGE_PATH = "KEY_OUTPUT_IMAGE_PATH";
 
     public static String parsePath(Intent intent) {
@@ -48,31 +48,35 @@ public class NullActivity extends BaseActivity implements Contract.NullPresenter
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.media_activity_null);
+        setContentView(R.layout.album_activity_null);
         mView = new NullView(this, this);
 
         Bundle argument = getIntent().getExtras();
         assert argument != null;
-        int function = argument.getInt(Media.KEY_INPUT_FUNCTION);
-        boolean hasCamera = argument.getBoolean(Media.KEY_INPUT_ALLOW_CAMERA);
+        int function = argument.getInt(Album.KEY_INPUT_FUNCTION);
+        boolean hasCamera = argument.getBoolean(Album.KEY_INPUT_ALLOW_CAMERA);
 
-        mQuality = argument.getInt(Media.KEY_INPUT_CAMERA_QUALITY);
-        mLimitDuration = argument.getLong(Media.KEY_INPUT_CAMERA_DURATION);
-        mLimitBytes = argument.getLong(Media.KEY_INPUT_CAMERA_BYTES);
+        mQuality = argument.getInt(Album.KEY_INPUT_CAMERA_QUALITY);
+        mLimitDuration = argument.getLong(Album.KEY_INPUT_CAMERA_DURATION);
+        mLimitBytes = argument.getLong(Album.KEY_INPUT_CAMERA_BYTES);
 
-        mWidget = argument.getParcelable(Media.KEY_INPUT_WIDGET);
+        mWidget = argument.getParcelable(Album.KEY_INPUT_WIDGET);
         mView.setupViews(mWidget);
         mView.setTitle(mWidget.getTitle());
 
         switch (function) {
-            case Media.FUNCTION_CHOICE_IMAGE: {
+            case Album.FUNCTION_CHOICE_IMAGE: {
                 mView.setMessage(R.string.media_not_found_image);
                 mView.setMakeVideoDisplay(false);
                 break;
             }
-            case Media.FUNCTION_CHOICE_VIDEO: {
+            case Album.FUNCTION_CHOICE_VIDEO: {
                 mView.setMessage(R.string.media_not_found_video);
                 mView.setMakeImageDisplay(false);
+                break;
+            }
+            case Album.FUNCTION_CHOICE_ALBUM: {
+                mView.setMessage(R.string.media_not_found_album);
                 break;
             }
             default: {
@@ -88,7 +92,7 @@ public class NullActivity extends BaseActivity implements Contract.NullPresenter
 
     @Override
     public void takePicture() {
-        Media.camera(this)
+        Album.camera(this)
                 .image()
                 .onResult(mCameraAction)
                 .start();
@@ -96,7 +100,7 @@ public class NullActivity extends BaseActivity implements Contract.NullPresenter
 
     @Override
     public void takeVideo() {
-        Media.camera(this)
+        Album.camera(this)
                 .video()
                 .quality(mQuality)
                 .limitDuration(mLimitDuration)

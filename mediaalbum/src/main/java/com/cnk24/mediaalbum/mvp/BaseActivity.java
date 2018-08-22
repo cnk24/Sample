@@ -25,8 +25,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +35,8 @@ import java.util.Locale;
 /**
  * 20180817 SJK: Created
  */
-public class BaseActivity extends AppCompatActivity implements Bye
-{
+public class BaseActivity extends AppCompatActivity implements Bye {
+
     public static final String[] PERMISSION_TAKE_PICTURE = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
     public static final String[] PERMISSION_TAKE_VIDEO = {"android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
     public static final String[] PERMISSION_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
@@ -44,8 +44,8 @@ public class BaseActivity extends AppCompatActivity implements Bye
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = Media.getMediaConfig().getLocale();
-        MediaUtils.applyLanguageForContext(this, locale);
+        Locale locale = Album.getAlbumConfig().getLocale();
+        AlbumUtils.applyLanguageForContext(this, locale);
     }
 
     /**

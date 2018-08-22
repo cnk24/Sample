@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media.data;
+package com.cnk24.mediaalbum.app.album.data;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -21,9 +21,9 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 import android.support.annotation.WorkerThread;
 
+import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.AlbumFolder;
 import com.cnk24.mediaalbum.Filter;
-import com.cnk24.mediaalbum.MediaFile;
-import com.cnk24.mediaalbum.MediaFolder;
 import com.cnk24.mediaalbum.R;
 
 import java.util.ArrayList;
@@ -34,20 +34,22 @@ import java.util.Map;
 /**
  * 20180819 SJK: Created
  */
-public class MediaReader
-{
+public class MediaReader {
+
     private Context mContext;
 
     private Filter<Long> mSizeFilter;
     private Filter<String> mMimeFilter;
     private Filter<Long> mDurationFilter;
+    private boolean mFilterVisibility;
 
-    public MediaReader(Context context, Filter<Long> sizeFilter, Filter<String> mimeFilter, Filter<Long> durationFilter) {
+    public MediaReader(Context context, Filter<Long> sizeFilter, Filter<String> mimeFilter, Filter<Long> durationFilter, boolean filterVisibility) {
         this.mContext = context;
 
         this.mSizeFilter = sizeFilter;
         this.mMimeFilter = mimeFilter;
         this.mDurationFilter = durationFilter;
+        this.mFilterVisibility = filterVisibility;
     }
 
     /**
@@ -67,7 +69,7 @@ public class MediaReader
      * Scan for image files.
      */
     @WorkerThread
-    private void scanImageFile(Map<String, MediaFolder> mediaFolderMap, MediaFolder allFileFolder) {
+    private void scanImageFile(Map<String, AlbumFolder> albumFolderMap, AlbumFolder allFileFolder) {
         ContentResolver contentResolver = mContext.getContentResolver();
         Cursor cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 IMAGES,
@@ -85,8 +87,8 @@ public class MediaReader
                 float longitude = cursor.getFloat(5);
                 long size = cursor.getLong(6);
 
-                MediaFile imageFile = new MediaFile();
-                imageFile.setMediaType(MediaFile.TYPE_IMAGE);
+                AlbumFile imageFile = new AlbumFile();
+                imageFile.setMediaType(AlbumFile.TYPE_IMAGE);
                 imageFile.setPath(path);
                 imageFile.setBucketName(bucketName);
                 imageFile.setMimeType(mimeType);
@@ -96,23 +98,25 @@ public class MediaReader
                 imageFile.setSize(size);
 
                 if (mSizeFilter != null && mSizeFilter.filter(size)) {
+                    if (!mFilterVisibility) continue;
                     imageFile.setDisable(true);
                 }
                 if (mMimeFilter != null && mMimeFilter.filter(mimeType)) {
+                    if (!mFilterVisibility) continue;
                     imageFile.setDisable(true);
                 }
 
-                allFileFolder.addMediaFile(imageFile);
-                MediaFolder mediaFolder = mediaFolderMap.get(bucketName);
+                allFileFolder.addAlbumFile(imageFile);
+                AlbumFolder albumFolder = albumFolderMap.get(bucketName);
 
-                if (mediaFolder != null)
-                    mediaFolder.addMediaFile(imageFile);
+                if (albumFolder != null)
+                    albumFolder.addAlbumFile(imageFile);
                 else {
-                    mediaFolder = new MediaFolder();
-                    mediaFolder.setName(bucketName);
-                    mediaFolder.addMediaFile(imageFile);
+                    albumFolder = new AlbumFolder();
+                    albumFolder.setName(bucketName);
+                    albumFolder.addAlbumFile(imageFile);
 
-                    mediaFolderMap.put(bucketName, mediaFolder);
+                    albumFolderMap.put(bucketName, albumFolder);
                 }
             }
             cursor.close();
@@ -137,7 +141,7 @@ public class MediaReader
      * Scan for image files.
      */
     @WorkerThread
-    private void scanVideoFile(Map<String, MediaFolder> mediaFolderMap, MediaFolder allFileFolder) {
+    private void scanVideoFile(Map<String, AlbumFolder> albumFolderMap, AlbumFolder allFileFolder) {
         ContentResolver contentResolver = mContext.getContentResolver();
         Cursor cursor = contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                 VIDEOS,
@@ -156,8 +160,8 @@ public class MediaReader
                 long size = cursor.getLong(6);
                 long duration = cursor.getLong(7);
 
-                MediaFile videoFile = new MediaFile();
-                videoFile.setMediaType(MediaFile.TYPE_VIDEO);
+                AlbumFile videoFile = new AlbumFile();
+                videoFile.setMediaType(AlbumFile.TYPE_VIDEO);
                 videoFile.setPath(path);
                 videoFile.setBucketName(bucketName);
                 videoFile.setMimeType(mimeType);
@@ -168,26 +172,29 @@ public class MediaReader
                 videoFile.setDuration(duration);
 
                 if (mSizeFilter != null && mSizeFilter.filter(size)) {
+                    if (!mFilterVisibility) continue;
                     videoFile.setDisable(true);
                 }
                 if (mMimeFilter != null && mMimeFilter.filter(mimeType)) {
+                    if (!mFilterVisibility) continue;
                     videoFile.setDisable(true);
                 }
                 if (mDurationFilter != null && mDurationFilter.filter(duration)) {
+                    if (!mFilterVisibility) continue;
                     videoFile.setDisable(true);
                 }
 
-                allFileFolder.addMediaFile(videoFile);
-                MediaFolder mediaFolder = mediaFolderMap.get(bucketName);
+                allFileFolder.addAlbumFile(videoFile);
+                AlbumFolder albumFolder = albumFolderMap.get(bucketName);
 
-                if (mediaFolder != null)
-                    mediaFolder.addMediaFile(videoFile);
+                if (albumFolder != null)
+                    albumFolder.addAlbumFile(videoFile);
                 else {
-                    mediaFolder = new MediaFolder();
-                    mediaFolder.setName(bucketName);
-                    mediaFolder.addMediaFile(videoFile);
+                    albumFolder = new AlbumFolder();
+                    albumFolder.setName(bucketName);
+                    albumFolder.addAlbumFile(videoFile);
 
-                    mediaFolderMap.put(bucketName, mediaFolder);
+                    albumFolderMap.put(bucketName, albumFolder);
                 }
             }
             cursor.close();
@@ -198,72 +205,73 @@ public class MediaReader
      * Scan the list of pictures in the library.
      */
     @WorkerThread
-    public ArrayList<MediaFolder> getAllImage() {
-        Map<String, MediaFolder> mediaFolderMap = new HashMap<>();
-        MediaFolder allFileFolder = new MediaFolder();
+    public ArrayList<AlbumFolder> getAllImage() {
+        Map<String, AlbumFolder> albumFolderMap = new HashMap<>();
+        AlbumFolder allFileFolder = new AlbumFolder();
         allFileFolder.setChecked(true);
-        allFileFolder.setName(mContext.getString(R.string.media_all_images));
+        allFileFolder.setName(mContext.getString(R.string.album_all_images));
 
-        scanImageFile(mediaFolderMap, allFileFolder);
+        scanImageFile(albumFolderMap, allFileFolder);
 
-        ArrayList<MediaFolder> mediaFolders = new ArrayList<>();
-        Collections.sort(allFileFolder.getMediaFiles());
-        mediaFolders.add(allFileFolder);
+        ArrayList<AlbumFolder> albumFolders = new ArrayList<>();
+        Collections.sort(allFileFolder.getAlbumFiles());
+        albumFolders.add(allFileFolder);
 
-        for (Map.Entry<String, MediaFolder> folderEntry : mediaFolderMap.entrySet()) {
-            MediaFolder mediaFolder = folderEntry.getValue();
-            Collections.sort(mediaFolder.getMediaFiles());
-            mediaFolders.add(mediaFolder);
+        for (Map.Entry<String, AlbumFolder> folderEntry : albumFolderMap.entrySet()) {
+            AlbumFolder albumFolder = folderEntry.getValue();
+            Collections.sort(albumFolder.getAlbumFiles());
+            albumFolders.add(albumFolder);
         }
-        return mediaFolders;
+        return albumFolders;
     }
 
     /**
      * Scan the list of videos in the library.
      */
     @WorkerThread
-    public ArrayList<MediaFolder> getAllVideo() {
-        Map<String, MediaFolder> mediaFolderMap = new HashMap<>();
-        MediaFolder allFileFolder = new MediaFolder();
+    public ArrayList<AlbumFolder> getAllVideo() {
+        Map<String, AlbumFolder> albumFolderMap = new HashMap<>();
+        AlbumFolder allFileFolder = new AlbumFolder();
         allFileFolder.setChecked(true);
-        allFileFolder.setName(mContext.getString(R.string.media_all_videos));
+        allFileFolder.setName(mContext.getString(R.string.album_all_videos));
 
-        scanVideoFile(mediaFolderMap, allFileFolder);
+        scanVideoFile(albumFolderMap, allFileFolder);
 
-        ArrayList<MediaFolder> mediaFolders = new ArrayList<>();
-        Collections.sort(allFileFolder.getMediaFiles());
-        mediaFolders.add(allFileFolder);
+        ArrayList<AlbumFolder> albumFolders = new ArrayList<>();
+        Collections.sort(allFileFolder.getAlbumFiles());
+        albumFolders.add(allFileFolder);
 
-        for (Map.Entry<String, MediaFolder> folderEntry : mediaFolderMap.entrySet()) {
-            MediaFolder mediaFolder = folderEntry.getValue();
-            Collections.sort(mediaFolder.getMediaFiles());
-            mediaFolders.add(mediaFolder);
+        for (Map.Entry<String, AlbumFolder> folderEntry : albumFolderMap.entrySet()) {
+            AlbumFolder albumFolder = folderEntry.getValue();
+            Collections.sort(albumFolder.getAlbumFiles());
+            albumFolders.add(albumFolder);
         }
-        return mediaFolders;
+        return albumFolders;
     }
 
     /**
      * Get all the multimedia files, including videos and pictures.
      */
     @WorkerThread
-    public ArrayList<MediaFolder> getAllMedia() {
-        Map<String, MediaFolder> mediaFolderMap = new HashMap<>();
-        MediaFolder allFileFolder = new MediaFolder();
+    public ArrayList<AlbumFolder> getAllMedia() {
+        Map<String, AlbumFolder> albumFolderMap = new HashMap<>();
+        AlbumFolder allFileFolder = new AlbumFolder();
         allFileFolder.setChecked(true);
-        allFileFolder.setName(mContext.getString(R.string.media_all_images_videos));
+        allFileFolder.setName(mContext.getString(R.string.album_all_images_videos));
 
-        scanImageFile(mediaFolderMap, allFileFolder);
-        scanVideoFile(mediaFolderMap, allFileFolder);
+        scanImageFile(albumFolderMap, allFileFolder);
+        scanVideoFile(albumFolderMap, allFileFolder);
 
-        ArrayList<MediaFolder> mediaFolders = new ArrayList<>();
-        Collections.sort(allFileFolder.getMediaFiles());
-        mediaFolders.add(allFileFolder);
+        ArrayList<AlbumFolder> albumFolders = new ArrayList<>();
+        Collections.sort(allFileFolder.getAlbumFiles());
+        albumFolders.add(allFileFolder);
 
-        for (Map.Entry<String, MediaFolder> folderEntry : mediaFolderMap.entrySet()) {
-            MediaFolder mediaFolder = folderEntry.getValue();
-            Collections.sort(mediaFolder.getMediaFiles());
-            mediaFolders.add(mediaFolder);
+        for (Map.Entry<String, AlbumFolder> folderEntry : albumFolderMap.entrySet()) {
+            AlbumFolder albumFolder = folderEntry.getValue();
+            Collections.sort(albumFolder.getAlbumFiles());
+            albumFolders.add(albumFolder);
         }
-        return mediaFolders;
+        return albumFolders;
     }
+
 }

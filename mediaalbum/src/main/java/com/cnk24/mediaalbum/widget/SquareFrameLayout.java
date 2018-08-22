@@ -25,8 +25,8 @@ import android.widget.FrameLayout;
 /**
  * 20180817 SJK: Created
  */
-public class SquareFrameLayout extends FrameLayout
-{
+public class SquareFrameLayout extends FrameLayout {
+
     private Configuration mConfig;
 
     public SquareFrameLayout(@NonNull Context context) {

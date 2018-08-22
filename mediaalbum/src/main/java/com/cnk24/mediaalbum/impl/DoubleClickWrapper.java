@@ -20,8 +20,8 @@ import android.view.View;
 /**
  * 20180817 SJK: Created
  */
-public class DoubleClickWrapper implements View.OnClickListener
-{
+public class DoubleClickWrapper implements View.OnClickListener {
+
     private final View.OnClickListener mOnClickListener;
     private long mFirstTime;
 

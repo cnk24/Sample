@@ -46,8 +46,8 @@ import com.cnk24.mediaalbum.R;
 /**
  * 20180817 SJK: Created
  */
-public abstract class BaseView<Presenter extends BasePresenter>
-{
+public abstract class BaseView<Presenter extends BasePresenter> {
+
     private Source mSource;
     private Presenter mPresenter;
 
@@ -364,7 +364,7 @@ public abstract class BaseView<Presenter extends BasePresenter>
     public void snackBar(CharSequence message) {
         Snackbar snackbar = Snackbar.make(mSource.getView(), message, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
-        view.setBackgroundColor(getColor(R.color.mediaColorPrimaryBlack));
+        view.setBackgroundColor(getColor(R.color.albumColorPrimaryBlack));
         TextView textView = view.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
@@ -373,7 +373,7 @@ public abstract class BaseView<Presenter extends BasePresenter>
     public void snackBar(@StringRes int message) {
         Snackbar snackbar = Snackbar.make(mSource.getView(), message, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
-        view.setBackgroundColor(getColor(R.color.mediaColorPrimaryBlack));
+        view.setBackgroundColor(getColor(R.color.albumColorPrimaryBlack));
         TextView textView = view.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();

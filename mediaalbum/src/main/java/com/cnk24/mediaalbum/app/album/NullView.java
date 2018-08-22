@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.mediaalbum.app.media;
+package com.cnk24.mediaalbum.app.album;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
@@ -26,14 +26,14 @@ import android.widget.TextView;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.app.Contract;
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.mediaalbum.util.SystemBar;
 
 /**
  * 20180819 SJK: Created
  */
-class NullView extends Contract.NullView implements View.OnClickListener
-{
+class NullView extends Contract.NullView implements View.OnClickListener {
+
     private Activity mActivity;
 
     private Toolbar mToolbar;
@@ -58,15 +58,15 @@ class NullView extends Contract.NullView implements View.OnClickListener
         mToolbar.setBackgroundColor(widget.getToolBarColor());
 
         int statusBarColor = widget.getStatusBarColor();
-        Drawable navigationIcon = getDrawable(R.drawable.media_ic_back_white);
+        Drawable navigationIcon = getDrawable(R.drawable.album_ic_back_white);
         if (widget.getUiStyle() == Widget.STYLE_LIGHT) {
             if (SystemBar.setStatusBarDarkFont(mActivity, true)) {
                 SystemBar.setStatusBarColor(mActivity, statusBarColor);
             } else {
-                SystemBar.setStatusBarColor(mActivity, getColor(R.color.mediaColorPrimaryBlack));
+                SystemBar.setStatusBarColor(mActivity, getColor(R.color.albumColorPrimaryBlack));
             }
 
-            MediaUtils.setDrawableTint(navigationIcon, getColor(R.color.mediaIconDark));
+            AlbumUtils.setDrawableTint(navigationIcon, getColor(R.color.albumIconDark));
             setHomeAsUpIndicator(navigationIcon);
         } else {
             SystemBar.setStatusBarColor(mActivity, statusBarColor);
@@ -80,14 +80,14 @@ class NullView extends Contract.NullView implements View.OnClickListener
         mBtnTakeVideo.setSupportBackgroundTintList(buttonSelector);
         if (buttonStyle.getUiStyle() == Widget.STYLE_LIGHT) {
             Drawable drawable = mBtnTakeImage.getCompoundDrawables()[0];
-            MediaUtils.setDrawableTint(drawable, getColor(R.color.mediaIconDark));
+            AlbumUtils.setDrawableTint(drawable, getColor(R.color.albumIconDark));
             mBtnTakeImage.setCompoundDrawables(drawable, null, null, null);
 
             drawable = mBtnTakeVideo.getCompoundDrawables()[0];
-            MediaUtils.setDrawableTint(drawable, getColor(R.color.mediaIconDark));
+            AlbumUtils.setDrawableTint(drawable, getColor(R.color.albumIconDark));
             mBtnTakeVideo.setCompoundDrawables(drawable, null, null, null);
-            mBtnTakeImage.setTextColor(getColor(R.color.mediaFontDark));
-            mBtnTakeVideo.setTextColor(getColor(R.color.mediaFontDark));
+            mBtnTakeImage.setTextColor(getColor(R.color.albumFontDark));
+            mBtnTakeVideo.setTextColor(getColor(R.color.albumFontDark));
         }
     }
 

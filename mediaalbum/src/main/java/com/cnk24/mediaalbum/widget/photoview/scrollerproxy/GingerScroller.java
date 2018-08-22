@@ -23,8 +23,8 @@ import android.widget.OverScroller;
  * 20180817 SJK: Created
  */
 @TargetApi(9)
-public class GingerScroller extends ScrollerProxy
-{
+public class GingerScroller extends ScrollerProxy {
+
     protected final OverScroller mScroller;
 
     public GingerScroller(Context context) {

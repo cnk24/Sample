@@ -20,8 +20,8 @@ import android.widget.CompoundButton;
 /**
  * 20180817 SJK: Created
  */
-public interface OnCheckedClickListener
-{
+public interface OnCheckedClickListener {
+
     /**
      * Compound button is clicked.
      *

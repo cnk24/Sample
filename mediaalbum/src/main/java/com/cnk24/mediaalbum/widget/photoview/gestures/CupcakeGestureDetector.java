@@ -23,8 +23,8 @@ import android.view.ViewConfiguration;
 /**
  * 20180817 SJK: Created
  */
-public class CupcakeGestureDetector implements GestureDetector
-{
+public class CupcakeGestureDetector implements GestureDetector {
+
     protected OnGestureListener mListener;
     float mLastTouchX;
     float mLastTouchY;

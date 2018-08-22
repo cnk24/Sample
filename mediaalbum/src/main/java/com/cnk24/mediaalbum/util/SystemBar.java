@@ -29,8 +29,8 @@ import java.lang.reflect.Method;
 /**
  * 20180817 SJK: Created
  */
-public class SystemBar
-{
+public class SystemBar {
+
     /**
      * Set the status bar color.
      */
@@ -175,4 +175,5 @@ public class SystemBar
         }
         return false;
     }
+
 }

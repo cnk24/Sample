@@ -22,8 +22,8 @@ import android.content.Context;
  * 20180817 SJK: Created
  */
 @TargetApi(14)
-public class IcsScroller extends GingerScroller
-{
+public class IcsScroller extends GingerScroller {
+
     public IcsScroller(Context context) {
         super(context);
     }
@@ -32,4 +32,5 @@ public class IcsScroller extends GingerScroller
     public boolean computeScrollOffset() {
         return mScroller.computeScrollOffset();
     }
+
 }

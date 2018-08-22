@@ -18,8 +18,8 @@ package com.cnk24.mediaalbum.mvp;
 /**
  * 20180817 SJK: Created
  */
-public interface Bye
-{
+public interface Bye {
+
     /**
      * Finish.
      */

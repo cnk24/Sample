@@ -24,8 +24,8 @@ import android.view.View;
 /**
  * 20180817 SJK: Created
  */
-public class Api21ItemDivider extends Divider
-{
+public class Api21ItemDivider extends Divider {
+
     private final int mWidth;
     private final int mHeight;
     private final Drawer mDrawer;
