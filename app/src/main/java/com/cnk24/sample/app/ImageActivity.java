@@ -30,8 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnk24.mediaalbum.Action;
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
@@ -46,7 +46,7 @@ public class ImageActivity extends AppCompatActivity
     private TextView mTvMessage;
 
     private Adapter mAdapter;
-    private ArrayList<MediaFile> mMediaFiles;
+    private ArrayList<AlbumFile> mAlbumFiles;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,22 +74,22 @@ public class ImageActivity extends AppCompatActivity
      * Select picture, from album.
      */
     private void selectImage() {
-        Media.image(this)
+        Album.image(this)
                 .multipleChoice()
                 .camera(false)
                 .columnCount(2)
                 //.selectCount(6)
-                .checkedList(mMediaFiles)
+                .checkedList(mAlbumFiles)
                 .widget(
                         Widget.newDarkBuilder(this)
                                 .title(mToolbar.getTitle().toString())
                                 .build()
                 )
-                .onResult(new Action<ArrayList<MediaFile>>() {
+                .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
-                    public void onAction(@NonNull ArrayList<MediaFile> result) {
-                        mMediaFiles = result;
-                        mAdapter.notifyDataSetChanged(mMediaFiles);
+                    public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                        mAlbumFiles = result;
+                        mAdapter.notifyDataSetChanged(mAlbumFiles);
                         mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })
@@ -106,27 +106,27 @@ public class ImageActivity extends AppCompatActivity
      * Preview image, to media.
      */
     private void previewImage(int position) {
-        if (mMediaFiles == null || mMediaFiles.size() == 0) {
+        if (mAlbumFiles == null || mAlbumFiles.size() == 0) {
             Toast.makeText(this, R.string.no_selected, Toast.LENGTH_LONG).show();
         } else {
-            //Media.galleryAlbum(this)
-            //        .checkable(true)
-            //        .checkedList(mMediaFiles)
-            //        .currentPosition(position)
-            //        .widget(
-            //                Widget.newDarkBuilder(this)
-            //                        .title(mToolbar.getTitle().toString())
-            //                        .build()
-            //        )
-            //        .onResult(new Action<ArrayList<AlbumFile>>() {
-            //            @Override
-            //            public void onAction(@NonNull ArrayList<AlbumFile> result) {
-            //                mAlbumFiles = result;
-            //                mAdapter.notifyDataSetChanged(mAlbumFiles);
-            //                mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
-            //            }
-            //        })
-            //        .start();
+            Album.galleryAlbum(this)
+                    .checkable(true)
+                    .checkedList(mAlbumFiles)
+                    .currentPosition(position)
+                    .widget(
+                            Widget.newDarkBuilder(this)
+                                    .title(mToolbar.getTitle().toString())
+                                    .build()
+                    )
+                    .onResult(new Action<ArrayList<AlbumFile>>() {
+                        @Override
+                        public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                            mAlbumFiles = result;
+                            mAdapter.notifyDataSetChanged(mAlbumFiles);
+                            mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                        }
+                    })
+                    .start();
         }
     }
 

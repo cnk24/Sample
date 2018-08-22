@@ -24,10 +24,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
-import com.cnk24.mediaalbum.util.MediaUtils;
+import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.sample.R;
 
 import java.util.List;
@@ -37,35 +37,35 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private LayoutInflater mInflater;
     private OnItemClickListener mItemClickListener;
 
-    private List<MediaFile> mMediaFiles;
+    private List<AlbumFile> mAlbumFiles;
 
     public Adapter(Context context, OnItemClickListener itemClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.mItemClickListener = itemClickListener;
     }
 
-    public void notifyDataSetChanged(List<MediaFile> imagePathList) {
-        this.mMediaFiles = imagePathList;
+    public void notifyDataSetChanged(List<AlbumFile> imagePathList) {
+        this.mAlbumFiles = imagePathList;
         super.notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        MediaFile mediaFile = mMediaFiles.get(position);
-        if (mediaFile.getMediaType() == MediaFile.TYPE_IMAGE) {
-            return MediaFile.TYPE_IMAGE;
+        AlbumFile albumFile = mAlbumFiles.get(position);
+        if (albumFile.getMediaType() == AlbumFile.TYPE_IMAGE) {
+            return AlbumFile.TYPE_IMAGE;
         } else {
-            return MediaFile.TYPE_VIDEO;
+            return AlbumFile.TYPE_VIDEO;
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case MediaFile.TYPE_IMAGE: {
+            case AlbumFile.TYPE_IMAGE: {
                 return new ImageViewHolder(mInflater.inflate(R.layout.item_content_image, parent, false), mItemClickListener);
             }
-            case MediaFile.TYPE_VIDEO: {
+            case AlbumFile.TYPE_VIDEO: {
                 return new VideoViewHolder(mInflater.inflate(R.layout.item_content_video, parent, false), mItemClickListener);
             }
             default: {
@@ -78,12 +78,12 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case MediaFile.TYPE_IMAGE: {
-                ((ImageViewHolder) holder).setData(mMediaFiles.get(position));
+            case AlbumFile.TYPE_IMAGE: {
+                ((ImageViewHolder) holder).setData(mAlbumFiles.get(position));
                 break;
             }
-            case MediaFile.TYPE_VIDEO: {
-                ((VideoViewHolder) holder).setData(mMediaFiles.get(position));
+            case AlbumFile.TYPE_VIDEO: {
+                ((VideoViewHolder) holder).setData(mAlbumFiles.get(position));
                 break;
             }
         }
@@ -91,7 +91,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mMediaFiles == null ? 0 : mMediaFiles.size();
+        return mAlbumFiles == null ? 0 : mAlbumFiles.size();
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -106,10 +106,10 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemView.setOnClickListener(this);
         }
 
-        public void setData(MediaFile mediaFile) {
-            Media.getMediaConfig().
-                    getMediaLoader().
-                    load(mIvImage, mediaFile);
+        public void setData(AlbumFile albumFile) {
+            Album.getAlbumConfig().
+                    getAlbumLoader().
+                    load(mIvImage, albumFile);
         }
 
         @Override
@@ -135,11 +135,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemView.setOnClickListener(this);
         }
 
-        void setData(MediaFile mediaFile) {
-            Media.getMediaConfig().
-                    getMediaLoader().
-                    load(mIvImage, mediaFile);
-            mTvDuration.setText(MediaUtils.convertDuration(mediaFile.getDuration()));
+        void setData(AlbumFile albumFile) {
+            Album.getAlbumConfig().
+                    getAlbumLoader().
+                    load(mIvImage, albumFile);
+            mTvDuration.setText(AlbumUtils.convertDuration(albumFile.getDuration()));
         }
 
         @Override

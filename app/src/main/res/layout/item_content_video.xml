@@ -27,13 +27,13 @@
         android:id="@+id/tv_duration"
         style="@style/MediaAlbum.WrapContent"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/media_dp_6"
-        android:layout_marginLeft="@dimen/media_dp_6"
-        android:layout_marginStart="@dimen/media_dp_6"
+        android:layout_marginBottom="@dimen/album_dp_6"
+        android:layout_marginLeft="@dimen/album_dp_6"
+        android:layout_marginStart="@dimen/album_dp_6"
         android:drawableLeft="@drawable/tag_video_white"
-        android:drawablePadding="@dimen/media_dp_4"
+        android:drawablePadding="@dimen/album_dp_4"
         android:drawableStart="@drawable/tag_video_white"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/mediaFontLight" />
+        android:textColor="@color/albumFontLight" />
 </com.cnk24.mediaalbum.widget.SquareRelativeLayout>

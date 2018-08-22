@@ -19,15 +19,16 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.cnk24.mediaalbum.MediaFile;
+import com.cnk24.mediaalbum.AlbumFile;
 
+import com.cnk24.mediaalbum.AlbumLoader;
 import com.cnk24.sample.R;
 
-public class MediaLoader implements com.cnk24.mediaalbum.MediaLoader
+public class MediaLoader implements AlbumLoader
 {
     @Override
-    public void load(ImageView imageView, MediaFile mediaFile) {
-        load(imageView, mediaFile.getPath());
+    public void load(ImageView imageView, AlbumFile albumFile) {
+        load(imageView, albumFile.getPath());
     }
 
     @Override

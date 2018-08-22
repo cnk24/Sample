@@ -15,8 +15,8 @@
  */
 package com.cnk24.sample;
 
-import com.cnk24.mediaalbum.Media;
-import com.cnk24.mediaalbum.MediaConfig;
+import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumConfig;
 
 import java.util.Locale;
 
@@ -30,8 +30,8 @@ public class Application extends android.app.Application
         if (instance == null) {
             instance = this;
 
-            Media.initialize(MediaConfig.newBuilder(this)
-                    .setMediaLoader(new MediaLoader())
+            Album.initialize(AlbumConfig.newBuilder(this)
+                    .setAlbumLoader(new MediaLoader())
                     .setLocale(Locale.getDefault())
                     .build()
             );
