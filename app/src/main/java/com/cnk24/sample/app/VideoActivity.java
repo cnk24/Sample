@@ -40,10 +40,13 @@ import com.cnk24.sample.R;
 
 import java.util.ArrayList;
 
-public class ImageActivity extends AppCompatActivity
-{
+/**
+ * 20180823 SJK Created.
+ */
+public class VideoActivity extends AppCompatActivity {
+
     private Toolbar mToolbar;
-    //private TextView mTvMessage;
+    private TextView mTvMessage;
 
     private Adapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
@@ -55,16 +58,16 @@ public class ImageActivity extends AppCompatActivity
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        //mTvMessage = findViewById(R.id.tv_message);
+        mTvMessage = findViewById(R.id.tv_message);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
+        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 10, 10);
         recyclerView.addItemDecoration(divider);
 
         mAdapter = new Adapter(this, new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                previewImage(position);
+                previewVideo(position);
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -73,12 +76,12 @@ public class ImageActivity extends AppCompatActivity
     /**
      * Select picture, from album.
      */
-    private void selectImage() {
-        Album.image(this)
+    private void selectVideo() {
+        Album.video(this)
                 .multipleChoice()
-                .camera(false)
                 .columnCount(2)
-                .selectCount(10)
+                .selectCount(6)
+                .camera(true)
                 .checkedList(mAlbumFiles)
                 .widget(
                         Widget.newDarkBuilder(this)
@@ -90,27 +93,27 @@ public class ImageActivity extends AppCompatActivity
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
                         mAlbumFiles = result;
                         mAdapter.notifyDataSetChanged(mAlbumFiles);
-                        //mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                        mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })
                 .onCancel(new Action<String>() {
                     @Override
                     public void onAction(@NonNull String result) {
-                        Toast.makeText(ImageActivity.this, R.string.canceled, Toast.LENGTH_LONG).show();
+                        Toast.makeText(VideoActivity.this, R.string.canceled, Toast.LENGTH_LONG).show();
                     }
                 })
                 .start();
     }
 
     /**
-     * Preview image, to media.
+     * Preview image, to album.
      */
-    private void previewImage(int position) {
+    private void previewVideo(int position) {
         if (mAlbumFiles == null || mAlbumFiles.size() == 0) {
             Toast.makeText(this, R.string.no_selected, Toast.LENGTH_LONG).show();
         } else {
             Album.galleryAlbum(this)
-                    .checkable(false)
+                    .checkable(true)
                     .checkedList(mAlbumFiles)
                     .currentPosition(position)
                     .widget(
@@ -123,7 +126,7 @@ public class ImageActivity extends AppCompatActivity
                         public void onAction(@NonNull ArrayList<AlbumFile> result) {
                             mAlbumFiles = result;
                             mAdapter.notifyDataSetChanged(mAlbumFiles);
-                            //mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                            mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                         }
                     })
                     .start();
@@ -132,7 +135,7 @@ public class ImageActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_album_image, menu);
+        getMenuInflater().inflate(R.menu.menu_album_video, menu);
         return true;
     }
 
@@ -144,15 +147,16 @@ public class ImageActivity extends AppCompatActivity
                 finish();
                 break;
             }
-            //case R.id.menu_eye: {
-            //    previewImage(0);
-            //    break;
-            //}
-            case R.id.menu_select_image: {
-                selectImage();
+            case R.id.menu_eye: {
+                previewVideo(0);
+                break;
+            }
+            case R.id.menu_select_video: {
+                selectVideo();
                 break;
             }
         }
         return true;
     }
+
 }

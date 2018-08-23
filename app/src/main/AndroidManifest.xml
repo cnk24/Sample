@@ -45,8 +45,20 @@
         </activity>
 
         <activity
+            android:name=".app.CameraActivity"
+            android:label="@string/title_camera"
+            android:screenOrientation="portrait"
+            android:theme="@style/MediaAlbum.AppTheme" />
+
+        <activity
             android:name=".app.ImageActivity"
             android:label="@string/title_image_select"
+            android:screenOrientation="portrait"
+            android:theme="@style/MediaAlbum.AppTheme" />
+
+        <activity
+            android:name=".app.VideoActivity"
+            android:label="@string/title_video_select"
             android:screenOrientation="portrait"
             android:theme="@style/MediaAlbum.AppTheme" />
 

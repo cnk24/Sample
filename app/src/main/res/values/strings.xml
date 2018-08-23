@@ -33,6 +33,7 @@
     <string name="title_video_select">Select video</string>
     <string name="menu_video_select">Video</string>
 
+    <string name="menu_preview">Gallery</string>
     <string name="checkable">Checkable Options</string>
     <string name="canceled">Canceled</string>
     <string name="no_selected">Please select, first.</string>

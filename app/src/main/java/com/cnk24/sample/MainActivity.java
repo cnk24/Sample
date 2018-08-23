@@ -22,7 +22,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.cnk24.sample.app.CameraActivity;
 import com.cnk24.sample.app.ImageActivity;
+import com.cnk24.sample.app.VideoActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -37,27 +39,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        //findViewById(R.id.btn_camera).setOnClickListener(this);
+        findViewById(R.id.btn_camera).setOnClickListener(this);
         findViewById(R.id.btn_image).setOnClickListener(this);
-        //findViewById(R.id.btn_video).setOnClickListener(this);
+        findViewById(R.id.btn_video).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            //case R.id.btn_camera: {
-            //    startActivity(new Intent(this, CameraActivity.class));
-            //    break;
-            //}
+            case R.id.btn_camera: {
+                startActivity(new Intent(this, CameraActivity.class));
+                break;
+            }
             case R.id.btn_image: {
                 startActivity(new Intent(this, ImageActivity.class));
                 break;
             }
-            //case R.id.btn_video: {
-            //    startActivity(new Intent(this, VideoActivity.class));
-            //    break;
-            //}
+            case R.id.btn_video: {
+                startActivity(new Intent(this, VideoActivity.class));
+                break;
+            }
         }
     }
 }
