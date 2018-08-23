@@ -27,12 +27,13 @@
 
         <com.cnk24.mediaalbum.widget.TransferLayout
             style="@style/MediaAlbum.WrapContent.Transfer"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/check_box"
                 style="@style/MediaAlbum.CheckBox.WrapContent" />
+
         </com.cnk24.mediaalbum.widget.TransferLayout>
 
     </RelativeLayout>

@@ -43,7 +43,7 @@ import java.util.ArrayList;
 public class ImageActivity extends AppCompatActivity
 {
     private Toolbar mToolbar;
-    private TextView mTvMessage;
+    //private TextView mTvMessage;
 
     private Adapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
@@ -55,10 +55,10 @@ public class ImageActivity extends AppCompatActivity
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mTvMessage = findViewById(R.id.tv_message);
+        //mTvMessage = findViewById(R.id.tv_message);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 10, 10);
+        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         recyclerView.addItemDecoration(divider);
 
         mAdapter = new Adapter(this, new OnItemClickListener() {
@@ -78,7 +78,7 @@ public class ImageActivity extends AppCompatActivity
                 .multipleChoice()
                 .camera(false)
                 .columnCount(2)
-                //.selectCount(6)
+                .selectCount(10)
                 .checkedList(mAlbumFiles)
                 .widget(
                         Widget.newDarkBuilder(this)
@@ -90,7 +90,7 @@ public class ImageActivity extends AppCompatActivity
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
                         mAlbumFiles = result;
                         mAdapter.notifyDataSetChanged(mAlbumFiles);
-                        mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                        //mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })
                 .onCancel(new Action<String>() {
@@ -123,7 +123,7 @@ public class ImageActivity extends AppCompatActivity
                         public void onAction(@NonNull ArrayList<AlbumFile> result) {
                             mAlbumFiles = result;
                             mAdapter.notifyDataSetChanged(mAlbumFiles);
-                            mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                            //mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                         }
                     })
                     .start();
