@@ -110,7 +110,7 @@ public class ImageActivity extends AppCompatActivity
             Toast.makeText(this, R.string.no_selected, Toast.LENGTH_LONG).show();
         } else {
             Album.galleryAlbum(this)
-                    .checkable(true)
+                    .checkable(false)
                     .checkedList(mAlbumFiles)
                     .currentPosition(position)
                     .widget(
