@@ -43,7 +43,7 @@ import java.util.ArrayList;
 public class ImageActivity extends AppCompatActivity
 {
     private Toolbar mToolbar;
-    //private TextView mTvMessage;
+    private TextView mTvMessage;
 
     private Adapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
@@ -55,10 +55,10 @@ public class ImageActivity extends AppCompatActivity
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        //mTvMessage = findViewById(R.id.tv_message);
+        mTvMessage = findViewById(R.id.tv_message);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 50, 100);
         recyclerView.addItemDecoration(divider);
 
         mAdapter = new Adapter(this, new OnItemClickListener() {
