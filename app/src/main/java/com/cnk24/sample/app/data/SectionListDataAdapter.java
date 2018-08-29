@@ -136,8 +136,8 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         VideoViewHolder(View itemView, OnItemClickListener itemClickListener) {
             super(itemView);
             this.mItemClickListener = itemClickListener;
-            this.mIvImage = itemView.findViewById(com.cnk24.mediaalbum.R.id.iv_album_content_image);
-            this.mTvDuration = itemView.findViewById(com.cnk24.mediaalbum.R.id.tv_duration);
+            this.mIvImage = itemView.findViewById(R.id.iv_media_content_image);
+            this.mTvDuration = itemView.findViewById(R.id.tv_duration);
             itemView.setOnClickListener(this);
         }
 
