@@ -48,7 +48,7 @@ public class VideoActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mTvMessage;
 
-    private Adapter mAdapter;
+    //private Adapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
 
     @Override
@@ -64,13 +64,13 @@ public class VideoActivity extends AppCompatActivity {
         Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 10, 10);
         recyclerView.addItemDecoration(divider);
 
-        mAdapter = new Adapter(this, new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                previewVideo(position);
-            }
-        });
-        recyclerView.setAdapter(mAdapter);
+        //mAdapter = new Adapter(this, new OnItemClickListener() {
+        //    @Override
+        //    public void onItemClick(View view, int position) {
+        //        previewVideo(position);
+        //    }
+        //});
+        //recyclerView.setAdapter(mAdapter);
     }
 
     /**

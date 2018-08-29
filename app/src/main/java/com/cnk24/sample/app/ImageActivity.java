@@ -15,10 +15,12 @@
  */
 package com.cnk24.sample.app;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +33,8 @@ import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
+import com.cnk24.mediaalbum.widget.divider.Divider;
 import com.cnk24.sample.R;
 import com.cnk24.sample.app.data.RecyclerViewDataAdapter;
 
@@ -57,8 +61,8 @@ public class ImageActivity extends AppCompatActivity
         // LinearLayoutManager : 가로 또는 세로 스크롤 목록
         // GridLayoutManager : 그리드 형식의 목록
         // StaggeredGridLayoutManager : 지그재그형의 그리드 형식 목록
-        //recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         //recyclerView.addItemDecoration(divider);

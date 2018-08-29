@@ -82,8 +82,8 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
         SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, singleSectionItems);
 
-        itemRowHolder.recycler_view_list.setHasFixedSize(true);
-        itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(this.mContext, 3));
+        //itemRowHolder.recycler_view_list.setHasFixedSize(true);
+        itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(this.mContext, 4));
         itemRowHolder.recycler_view_list.setAdapter(itemListDataAdapter);
         Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         itemRowHolder.recycler_view_list.addItemDecoration(divider);

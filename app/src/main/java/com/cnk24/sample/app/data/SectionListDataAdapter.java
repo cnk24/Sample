@@ -16,6 +16,7 @@
 package com.cnk24.sample.app.data;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +34,12 @@ import java.util.ArrayList;
 
 public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.SingleItemRowHolder> {
 
-    private Context mContext;
+    private LayoutInflater mInflater;
     private ArrayList<AlbumFile> mItemList;
 
     public SectionListDataAdapter(Context context, ArrayList<AlbumFile> itemList) {
+        this.mInflater = LayoutInflater.from(context);
         this.mItemList = itemList;
-        this.mContext = context;
     }
 
     @Override
@@ -47,27 +48,25 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
     }
 
     @Override
-    public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_content_image, null);
-        SingleItemRowHolder mh = new SingleItemRowHolder(v);
+    public SingleItemRowHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        //View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_content_image, null);
+        //SingleItemRowHolder mh = new SingleItemRowHolder(v);
 
 
-        //switch (viewType) {
-        //    case AdapterItem.TYPE_DATE: {
-        //        return new Adapter.DateViewHolder(mInflater.inflate(R.layout.item_content_date, parent, false));
-        //    }
-        //    case AdapterItem.TYPE_IMAGE: {
-        //        return new Adapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, parent, false), mItemClickListener);
-        //    }
-        //    case AdapterItem.TYPE_VIDEO: {
-        //        return new Adapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, parent, false), mItemClickListener);
-        //    }
-        //    default: {
-        //        throw new AssertionError("This should not be the case.");
-        //    }
-        //}
+        switch (viewType) {
+            case AlbumFile.TYPE_IMAGE: {
+                //return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mItemClickListener);
+                return new SectionListDataAdapter.SingleItemRowHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false));
+            }
+            //case AlbumFile.TYPE_VIDEO: {
+            //    return new SectionListDataAdapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, viewGroup, false), mItemClickListener);
+            //}
+            default: {
+                throw new AssertionError("This should not be the case.");
+            }
+        }
 
-        return mh;
+        //return mh;
     }
 
     @Override
@@ -81,21 +80,18 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         //holder.webView.loadUrl(url);
 
 
-        //int viewType = getItemViewType(position);
-        //switch (viewType) {
-        //    case AdapterItem.TYPE_DATE: {
-        //        ((Adapter.DateViewHolder) holder).setData( ((DateItem)mItemList.get(position)).getMediaDate() );
-        //        break;
-        //    }
-        //    case AdapterItem.TYPE_IMAGE: {
-        //        ((Adapter.ImageViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
-        //        break;
-        //    }
+        int viewType = getItemViewType(position);
+        switch (viewType) {
+            case AlbumFile.TYPE_IMAGE: {
+                //((SectionListDataAdapter.ImageViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
+                ((SectionListDataAdapter.SingleItemRowHolder) holder).setData(mItemList.get(position));
+                break;
+            }
         //    case AdapterItem.TYPE_VIDEO: {
         //        ((Adapter.VideoViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
         //        break;
         //    }
-        //}
+        }
 
     }
 
@@ -162,11 +158,26 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
 
     public class SingleItemRowHolder extends RecyclerView.ViewHolder {
+        private ImageView mIvImage;
+
+        SingleItemRowHolder(View itemView) {
+            super(itemView);
+            this.mIvImage = itemView.findViewById(R.id.iv_media_content_image);
+        }
+
+        public void setData(AlbumFile albumFile) {
+            Album.getAlbumConfig().
+                    getAlbumLoader().
+                    load(mIvImage, albumFile);
+        }
+
+
+
         //protected TextView tvTitle;
         //protected WebView webView;
 
-        public SingleItemRowHolder(View view) {
-            super(view);
+        //public SingleItemRowHolder(View view) {
+        //    super(view);
 
             //this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             //this.webView = (WebView)view.findViewById(R.id.webview);
@@ -177,7 +188,8 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
             //        Toast.makeText(v.getContext(), tvTitle.getText(), Toast.LENGTH_SHORT).show();
             //    }
             //});
-        }
+        //}
+
     }
 
 }
