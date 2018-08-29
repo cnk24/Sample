@@ -92,7 +92,7 @@ public class VideoActivity extends AppCompatActivity {
                     @Override
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
                         mAlbumFiles = result;
-                        mAdapter.notifyDataSetChanged(mAlbumFiles);
+                        //mAdapter.notifyDataSetChanged(mAlbumFiles);
                         mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })
@@ -121,14 +121,14 @@ public class VideoActivity extends AppCompatActivity {
                                     .title(mToolbar.getTitle().toString())
                                     .build()
                     )
-                    .onResult(new Action<ArrayList<AlbumFile>>() {
-                        @Override
-                        public void onAction(@NonNull ArrayList<AlbumFile> result) {
-                            mAlbumFiles = result;
-                            mAdapter.notifyDataSetChanged(mAlbumFiles);
-                            mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
-                        }
-                    })
+                    //.onResult(new Action<ArrayList<AlbumFile>>() {
+                    //    @Override
+                    //    public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                    //        mAlbumFiles = result;
+                    //        mAdapter.notifyDataSetChanged(mAlbumFiles);
+                    //        mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                    //    }
+                    //})
                     .start();
         }
     }

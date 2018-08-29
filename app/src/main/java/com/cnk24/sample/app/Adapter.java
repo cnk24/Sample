@@ -29,7 +29,10 @@ import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.sample.R;
+import com.cnk24.sample.app.data.AdapterItem;
+import com.cnk24.sample.app.data.DateItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -37,35 +40,63 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private LayoutInflater mInflater;
     private OnItemClickListener mItemClickListener;
 
-    private List<AlbumFile> mAlbumFiles;
+    private ArrayList<AdapterItem> mItemList;
 
     public Adapter(Context context, OnItemClickListener itemClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.mItemClickListener = itemClickListener;
     }
 
-    public void notifyDataSetChanged(List<AlbumFile> imagePathList) {
-        this.mAlbumFiles = imagePathList;
+    public void notifyDataSetChanged(ArrayList<AdapterItem> itemList) {
+        //this.mItemList = itemList;
+
+        this.mItemList = initItemList(itemList);
+
         super.notifyDataSetChanged();
+    }
+
+    private ArrayList<AdapterItem> initItemList(ArrayList<AdapterItem> dataset) {
+        ArrayList<AdapterItem> result = new ArrayList<>();
+
+        int year = 0, month = 0, day = 0;
+        for(AdapterItem data:dataset) {
+            if(year != data.getAlbumYear() || month != data.getAlbumMonth() || day != data.getAlbumDay()) {
+                result.add(new DateItem(data.getAlbumDate()));
+                year = data.getAlbumYear();
+                month = data.getAlbumMonth();
+                day = data.getAlbumDay();
+            }
+
+            result.add(data);
+        }
+
+        return result;
     }
 
     @Override
     public int getItemViewType(int position) {
-        AlbumFile albumFile = mAlbumFiles.get(position);
-        if (albumFile.getMediaType() == AlbumFile.TYPE_IMAGE) {
-            return AlbumFile.TYPE_IMAGE;
+        AdapterItem item = mItemList.get(position);
+        if (item.getType() == AdapterItem.TYPE_MEDIA) {
+            if (item.getAlbumFile().getMediaType() == AlbumFile.TYPE_IMAGE) {
+                return AdapterItem.TYPE_IMAGE;
+            } else {
+                return AdapterItem.TYPE_VIDEO;
+            }
         } else {
-            return AlbumFile.TYPE_VIDEO;
+            return item.getType();
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case AlbumFile.TYPE_IMAGE: {
+            case AdapterItem.TYPE_DATE: {
+                return new DateViewHolder(mInflater.inflate(R.layout.item_content_date, parent, false));
+            }
+            case AdapterItem.TYPE_IMAGE: {
                 return new ImageViewHolder(mInflater.inflate(R.layout.item_content_image, parent, false), mItemClickListener);
             }
-            case AlbumFile.TYPE_VIDEO: {
+            case AdapterItem.TYPE_VIDEO: {
                 return new VideoViewHolder(mInflater.inflate(R.layout.item_content_video, parent, false), mItemClickListener);
             }
             default: {
@@ -78,12 +109,16 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case AlbumFile.TYPE_IMAGE: {
-                ((ImageViewHolder) holder).setData(mAlbumFiles.get(position));
+            case AdapterItem.TYPE_DATE: {
+                ((DateViewHolder) holder).setData( ((DateItem)mItemList.get(position)).getMediaDate() );
                 break;
             }
-            case AlbumFile.TYPE_VIDEO: {
-                ((VideoViewHolder) holder).setData(mAlbumFiles.get(position));
+            case AdapterItem.TYPE_IMAGE: {
+                ((ImageViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
+                break;
+            }
+            case AdapterItem.TYPE_VIDEO: {
+                ((VideoViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
                 break;
             }
         }
@@ -91,7 +126,8 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mAlbumFiles == null ? 0 : mAlbumFiles.size();
+        return mItemList == null ? 0 : mItemList.size();
+        //return mAlbumFiles == null ? 0 : mAlbumFiles.size();
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -147,6 +183,19 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(v, getAdapterPosition());
             }
+        }
+    }
+
+    public static class DateViewHolder extends RecyclerView.ViewHolder {
+        public TextView mTvDate;
+
+        public DateViewHolder(View itemView) {
+            super(itemView);
+            mTvDate = itemView.findViewById(R.id.tv_date);
+        }
+
+        void setData(String date) {
+            mTvDate.setText(date);
         }
     }
 }
