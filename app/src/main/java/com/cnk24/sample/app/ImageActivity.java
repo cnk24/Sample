@@ -61,8 +61,10 @@ public class ImageActivity extends AppCompatActivity
         mTvMessage = findViewById(R.id.tv_message);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        //recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        // LinearLayoutMaanger : 가로 또는 세로 스크롤 목록
+        // GridLayoutManager : 그리드 형식의 목록
+        // StaggeredGridLayoutManager : 지그재그형의 그리드 형식 목록
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
         Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         recyclerView.addItemDecoration(divider);

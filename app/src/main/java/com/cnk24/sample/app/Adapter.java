@@ -51,7 +51,6 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         //this.mItemList = itemList;
 
         this.mItemList = initItemList(itemList);
-
         super.notifyDataSetChanged();
     }
 
