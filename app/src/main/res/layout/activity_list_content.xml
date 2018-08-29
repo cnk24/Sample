@@ -35,4 +35,5 @@
         android:id="@+id/recycler_view"
         style="@style/MediaAlbum.WrapContent.WidthMatchParent"
         android:layout_marginTop="@dimen/album_dp_10" />
+
 </LinearLayout>

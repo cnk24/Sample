@@ -15,18 +15,15 @@
  */
 package com.cnk24.sample.app;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,12 +31,8 @@ import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.api.widget.Widget;
-import com.cnk24.mediaalbum.impl.OnItemClickListener;
-import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
-import com.cnk24.mediaalbum.widget.divider.Divider;
 import com.cnk24.sample.R;
-import com.cnk24.sample.app.data.AdapterItem;
-import com.cnk24.sample.app.data.AlbumItem;
+import com.cnk24.sample.app.data.RecyclerViewDataAdapter;
 
 import java.util.ArrayList;
 
@@ -48,7 +41,7 @@ public class ImageActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private TextView mTvMessage;
 
-    private Adapter mAdapter;
+    private RecyclerViewDataAdapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
 
     @Override
@@ -61,20 +54,23 @@ public class ImageActivity extends AppCompatActivity
         mTvMessage = findViewById(R.id.tv_message);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        // LinearLayoutMaanger : 가로 또는 세로 스크롤 목록
+        // LinearLayoutManager : 가로 또는 세로 스크롤 목록
         // GridLayoutManager : 그리드 형식의 목록
         // StaggeredGridLayoutManager : 지그재그형의 그리드 형식 목록
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        //recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
-        recyclerView.addItemDecoration(divider);
+        //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
+        //recyclerView.addItemDecoration(divider);
 
-        mAdapter = new Adapter(this, new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                previewImage(position);
-            }
-        });
+        //mAdapter = new Adapter(this, new OnItemClickListener() {
+        //    @Override
+        //    public void onItemClick(View view, int position) {
+        //        previewImage(position);
+        //    }
+        //});
+
+        mAdapter = new RecyclerViewDataAdapter(this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -96,16 +92,16 @@ public class ImageActivity extends AppCompatActivity
                 .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
-                        ArrayList<AdapterItem> items = new ArrayList<>();
-                        for (AlbumFile albumFile:result) {
-                            items.add(new AlbumItem(albumFile));
-                        }
-                        mAdapter.notifyDataSetChanged(items);
+                        //ArrayList<AdapterItem> items = new ArrayList<>();
+                        //for (AlbumFile albumFile:result) {
+                        //    items.add(new AlbumItem(albumFile));
+                        //}
+                        //mAdapter.notifyDataSetChanged(items);
 
 
 
                         mAlbumFiles = result;
-                        //mAdapter.notifyDataSetChanged(mAlbumFiles);
+                        mAdapter.notifyDataSetChanged(mAlbumFiles);
                         //mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })
