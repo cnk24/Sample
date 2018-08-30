@@ -203,7 +203,7 @@ public class AlbumActivity extends BaseActivity implements
             showFolderAlbumFiles(0);
             int count = mCheckedList.size();
             mView.setCheckedCount(count);
-            mView.setSubTitle(count + "/" + mLimitCount);
+            //mView.setSubTitle(count + "/" + mLimitCount);
         }
     }
 
@@ -392,7 +392,7 @@ public class AlbumActivity extends BaseActivity implements
         mCheckedList.add(albumFile);
         int count = mCheckedList.size();
         mView.setCheckedCount(count);
-        mView.setSubTitle(count + "/" + mLimitCount);
+        //mView.setSubTitle(count + "/" + mLimitCount);
 
         switch (mChoiceMode) {
             case Album.MODE_SINGLE: {
@@ -449,7 +449,7 @@ public class AlbumActivity extends BaseActivity implements
     private void setCheckedCount() {
         int count = mCheckedList.size();
         mView.setCheckedCount(count);
-        mView.setSubTitle(count + "/" + mLimitCount);
+        //mView.setSubTitle(count + "/" + mLimitCount);
     }
 
     @Override
