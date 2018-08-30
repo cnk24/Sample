@@ -37,6 +37,7 @@ import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
 import com.cnk24.sample.R;
+import com.cnk24.sample.app.data.RecyclerViewDataAdapter;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class VideoActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mTvMessage;
 
-    //private Adapter mAdapter;
+    private RecyclerViewDataAdapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
 
     @Override
@@ -60,17 +61,22 @@ public class VideoActivity extends AppCompatActivity {
 
         mTvMessage = findViewById(R.id.tv_message);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 10, 10);
-        recyclerView.addItemDecoration(divider);
 
-        //mAdapter = new Adapter(this, new OnItemClickListener() {
-        //    @Override
-        //    public void onItemClick(View view, int position) {
-        //        previewVideo(position);
-        //    }
-        //});
-        //recyclerView.setAdapter(mAdapter);
+        // LinearLayoutManager : 가로 또는 세로 스크롤 목록
+        // GridLayoutManager : 그리드 형식의 목록
+        // StaggeredGridLayoutManager : 지그재그형의 그리드 형식 목록
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
+        //recyclerView.addItemDecoration(divider);
+
+        mAdapter = new RecyclerViewDataAdapter(this, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                previewVideo(position);
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
     }
 
     /**
@@ -92,7 +98,7 @@ public class VideoActivity extends AppCompatActivity {
                     @Override
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
                         mAlbumFiles = result;
-                        //mAdapter.notifyDataSetChanged(mAlbumFiles);
+                        mAdapter.notifyDataSetChanged(mAlbumFiles);
                         mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })

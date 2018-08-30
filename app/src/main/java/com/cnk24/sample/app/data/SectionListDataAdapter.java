@@ -32,13 +32,16 @@ import com.cnk24.sample.R;
 
 import java.util.ArrayList;
 
-public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.SingleItemRowHolder> {
+public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
+    private OnItemClickListener mItemClickListener;
+
     private ArrayList<AlbumFile> mItemList;
 
-    public SectionListDataAdapter(Context context, ArrayList<AlbumFile> itemList) {
+    public SectionListDataAdapter(Context context, OnItemClickListener itemClickListener, ArrayList<AlbumFile> itemList) {
         this.mInflater = LayoutInflater.from(context);
+        this.mItemClickListener = itemClickListener;
         this.mItemList = itemList;
     }
 
@@ -48,49 +51,32 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
     }
 
     @Override
-    public SingleItemRowHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        //View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_content_image, null);
-        //SingleItemRowHolder mh = new SingleItemRowHolder(v);
-
-
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
-                //return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mItemClickListener);
-                return new SectionListDataAdapter.SingleItemRowHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false));
+                return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mItemClickListener);
             }
-            //case AlbumFile.TYPE_VIDEO: {
-            //    return new SectionListDataAdapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, viewGroup, false), mItemClickListener);
-            //}
+            case AlbumFile.TYPE_VIDEO: {
+                return new SectionListDataAdapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, viewGroup, false), mItemClickListener);
+            }
             default: {
                 throw new AssertionError("This should not be the case.");
             }
         }
-
-        //return mh;
     }
 
     @Override
-    public void onBindViewHolder(SingleItemRowHolder holder, int position) {
-        //SingleItemModel singleItem = itemsList.get(i);
-
-        //holder.tvTitle.setText(singleItem.getName());
-        //String url = singleItem.getUrl().toString();
-
-        //holder.webView.setWebViewClient(new WebViewClient()); // 이걸 안해주면 새창이 뜸
-        //holder.webView.loadUrl(url);
-
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
-                //((SectionListDataAdapter.ImageViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
-                ((SectionListDataAdapter.SingleItemRowHolder) holder).setData(mItemList.get(position));
+                ((SectionListDataAdapter.ImageViewHolder) holder).setData(mItemList.get(position));
                 break;
             }
-        //    case AdapterItem.TYPE_VIDEO: {
-        //        ((Adapter.VideoViewHolder) holder).setData( mItemList.get(position).getAlbumFile() );
-        //        break;
-        //    }
+            case AlbumFile.TYPE_VIDEO: {
+                ((SectionListDataAdapter.VideoViewHolder) holder).setData(mItemList.get(position));
+                break;
+            }
         }
 
     }
@@ -154,42 +140,6 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
                 mItemClickListener.onItemClick(v, getAdapterPosition());
             }
         }
-    }
-
-
-    public class SingleItemRowHolder extends RecyclerView.ViewHolder {
-        private ImageView mIvImage;
-
-        SingleItemRowHolder(View itemView) {
-            super(itemView);
-            this.mIvImage = itemView.findViewById(R.id.iv_media_content_image);
-        }
-
-        public void setData(AlbumFile albumFile) {
-            Album.getAlbumConfig().
-                    getAlbumLoader().
-                    load(mIvImage, albumFile);
-        }
-
-
-
-        //protected TextView tvTitle;
-        //protected WebView webView;
-
-        //public SingleItemRowHolder(View view) {
-        //    super(view);
-
-            //this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-            //this.webView = (WebView)view.findViewById(R.id.webview);
-
-            //view.setOnClickListener(new View.OnClickListener() {
-            //    @Override
-            //    public void onClick(View v) {
-            //        Toast.makeText(v.getContext(), tvTitle.getText(), Toast.LENGTH_SHORT).show();
-            //    }
-            //});
-        //}
-
     }
 
 }

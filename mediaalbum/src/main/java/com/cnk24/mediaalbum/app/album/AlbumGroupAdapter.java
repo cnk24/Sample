@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cnk24.sample.app.data;
+package com.cnk24.mediaalbum.app.album;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,28 +26,57 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.R;
+import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
-import com.cnk24.sample.R;
 
 import java.util.ArrayList;
 
-public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDataAdapter.ItemRowHolder> {
+public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.ItemRowHolder> {
 
     private Context mContext;
+    private final boolean hasCamera;
+    private final int mChoiceMode;
+    private final ColorStateList mSelector;
+
+    private OnItemClickListener mAddPhotoClickListener;
     private OnItemClickListener mItemClickListener;
+    private OnCheckedClickListener mCheckedClickListener;
+
+    private int mSpanCount;
+    private int mOrientation;
 
     private ArrayList<SectionDataModel> mItemList;
 
-    public RecyclerViewDataAdapter(Context context, OnItemClickListener itemClickListener) {
+    public AlbumGroupAdapter(Context context, boolean hasCamera, int choiceMode, ColorStateList selector) {
         this.mContext = context;
-        this.mItemClickListener = itemClickListener;
+        this.hasCamera = hasCamera;
+        this.mChoiceMode = choiceMode;
+        this.mSelector = selector;
     }
 
     public void notifyDataSetChanged(ArrayList<AlbumFile> itemList) {
         this.mItemList = initItemList(itemList);
         super.notifyDataSetChanged();
+    }
+
+    public void setLayoutManager(int spanCount, int orientation) {
+        this.mSpanCount = spanCount;
+        this.mOrientation = orientation;
+    }
+
+    public void setAddClickListener(OnItemClickListener addPhotoClickListener) {
+        this.mAddPhotoClickListener = addPhotoClickListener;
+    }
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
+    }
+
+    public void setCheckedClickListener(OnCheckedClickListener checkedClickListener) {
+        this.mCheckedClickListener = checkedClickListener;
     }
 
     private ArrayList<SectionDataModel> initItemList(ArrayList<AlbumFile> dataset) {
@@ -73,7 +102,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
     @Override
     public ItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_content_list, null);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.album_item_content_group, null);
         ItemRowHolder mh = new ItemRowHolder(v);
         return mh;
     }
@@ -84,12 +113,16 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         ArrayList singleSectionItems = mItemList.get(position).getItemListInSection();
         itemRowHolder.itemTitle.setText(sectionName);
 
-        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, mItemClickListener, singleSectionItems);
+        AlbumAdapter adapter = new AlbumAdapter(mContext, hasCamera, mChoiceMode, mSelector);
+        adapter.setAlbumFiles(mItemList.get(position).getItemListInSection());
+        adapter.setAddClickListener(mAddPhotoClickListener);
+        adapter.setCheckedClickListener(mCheckedClickListener);
+        adapter.setItemClickListener(mItemClickListener);
 
         itemRowHolder.recycler_view_list.setHasFixedSize(true);
-        itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(this.mContext, 4));
-        itemRowHolder.recycler_view_list.setAdapter(itemListDataAdapter);
-        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
+        itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(mContext, mSpanCount, mOrientation, false));
+        itemRowHolder.recycler_view_list.setAdapter(adapter);
+        Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 4, 4);
         itemRowHolder.recycler_view_list.addItemDecoration(divider);
     }
 

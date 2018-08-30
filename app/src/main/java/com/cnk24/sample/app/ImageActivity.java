@@ -26,6 +26,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
 import com.cnk24.sample.R;
@@ -63,18 +65,15 @@ public class ImageActivity extends AppCompatActivity
         // StaggeredGridLayoutManager : 지그재그형의 그리드 형식 목록
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         //recyclerView.addItemDecoration(divider);
 
-        //mAdapter = new Adapter(this, new OnItemClickListener() {
-        //    @Override
-        //    public void onItemClick(View view, int position) {
-        //        previewImage(position);
-        //    }
-        //});
-
-        mAdapter = new RecyclerViewDataAdapter(this);
+        mAdapter = new RecyclerViewDataAdapter(this, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                previewImage(position);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -85,7 +84,7 @@ public class ImageActivity extends AppCompatActivity
         Album.image(this)
                 .multipleChoice()
                 .camera(false)
-                .columnCount(2)
+                .columnCount(4)
                 .selectCount(10)
                 .checkedList(mAlbumFiles)
                 .widget(
@@ -96,17 +95,9 @@ public class ImageActivity extends AppCompatActivity
                 .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
-                        //ArrayList<AdapterItem> items = new ArrayList<>();
-                        //for (AlbumFile albumFile:result) {
-                        //    items.add(new AlbumItem(albumFile));
-                        //}
-                        //mAdapter.notifyDataSetChanged(items);
-
-
-
                         mAlbumFiles = result;
                         mAdapter.notifyDataSetChanged(mAlbumFiles);
-                        //mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
+                        mTvMessage.setVisibility(result.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 })
                 .onCancel(new Action<String>() {

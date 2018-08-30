@@ -54,7 +54,7 @@ class AlbumView extends Contract.AlbumView implements View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
-    private AlbumAdapter mAdapter;
+    private AlbumGroupAdapter mAdapter;
 
     private Button mBtnPreview;
     private Button mBtnSwitchFolder;
@@ -123,11 +123,13 @@ class AlbumView extends Contract.AlbumView implements View.OnClickListener {
         mToolbar.setBackgroundColor(widget.getToolBarColor());
 
         Configuration config = mActivity.getResources().getConfiguration();
-        mLayoutManager = new GridLayoutManager(getContext(), column, getOrientation(config), false);
+        mLayoutManager = new GridLayoutManager(getContext(), 1, getOrientation(config), false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         int dividerSize = getResources().getDimensionPixelSize(R.dimen.album_dp_4);
         mRecyclerView.addItemDecoration(new Api21ItemDivider(Color.TRANSPARENT, dividerSize, dividerSize));
-        mAdapter = new AlbumAdapter(getContext(), hasCamera, choiceMode, widget.getMediaItemCheckSelector());
+
+        mAdapter = new AlbumGroupAdapter(getContext(), hasCamera, choiceMode, widget.getMediaItemCheckSelector());
+        mAdapter.setLayoutManager(column, getOrientation(config));
         mAdapter.setAddClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -186,8 +188,7 @@ class AlbumView extends Contract.AlbumView implements View.OnClickListener {
     public void bindAlbumFolder(AlbumFolder albumFolder) {
         mBtnSwitchFolder.setText(albumFolder.getName());
 
-        mAdapter.setAlbumFiles(albumFolder.getAlbumFiles());
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged(albumFolder.getAlbumFiles());
         mRecyclerView.scrollToPosition(0);
     }
 
