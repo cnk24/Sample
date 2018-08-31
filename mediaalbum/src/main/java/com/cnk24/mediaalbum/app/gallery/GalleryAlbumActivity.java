@@ -16,8 +16,12 @@
 package com.cnk24.mediaalbum.app.gallery;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
@@ -50,6 +54,9 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
 
     private Contract.GalleryView<AlbumFile> mView;
 
+    private RelativeLayout mRelativeLayout;
+    private AppBarLayout mAppBarLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,43 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         mAlbumFiles = argument.getParcelableArrayList(Album.KEY_INPUT_CHECKED_LIST);
         mCurrentPosition = argument.getInt(Album.KEY_INPUT_CURRENT_POSITION);
         mCheckable = argument.getBoolean(Album.KEY_INPUT_GALLERY_CHECKABLE);
+
+
+        mAppBarLayout = findViewById(R.id.app_bar_layout);
+        mRelativeLayout = findViewById(R.id.relative_layout);
+
+        mRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        //animationAppBarUp(mAppBarLayout);
+                        mAppBarLayout.animate()
+                                .translationY(-mAppBarLayout.getHeight())
+                                .setDuration(500).start();
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        //animationAppBarDown(mAppBarLayout);
+                        mAppBarLayout.animate()
+                                .translationY(0)
+                                .setDuration(500).start();
+
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+
+
+
+
+
 
         mView.setTitle(mWidget.getTitle());
         mView.setupViews(mWidget, mCheckable);
@@ -153,4 +197,35 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         sLongClick = null;
         super.finish();
     }
+
+
+    private void animationAppBarUp(final AppBarLayout appBar) {
+        new CountDownTimer(300, 1) {
+            public void onTick(long millisUntilFinished) {
+                appBar.setTranslationY(0);
+            }
+
+            public void onFinish() {
+                appBar.animate()
+                        .translationY(-appBar.getHeight())
+                        .setDuration(500).start();
+            }
+        }.start();
+    }
+
+    private void animationAppBarDown(final AppBarLayout appBar) {
+        new CountDownTimer(300, 1) {
+            public void onTick(long millisUntilFinished) {
+                appBar.setTranslationY(-appBar.getHeight());
+            }
+
+            public void onFinish() {
+                appBar.animate()
+                        .translationY(0)
+                        .setDuration(500).start();
+            }
+        }.start();
+    }
+
+
 }
