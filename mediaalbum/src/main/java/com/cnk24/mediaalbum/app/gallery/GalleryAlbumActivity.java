@@ -56,6 +56,7 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
 
     private RelativeLayout mRelativeLayout;
     private AppBarLayout mAppBarLayout;
+    private CountDownTimer mAppBarCountDownTimer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,41 +71,27 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         mCurrentPosition = argument.getInt(Album.KEY_INPUT_CURRENT_POSITION);
         mCheckable = argument.getBoolean(Album.KEY_INPUT_GALLERY_CHECKABLE);
 
-
         mAppBarLayout = findViewById(R.id.app_bar_layout);
         mRelativeLayout = findViewById(R.id.relative_layout);
 
-        mRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
+        AppBarCountDown(mAppBarLayout);
+
+        /*mRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-
-                        //animationAppBarUp(mAppBarLayout);
-                        mAppBarLayout.animate()
-                                .translationY(-mAppBarLayout.getHeight())
-                                .setDuration(500).start();
-
+                        AppBarUp(mAppBarLayout);
                         break;
                     case MotionEvent.ACTION_UP:
-
-                        //animationAppBarDown(mAppBarLayout);
-                        mAppBarLayout.animate()
-                                .translationY(0)
-                                .setDuration(500).start();
-
+                        AppBarDown(mAppBarLayout);
                         break;
                 }
 
                 return false;
             }
-        });
-
-
-
-
-
+        });*/
 
 
         mView.setTitle(mWidget.getTitle());
@@ -198,34 +185,29 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         super.finish();
     }
 
-
-    private void animationAppBarUp(final AppBarLayout appBar) {
-        new CountDownTimer(300, 1) {
+    private void AppBarCountDown(final AppBarLayout appBar) {
+        mAppBarCountDownTimer = new CountDownTimer(5000, 1) {
             public void onTick(long millisUntilFinished) {
-                appBar.setTranslationY(0);
             }
 
             public void onFinish() {
-                appBar.animate()
-                        .translationY(-appBar.getHeight())
-                        .setDuration(500).start();
+                AppBarUp(appBar);
             }
         }.start();
     }
 
-    private void animationAppBarDown(final AppBarLayout appBar) {
-        new CountDownTimer(300, 1) {
-            public void onTick(long millisUntilFinished) {
-                appBar.setTranslationY(-appBar.getHeight());
-            }
-
-            public void onFinish() {
-                appBar.animate()
-                        .translationY(0)
-                        .setDuration(500).start();
-            }
-        }.start();
+    private void AppBarUp(final AppBarLayout appBar) {
+        appBar.animate()
+                .translationY(-appBar.getHeight())
+                .setDuration(500).start();
+        mAppBarCountDownTimer.cancel();
     }
 
+    private void AppBarDown(final AppBarLayout appBar) {
+        appBar.animate()
+                .translationY(0)
+                .setDuration(500).start();
+        AppBarCountDown(mAppBarLayout);
+    }
 
 }
