@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.sample.R;
@@ -35,13 +36,13 @@ import java.util.ArrayList;
 public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
-    private OnItemClickListener mItemClickListener;
+    private OnAlbumItemClickListener mAlbumItemClickListener;
 
     private ArrayList<AlbumFile> mItemList;
 
-    public SectionListDataAdapter(Context context, OnItemClickListener itemClickListener, ArrayList<AlbumFile> itemList) {
+    public SectionListDataAdapter(Context context, OnAlbumItemClickListener itemClickListener, ArrayList<AlbumFile> itemList) {
         this.mInflater = LayoutInflater.from(context);
-        this.mItemClickListener = itemClickListener;
+        this.mAlbumItemClickListener = itemClickListener;
         this.mItemList = itemList;
     }
 
@@ -54,10 +55,10 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
-                return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mItemClickListener);
+                return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mAlbumItemClickListener);
             }
             case AlbumFile.TYPE_VIDEO: {
-                return new SectionListDataAdapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, viewGroup, false), mItemClickListener);
+                return new SectionListDataAdapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, viewGroup, false), mAlbumItemClickListener);
             }
             default: {
                 throw new AssertionError("This should not be the case.");
@@ -88,12 +89,13 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final OnItemClickListener mItemClickListener;
+        private final OnAlbumItemClickListener mAlbumItemClickListener;
         private ImageView mIvImage;
+        private AlbumFile mAlbumFile;
 
-        ImageViewHolder(View itemView, OnItemClickListener itemClickListener) {
+        ImageViewHolder(View itemView, OnAlbumItemClickListener itemClickListener) {
             super(itemView);
-            this.mItemClickListener = itemClickListener;
+            this.mAlbumItemClickListener = itemClickListener;
             this.mIvImage = itemView.findViewById(R.id.iv_media_content_image);
             itemView.setOnClickListener(this);
         }
@@ -102,26 +104,29 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Album.getAlbumConfig().
                     getAlbumLoader().
                     load(mIvImage, albumFile);
+
+            mAlbumFile = albumFile;
         }
 
         @Override
         public void onClick(View v) {
-            if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(v, getAdapterPosition());
+            if (mAlbumItemClickListener != null) {
+                mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
             }
         }
     }
 
     private static class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final OnItemClickListener mItemClickListener;
+        private final OnAlbumItemClickListener mAlbumItemClickListener;
+        private AlbumFile mAlbumFile;
 
         private ImageView mIvImage;
         private TextView mTvDuration;
 
-        VideoViewHolder(View itemView, OnItemClickListener itemClickListener) {
+        VideoViewHolder(View itemView, OnAlbumItemClickListener itemClickListener) {
             super(itemView);
-            this.mItemClickListener = itemClickListener;
+            this.mAlbumItemClickListener = itemClickListener;
             this.mIvImage = itemView.findViewById(R.id.iv_media_content_image);
             this.mTvDuration = itemView.findViewById(R.id.tv_duration);
             itemView.setOnClickListener(this);
@@ -131,13 +136,15 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Album.getAlbumConfig().
                     getAlbumLoader().
                     load(mIvImage, albumFile);
+
+            mAlbumFile = albumFile;
             mTvDuration.setText(AlbumUtils.convertDuration(albumFile.getDuration()));
         }
 
         @Override
         public void onClick(View v) {
-            if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(v, getAdapterPosition());
+            if (mAlbumItemClickListener != null) {
+                mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
             }
         }
     }

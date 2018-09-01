@@ -18,11 +18,15 @@ package com.cnk24.sample;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.cnk24.mediaalbum.AlbumFile;
 
 import com.cnk24.mediaalbum.AlbumLoader;
 import com.cnk24.sample.R;
+
+//import com.bumptech.glide.Priority;
+//import com.bumptech.glide.load.engine.DiskCacheStrategy;
+//import com.bumptech.glide.request.RequestOptions;
+//import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class MediaLoader implements AlbumLoader
 {
@@ -33,13 +37,26 @@ public class MediaLoader implements AlbumLoader
 
     @Override
     public void load(ImageView imageView, String url) {
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder);
 
+        // Glide 4.8.0
+        //RequestOptions options = new RequestOptions()
+        //        .centerCrop()
+        //        .placeholder(R.drawable.placeholder)
+        //        .error(R.drawable.placeholder)
+        //        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        //        .priority(Priority.HIGH);
+        //Glide.with(imageView.getContext())
+        //        .load(url)
+        //        .apply(options)
+        //        .transition(withCrossFade())
+        //        .into(imageView);
+
+        // Glide 3.8.0
         Glide.with(imageView.getContext())
                 .load(url)
-                .apply(options)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .crossFade()
                 .into(imageView);
     }
 }

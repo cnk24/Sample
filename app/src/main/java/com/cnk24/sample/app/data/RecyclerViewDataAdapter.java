@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
@@ -36,13 +37,13 @@ import java.util.ArrayList;
 public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDataAdapter.ItemRowHolder> {
 
     private Context mContext;
-    private OnItemClickListener mItemClickListener;
+    private OnAlbumItemClickListener mAlbumItemClickListener;
 
     private ArrayList<SectionDataModel> mItemList;
 
-    public RecyclerViewDataAdapter(Context context, OnItemClickListener itemClickListener) {
+    public RecyclerViewDataAdapter(Context context, OnAlbumItemClickListener itemClickListener) {
         this.mContext = context;
-        this.mItemClickListener = itemClickListener;
+        this.mAlbumItemClickListener = itemClickListener;
     }
 
     public void notifyDataSetChanged(ArrayList<AlbumFile> itemList) {
@@ -84,7 +85,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         ArrayList singleSectionItems = mItemList.get(position).getItemListInSection();
         itemRowHolder.itemTitle.setText(sectionName);
 
-        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, mItemClickListener, singleSectionItems);
+        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, mAlbumItemClickListener, singleSectionItems);
 
         itemRowHolder.recycler_view_list.setHasFixedSize(true);
         itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(this.mContext, 4));

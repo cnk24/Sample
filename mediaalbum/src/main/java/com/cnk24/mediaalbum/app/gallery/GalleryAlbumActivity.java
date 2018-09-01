@@ -223,7 +223,10 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
                 }
                 break;
             case(MotionEvent.ACTION_UP):
-
+                break;
+            case(MotionEvent.ACTION_MOVE):
+                mSingleTapFlag = false;
+                mSingleTapCountDownTimer.cancel();
                 break;
             default:
                 break;

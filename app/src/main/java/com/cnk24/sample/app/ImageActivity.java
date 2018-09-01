@@ -34,6 +34,7 @@ import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.api.widget.Widget;
+import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
@@ -68,10 +69,10 @@ public class ImageActivity extends AppCompatActivity
         //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         //recyclerView.addItemDecoration(divider);
 
-        mAdapter = new RecyclerViewDataAdapter(this, new OnItemClickListener() {
+        mAdapter = new RecyclerViewDataAdapter(this, new OnAlbumItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                previewImage(position);
+            public void onAlbumItemClick(View view, AlbumFile albumFile) {
+                previewImage(albumFile);
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -112,10 +113,12 @@ public class ImageActivity extends AppCompatActivity
     /**
      * Preview image, to media.
      */
-    private void previewImage(int position) {
+    private void previewImage(AlbumFile albumFile) {
         if (mAlbumFiles == null || mAlbumFiles.size() == 0) {
             Toast.makeText(this, R.string.no_selected, Toast.LENGTH_LONG).show();
         } else {
+            int position = mAlbumFiles.indexOf(albumFile);
+
             Album.galleryAlbum(this)
                     .checkable(false)
                     .checkedList(mAlbumFiles)

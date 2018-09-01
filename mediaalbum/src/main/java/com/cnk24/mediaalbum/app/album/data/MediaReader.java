@@ -59,7 +59,7 @@ public class MediaReader {
             MediaStore.Images.Media.DATA,
             MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
             MediaStore.Images.Media.MIME_TYPE,
-            MediaStore.Images.Media.DATE_ADDED,
+            MediaStore.Images.Media.DATE_TAKEN,
             MediaStore.Images.Media.LATITUDE,
             MediaStore.Images.Media.LONGITUDE,
             MediaStore.Images.Media.SIZE
@@ -130,7 +130,7 @@ public class MediaReader {
             MediaStore.Video.Media.DATA,
             MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
             MediaStore.Video.Media.MIME_TYPE,
-            MediaStore.Video.Media.DATE_ADDED,
+            MediaStore.Video.Media.DATE_TAKEN,
             MediaStore.Video.Media.LATITUDE,
             MediaStore.Video.Media.LONGITUDE,
             MediaStore.Video.Media.SIZE,
