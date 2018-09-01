@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.cnk24.mediaalbum.Album;
+import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.AlbumFolder;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.app.gallery.PreviewAdapter;
@@ -48,16 +49,16 @@ public final class Contract {
          * Try to check item.
          *
          * @param button   view.
-         * @param position position of item.
+         * @param albumFile
          */
-        void tryCheckItem(CompoundButton button, int position);
+        void tryCheckItem(CompoundButton button, AlbumFile albumFile);
 
         /**
          * Try to preview item.
          *
-         * @param position position of item.
+         * @param albumFile 
          */
-        void tryPreviewItem(int position);
+        void tryPreviewItem(AlbumFile albumFile);
 
         /**
          * Preview the checked items.

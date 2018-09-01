@@ -23,10 +23,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.R;
+import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
@@ -42,7 +44,7 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
     private final ColorStateList mSelector;
 
     private OnItemClickListener mAddPhotoClickListener;
-    private OnItemClickListener mItemClickListener;
+    private OnAlbumItemClickListener mAlbumItemClickListener;
     private OnCheckedClickListener mCheckedClickListener;
 
     private int mSpanCount;
@@ -71,8 +73,8 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
         this.mAddPhotoClickListener = addPhotoClickListener;
     }
 
-    public void setItemClickListener(OnItemClickListener itemClickListener) {
-        this.mItemClickListener = itemClickListener;
+    public void setAlbumItemClickListener(OnAlbumItemClickListener itemClickListener) {
+        this.mAlbumItemClickListener = itemClickListener;
     }
 
     public void setCheckedClickListener(OnCheckedClickListener checkedClickListener) {
@@ -117,7 +119,7 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
         adapter.setAlbumFiles(mItemList.get(position).getItemListInSection());
         adapter.setAddClickListener(mAddPhotoClickListener);
         adapter.setCheckedClickListener(mCheckedClickListener);
-        adapter.setItemClickListener(mItemClickListener);
+        adapter.setAlbumItemClickListener(mAlbumItemClickListener);
 
         itemRowHolder.recycler_view_list.setHasFixedSize(true);
         itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(mContext, mSpanCount, mOrientation, false));

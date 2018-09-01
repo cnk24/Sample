@@ -15,20 +15,20 @@
  */
 package com.cnk24.mediaalbum.impl;
 
-import android.widget.CompoundButton;
+import android.view.View;
 
 import com.cnk24.mediaalbum.AlbumFile;
 
 /**
- * 20180817 SJK: Created
+ * 20180901 SJK: Created
  */
-public interface OnCheckedClickListener {
+public interface OnAlbumItemClickListener {
 
     /**
-     * Compound button is clicked.
+     * When Item is clicked.
      *
-     * @param button   view.
+     * @param view     item view.
      * @param albumFile
      */
-    void onCheckedClick(CompoundButton button, AlbumFile albumFile);
+    void onAlbumItemClick(View view, AlbumFile albumFile);
 }

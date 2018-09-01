@@ -22,7 +22,6 @@ import android.support.design.widget.AppBarLayout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
@@ -57,6 +56,9 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
 
     private AppBarLayout mAppBarLayout;
     private CountDownTimer mAppBarCountDownTimer;
+
+    private CountDownTimer mSingleTapCountDownTimer;
+    private boolean mSingleTapFlag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,30 +189,46 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         appBar.animate()
                 .translationY(0)
                 .setDuration(500).start();
-        AppBarCountDown(mAppBarLayout);
+        AppBarCountDown(appBar);
     }
 
+    private void SingleTapCountDown() {
+        mSingleTapCountDownTimer = new CountDownTimer(300, 1) {
+            public void onTick(long millisUntilFinished) {
+                mSingleTapFlag = true;
+            }
 
+            public void onFinish() {
+                mSingleTapFlag = false;
+
+                if (mAppBarLayout.getY() < 0) {
+                    AppBarDown(mAppBarLayout);
+                } else {
+                    AppBarUp(mAppBarLayout);
+                }
+            }
+        }.start();
+    }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event){
+    public boolean dispatchTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        switch(action){
+        switch(action) {
             case(MotionEvent.ACTION_DOWN):
-                Log.i("HoneyMap","ACTION_DOWN");
-                break;
-            case(MotionEvent.ACTION_MOVE):
-                Log.i("HoneyMap","ACTION_MOVE");
+                if (mSingleTapFlag) {
+                    mSingleTapFlag = false;
+                    mSingleTapCountDownTimer.cancel();
+                } else {
+                    SingleTapCountDown();
+                }
                 break;
             case(MotionEvent.ACTION_UP):
-                Log.i("HoneyMap","ACTION_UP");
-                break;
-            case(MotionEvent.ACTION_CANCEL):
-                Log.i("HoneyMap","ACTION_CANCEL");
+
                 break;
             default:
                 break;
         }
+
         return super.dispatchTouchEvent(event);
     }
 

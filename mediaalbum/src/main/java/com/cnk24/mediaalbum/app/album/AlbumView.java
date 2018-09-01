@@ -30,11 +30,13 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.AlbumFolder;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.app.Contract;
 import com.cnk24.mediaalbum.impl.DoubleClickWrapper;
+import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
@@ -138,14 +140,14 @@ class AlbumView extends Contract.AlbumView implements View.OnClickListener {
         });
         mAdapter.setCheckedClickListener(new OnCheckedClickListener() {
             @Override
-            public void onCheckedClick(CompoundButton button, int position) {
-                getPresenter().tryCheckItem(button, position);
+            public void onCheckedClick(CompoundButton button, AlbumFile albumFile) {
+                getPresenter().tryCheckItem(button, albumFile);
             }
         });
-        mAdapter.setItemClickListener(new OnItemClickListener() {
+        mAdapter.setAlbumItemClickListener(new OnAlbumItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                getPresenter().tryPreviewItem(position);
+            public void onAlbumItemClick(View view, AlbumFile albumFile) {
+                getPresenter().tryPreviewItem(albumFile);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

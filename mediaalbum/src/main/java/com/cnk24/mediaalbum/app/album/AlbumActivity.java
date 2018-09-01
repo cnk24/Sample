@@ -410,8 +410,8 @@ public class AlbumActivity extends BaseActivity implements
     }
 
     @Override
-    public void tryCheckItem(CompoundButton button, int position) {
-        AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(position);
+    public void tryCheckItem(CompoundButton button, AlbumFile albumFile) {
+        //AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(position);
         if (button.isChecked()) {
             if (mCheckedList.size() >= mLimitCount) {
                 int messageRes;
@@ -453,10 +453,10 @@ public class AlbumActivity extends BaseActivity implements
     }
 
     @Override
-    public void tryPreviewItem(int position) {
+    public void tryPreviewItem(AlbumFile albumFile) {
         switch (mChoiceMode) {
             case Album.MODE_SINGLE: {
-                AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(position);
+                //AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(position);
 //                albumFile.setChecked(true);
 //                mView.notifyItem(position);
                 mCheckedList.add(albumFile);
@@ -466,10 +466,11 @@ public class AlbumActivity extends BaseActivity implements
                 break;
             }
             case Album.MODE_MULTIPLE: {
-                GalleryActivity.sAlbumFiles = mAlbumFolders.get(mCurrentFolder).getAlbumFiles();
+                GalleryActivity.sAlbumFileList = mAlbumFolders.get(mCurrentFolder).getAlbumFiles();
+                GalleryActivity.sAlbumFile = albumFile;
                 GalleryActivity.sCheckedCount = mCheckedList.size();
-                GalleryActivity.sCurrentPosition = position;
                 GalleryActivity.sCallback = this;
+
                 Intent intent = new Intent(this, GalleryActivity.class);
                 intent.putExtras(getIntent());
                 startActivity(intent);
@@ -484,10 +485,13 @@ public class AlbumActivity extends BaseActivity implements
     @Override
     public void tryPreviewChecked() {
         if (mCheckedList.size() > 0) {
-            GalleryActivity.sAlbumFiles = new ArrayList<>(mCheckedList);
+            GalleryActivity.sAlbumFileList = new ArrayList<>(mCheckedList);
             GalleryActivity.sCheckedCount = mCheckedList.size();
-            GalleryActivity.sCurrentPosition = 0;
             GalleryActivity.sCallback = this;
+
+            AlbumFile albumFile = mAlbumFolders.get(mCurrentFolder).getAlbumFiles().get(0);
+            GalleryActivity.sAlbumFile = albumFile;
+
             Intent intent = new Intent(this, GalleryActivity.class);
             intent.putExtras(getIntent());
             startActivity(intent);

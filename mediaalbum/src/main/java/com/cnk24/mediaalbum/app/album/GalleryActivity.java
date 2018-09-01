@@ -35,15 +35,16 @@ import java.util.ArrayList;
  */
 public class GalleryActivity extends BaseActivity implements Contract.GalleryPresenter {
 
-    public static ArrayList<AlbumFile> sAlbumFiles;
+    public static ArrayList<AlbumFile> sAlbumFileList;
+    public static AlbumFile sAlbumFile;
     public static int sCheckedCount;
-    public static int sCurrentPosition;
 
     public static Callback sCallback;
 
     private Widget mWidget;
     private int mFunction;
     private int mAllowSelectCount;
+    private int mCurrentPosition;
 
     private Contract.GalleryView<AlbumFile> mView;
 
@@ -59,10 +60,12 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
         mAllowSelectCount = argument.getInt(Album.KEY_INPUT_LIMIT_COUNT);
 
         mView.setupViews(mWidget, true);
-        mView.bindData(new PreviewAlbumAdapter(this, sAlbumFiles));
+        mView.bindData(new PreviewAlbumAdapter(this, sAlbumFileList));
 
-        if (sCurrentPosition == 0) onCurrentChanged(sCurrentPosition);
-        else mView.setCurrentItem(sCurrentPosition);
+        mCurrentPosition = sAlbumFileList.indexOf(sAlbumFile);
+
+        if (mCurrentPosition == 0) onCurrentChanged(mCurrentPosition);
+        else mView.setCurrentItem(mCurrentPosition);
         setCheckedCount();
     }
 
@@ -74,10 +77,10 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
 
     @Override
     public void onCurrentChanged(int position) {
-        sCurrentPosition = position;
-        mView.setTitle(sCurrentPosition + 1 + " / " + sAlbumFiles.size());
+        mCurrentPosition = position;
+        mView.setTitle(mCurrentPosition + 1 + " / " + sAlbumFileList.size());
 
-        AlbumFile albumFile = sAlbumFiles.get(position);
+        AlbumFile albumFile = sAlbumFileList.get(position);
         mView.setChecked(albumFile.isChecked());
         mView.setLayerDisplay(albumFile.isDisable());
 
@@ -91,7 +94,7 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
 
     @Override
     public void onCheckedChanged() {
-        AlbumFile albumFile = sAlbumFiles.get(sCurrentPosition);
+        AlbumFile albumFile = sAlbumFileList.get(mCurrentPosition);
         if (albumFile.isChecked()) {
             albumFile.setChecked(false);
             sCallback.onPreviewChanged(albumFile);
@@ -163,9 +166,9 @@ public class GalleryActivity extends BaseActivity implements Contract.GalleryPre
 
     @Override
     public void finish() {
-        sAlbumFiles = null;
+        sAlbumFileList = null;
+        sAlbumFile = null;
         sCheckedCount = 0;
-        sCurrentPosition = 0;
         sCallback = null;
         super.finish();
     }
