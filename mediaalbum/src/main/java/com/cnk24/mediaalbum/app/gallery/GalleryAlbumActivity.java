@@ -22,6 +22,8 @@ import android.support.design.widget.AppBarLayout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
@@ -30,6 +32,7 @@ import com.cnk24.mediaalbum.ItemAction;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.app.Contract;
+import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.mvp.BaseActivity;
 import com.cnk24.mediaalbum.util.AlbumUtils;
@@ -78,6 +81,7 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
 
         mView.setTitle(mWidget.getTitle());
         mView.setupViews(mWidget, mCheckable);
+
         PreviewAdapter<AlbumFile> adapter = new PreviewAlbumAdapter(this, mAlbumFiles);
         if (sClick != null) {
             adapter.setItemClickListener(new OnItemClickListener() {
@@ -95,6 +99,20 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
                 }
             });
         }
+
+        adapter.setAlbumItemClickListener(new OnAlbumItemClickListener() {
+            @Override
+            public void onAlbumItemClick(View view, AlbumFile albumFile) {
+
+                //VideoView videoView = new VideoView(mContext);
+                //videoView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+                //videoView.setVideoPath(albumFile.getPath());
+                //final MediaController mediaController = new MediaController(mContext);
+                //videoView.setMediaController(mediaController);
+
+            }
+        });
+
         mView.bindData(adapter);
 
         if (mCurrentPosition == 0) onCurrentChanged(mCurrentPosition);

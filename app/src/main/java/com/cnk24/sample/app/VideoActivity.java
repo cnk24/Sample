@@ -15,6 +15,7 @@
  */
 package com.cnk24.sample.app;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
+import com.cnk24.mediaalbum.ItemAction;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
@@ -130,6 +132,11 @@ public class VideoActivity extends AppCompatActivity {
                                     .title(mToolbar.getTitle().toString())
                                     .build()
                     )
+                    //.itemClick(new ItemAction<AlbumFile>() {
+                    //    @Override
+                    //    public void onAction(Context context, AlbumFile item) {
+                    //    }
+                    //})
                     //.onResult(new Action<ArrayList<AlbumFile>>() {
                     //    @Override
                     //    public void onAction(@NonNull ArrayList<AlbumFile> result) {

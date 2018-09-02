@@ -20,7 +20,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
-        style="@style/MediaAlbum.MatchParent" />
+        style="@style/MediaAlbum.MatchParent"/>
 
     <RelativeLayout
         style="@style/MediaAlbum.MatchParent"
