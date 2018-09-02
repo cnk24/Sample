@@ -19,11 +19,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;

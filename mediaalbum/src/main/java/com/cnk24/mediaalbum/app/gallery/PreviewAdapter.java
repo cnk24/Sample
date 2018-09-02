@@ -15,19 +15,13 @@
  */
 package com.cnk24.mediaalbum.app.gallery;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.R;
