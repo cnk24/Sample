@@ -26,9 +26,14 @@
             android:scaleType="centerCrop" />
 
         <com.cnk24.mediaalbum.widget.TransferLayout
+            android:id="@+id/check_layer"
+            android:alpha="0.0"
+            android:background="@color/albumSheetLayer"
+            style="@style/MediaAlbum.MatchParent" />
+
+        <com.cnk24.mediaalbum.widget.TransferLayout
             android:clickable="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            style="@style/MediaAlbum.MatchParent" >
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/check_box"

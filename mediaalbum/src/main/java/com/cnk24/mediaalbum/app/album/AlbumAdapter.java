@@ -34,6 +34,7 @@ import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
+import com.cnk24.mediaalbum.widget.TransferLayout;
 
 import java.util.List;
 
@@ -191,6 +192,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private ImageView mIvImage;
         private AppCompatCheckBox mCheckBox;
+        private TransferLayout mCheckLayer;
 
         private AlbumFile mAlbumFile;
         private FrameLayout mLayoutLayer;
@@ -204,6 +206,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             mIvImage = itemView.findViewById(R.id.iv_album_content_image);
             mCheckBox = itemView.findViewById(R.id.check_box);
+            mCheckLayer = itemView.findViewById(R.id.check_layer);
             mLayoutLayer = itemView.findViewById(R.id.layout_layer);
 
             itemView.setOnClickListener(this);
@@ -231,6 +234,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
             } else if (v == mCheckBox) {
                 mCheckedClickListener.onCheckedClick(mCheckBox, mAlbumFile);
+                if (mCheckBox.isChecked()) {
+                    mCheckLayer.setAlpha(0.8f);
+                } else {
+                    mCheckLayer.setAlpha(0.0f);
+                }
             } else if (v == mLayoutLayer) {
                 mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
             }
@@ -246,6 +254,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private ImageView mIvImage;
         private AppCompatCheckBox mCheckBox;
+        private TransferLayout mCheckLayer;
         private TextView mTvDuration;
 
         private AlbumFile mAlbumFile;
@@ -260,6 +269,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             mIvImage = itemView.findViewById(R.id.iv_album_content_image);
             mCheckBox = itemView.findViewById(R.id.check_box);
+            mCheckLayer = itemView.findViewById(R.id.check_layer);
             mTvDuration = itemView.findViewById(R.id.tv_duration);
             mLayoutLayer = itemView.findViewById(R.id.layout_layer);
 
@@ -287,6 +297,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
             } else if (v == mCheckBox) {
                 mCheckedClickListener.onCheckedClick(mCheckBox, mAlbumFile);
+                if (mCheckBox.isChecked()) {
+                    mCheckLayer.setAlpha(0.8f);
+                } else {
+                    mCheckLayer.setAlpha(0.0f);
+                }
             } else if (v == mLayoutLayer) {
                 if (mAlbumItemClickListener != null) {
                     mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
