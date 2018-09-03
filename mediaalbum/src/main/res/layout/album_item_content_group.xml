@@ -45,7 +45,7 @@
                     android:layout_marginLeft="@dimen/album_dp_10" />
 
                 <android.support.v7.widget.AppCompatCheckBox
-                    android:id="@+id/check_box"
+                    android:id="@+id/group_check_box"
                     style="@style/MediaAlbum.CheckBox.Scale" />
 
             </LinearLayout>

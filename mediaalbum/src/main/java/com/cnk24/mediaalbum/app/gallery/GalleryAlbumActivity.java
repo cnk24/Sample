@@ -15,6 +15,8 @@
  */
 package com.cnk24.mediaalbum.app.gallery;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -34,6 +36,7 @@ import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.mvp.BaseActivity;
 import com.cnk24.mediaalbum.util.AlbumUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -100,13 +103,12 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         adapter.setAlbumItemClickListener(new OnAlbumItemClickListener() {
             @Override
             public void onAlbumItemClick(View view, AlbumFile albumFile) {
-
-                //VideoView videoView = new VideoView(mContext);
-                //videoView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
-                //videoView.setVideoPath(albumFile.getPath());
-                //final MediaController mediaController = new MediaController(mContext);
-                //videoView.setMediaController(mediaController);
-
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                File videoFile = new File(albumFile.getPath());
+                Uri uriFromVideoFile = Uri.fromFile(videoFile);
+                intent.setDataAndType(uriFromVideoFile, "video/*");
+                startActivity(intent);
             }
         });
 

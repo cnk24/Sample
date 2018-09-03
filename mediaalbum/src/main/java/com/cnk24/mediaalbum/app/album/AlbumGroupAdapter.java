@@ -18,18 +18,19 @@ package com.cnk24.mediaalbum.app.album;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.R;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
+import com.cnk24.mediaalbum.impl.OnGroupCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
@@ -46,10 +47,12 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
     private OnItemClickListener mAddPhotoClickListener;
     private OnAlbumItemClickListener mAlbumItemClickListener;
     private OnCheckedClickListener mCheckedClickListener;
+    private OnGroupCheckedClickListener mGroupCheckedClickListener;
 
     private int mSpanCount;
     private int mOrientation;
 
+    //private AppCompatCheckBox mCheckBox;
     private ArrayList<SectionDataModel> mItemList;
 
     public AlbumGroupAdapter(Context context, boolean hasCamera, int choiceMode, ColorStateList selector) {
@@ -81,6 +84,10 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
         this.mCheckedClickListener = checkedClickListener;
     }
 
+    public void setGroupCheckedClickListener(OnGroupCheckedClickListener checkedClickListener) {
+        this.mGroupCheckedClickListener = checkedClickListener;
+    }
+
     private ArrayList<SectionDataModel> initItemList(ArrayList<AlbumFile> dataset) {
         ArrayList<SectionDataModel> result = new ArrayList<>();
 
@@ -105,14 +112,38 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
     @Override
     public ItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.album_item_content_group, null);
-        ItemRowHolder mh = new ItemRowHolder(v);
+        ItemRowHolder mh = new ItemRowHolder(v, mGroupCheckedClickListener);
+
+        //mCheckBox = v.findViewById(R.id.group_check_box);
+        //if (mGroupCheckedClickListener != null) {
+        //    v.setOnClickListener(new View.OnClickListener() {
+        //        @Override
+        //        public void onClick(View v) {
+        //            if (v == mCheckBox) {
+        //                mGroupCheckedClickListener.onCheckedClick(mCheckBox, mItemList.get(v.getId()));
+                        //if (mCheckBox.isChecked()) {
+                        //    mCheckLayer.setAlpha(0.8f);
+                        //} else {
+                        //    mCheckLayer.setAlpha(0.0f);
+                        //}
+        //            }
+        //        }
+        //    });
+        //}
+
+
         return mh;
     }
+
+
+
+
+
+
 
     @Override
     public void onBindViewHolder(ItemRowHolder itemRowHolder, int position) {
         final String sectionName = mItemList.get(position).getHeaderTitle();
-        ArrayList singleSectionItems = mItemList.get(position).getItemListInSection();
         itemRowHolder.itemTitle.setText(sectionName);
 
         AlbumAdapter adapter = new AlbumAdapter(mContext, hasCamera, mChoiceMode, mSelector);
@@ -126,6 +157,8 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
         itemRowHolder.recycler_view_list.setAdapter(adapter);
         Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 4, 4);
         itemRowHolder.recycler_view_list.addItemDecoration(divider);
+
+        itemRowHolder.setData(mItemList.get(position));
     }
 
     @Override
@@ -133,14 +166,36 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
         return (null != mItemList ? mItemList.size() : 0);
     }
 
-    public class ItemRowHolder extends RecyclerView.ViewHolder {
+    public class ItemRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected TextView itemTitle;
         protected RecyclerView recycler_view_list;
 
-        public ItemRowHolder(View view) {
+        private final OnGroupCheckedClickListener mGroupCheckedClickListener;
+
+        private AppCompatCheckBox mCheckBox;
+        private SectionDataModel mSectionDataModel;
+
+        public ItemRowHolder(View view, OnGroupCheckedClickListener checkedClickListener) {
             super(view);
             this.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
             this.recycler_view_list = (RecyclerView) view.findViewById(R.id.recycler_view_list);
+
+            this.mGroupCheckedClickListener = checkedClickListener;
+            this.mCheckBox = view.findViewById(R.id.group_check_box);
+
+            this.mCheckBox.setOnClickListener(this);
+        }
+
+        public void setData(SectionDataModel sectionDataModel) {
+            this.mSectionDataModel = sectionDataModel;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v == mCheckBox) {
+                ((AlbumAdapter)recycler_view_list.getAdapter()).setItemsChecked(mCheckBox.isChecked());
+                mGroupCheckedClickListener.onCheckedClick(mCheckBox, mSectionDataModel);
+            }
         }
     }
 

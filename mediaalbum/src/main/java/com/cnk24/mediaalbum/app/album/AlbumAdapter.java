@@ -36,6 +36,7 @@ import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.mediaalbum.widget.TransferLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final ColorStateList mSelector;
 
     private List<AlbumFile> mAlbumFiles;
+    private ArrayList<Object[]> mViewHolderList = new ArrayList<>();
 
     private OnItemClickListener mAddPhotoClickListener;
     private OnAlbumItemClickListener mAlbumItemClickListener;
@@ -101,6 +103,23 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    public void setItemsChecked(boolean isChecked) {
+        for (Object[] data:mViewHolderList) {
+            int viewType = (int)data[0];
+            Object holder = null;
+            switch (viewType) {
+                case TYPE_IMAGE:
+                    ImageHolder imageViewHolder = (ImageHolder)data[1];
+                    imageViewHolder.mCheckBox.setChecked(isChecked);
+                    break;
+                case TYPE_VIDEO:
+                    VideoHolder videoViewHolder = (VideoHolder)data[1];
+                    videoViewHolder.mCheckBox.setChecked(isChecked);
+                    break;
+            }
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -120,6 +139,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 } else {
                     imageViewHolder.mCheckBox.setVisibility(View.GONE);
                 }
+
+                mViewHolderList.add(new Object[]{viewType, imageViewHolder});
                 return imageViewHolder;
             }
             case TYPE_VIDEO: {
@@ -134,6 +155,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 } else {
                     videoViewHolder.mCheckBox.setVisibility(View.GONE);
                 }
+
+                mViewHolderList.add(new Object[]{viewType, videoViewHolder});
                 return videoViewHolder;
             }
             default: {

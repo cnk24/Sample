@@ -38,6 +38,7 @@ import com.cnk24.mediaalbum.app.Contract;
 import com.cnk24.mediaalbum.impl.DoubleClickWrapper;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
 import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
+import com.cnk24.mediaalbum.impl.OnGroupCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
 import com.cnk24.mediaalbum.util.SystemBar;
@@ -150,6 +151,15 @@ class AlbumView extends Contract.AlbumView implements View.OnClickListener {
                 getPresenter().tryPreviewItem(albumFile);
             }
         });
+        mAdapter.setGroupCheckedClickListener(new OnGroupCheckedClickListener() {
+            @Override
+            public void onCheckedClick(CompoundButton button, SectionDataModel sectionData) {
+                for (AlbumFile albumFile:sectionData.getItemListInSection()) {
+                    getPresenter().tryCheckItem(button, albumFile);
+                }
+            }
+        });
+
         mRecyclerView.setAdapter(mAdapter);
     }
 
