@@ -22,6 +22,7 @@
     <string name="btn_function_video">Only Videos</string>
 
     <string name="btn_plus">+</string>
+    <string name="btn_ok">OK</string>
 
     <string name="title_camera">Camera</string>
     <string name="menu_camera_image">Image</string>
@@ -40,9 +41,13 @@
 
     <string name="hint_image_preview_click">Click on a item to preview them.</string>
 
+    <string name="checkbox_look">Never look again</string>
+
     <string name="new_folder">New Album</string>
     <string name="new_folder_hint">Vacation</string>
     <string name="btn_add">Add</string>
     <string name="btn_cancel">Cancel</string>
+
+    <string name="help">Note : The app does not return the original picture or video. However, only the album structure you create is used. If you delete the original, it will also be deleted from the app. If you delete the app, the original will not be deleted.</string>
 
 </resources>

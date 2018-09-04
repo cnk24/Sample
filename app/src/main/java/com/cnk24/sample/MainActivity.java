@@ -16,6 +16,9 @@
 package com.cnk24.sample;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -32,7 +35,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnk24.sample.app.CameraActivity;
@@ -55,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_camera).setOnClickListener(this);
         findViewById(R.id.btn_image).setOnClickListener(this);
         findViewById(R.id.btn_video).setOnClickListener(this);
+
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        boolean bNoLook = pref.getBoolean("NOLOOK", false);
+        if (!bNoLook) {
+            Help(true);
+        }
     }
 
     @Override
@@ -80,11 +91,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_new_folder, null);
         final EditText name = (EditText)view.findViewById(R.id.et_name);
-        Button btnOK = (Button)view.findViewById(R.id.btn_add);
+        Button btnAdd = (Button)view.findViewById(R.id.btn_add);
         Button btnCancel = (Button)view.findViewById(R.id.btn_cancel);
 
         builder.setView(view);
         final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.show();
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -100,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         window.setAttributes(lp);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        btnOK.setOnClickListener(new View.OnClickListener() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, name.getText().toString(), Toast.LENGTH_SHORT).show();
@@ -114,8 +126,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void Help() {
+    private void Help(boolean checkbox) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_help, null);
+        TextView tvVersion = (TextView)view.findViewById(R.id.tv_app_version);
+        final CheckBox cbLook = (CheckBox)view.findViewById(R.id.cb_look);
+        Button btnOK = (Button)view.findViewById(R.id.btn_ok);
 
+        cbLook.setVisibility(checkbox ? View.VISIBLE : View.GONE);
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            tvVersion.setText(info.versionName);
+        } catch (PackageManager.NameNotFoundException e) {}
+
+
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        Window window = dialog.getWindow();
+        window.setAttributes(lp);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbLook.isChecked()) {
+                    SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putBoolean("NOLOOK", true);
+                    editor.commit();
+                }
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -133,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.menu_help: {
-                Help();
+                Help(false);
                 break;
             }
         }
