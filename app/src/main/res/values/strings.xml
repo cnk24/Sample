@@ -39,4 +39,10 @@
     <string name="no_selected">Please select, first.</string>
 
     <string name="hint_image_preview_click">Click on a item to preview them.</string>
+
+    <string name="new_folder">New Album</string>
+    <string name="new_folder_hint">Vacation</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_cancel">Cancel</string>
+
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_new_folder"
+        android:icon="@drawable/ic_new_folder_white"
+        android:orderInCategory="100"
+        android:title="@string/menu_preview"
+        app:showAsAction="always|withText"/>
+
+    <item
+        android:id="@+id/menu_help"
+        android:icon="@drawable/ic_help_white"
+        android:orderInCategory="100"
+        android:title="@string/menu_image_select"
+        app:showAsAction="always|withText"/>
+
+</menu>

@@ -16,11 +16,24 @@
 package com.cnk24.sample;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cnk24.sample.app.CameraActivity;
 import com.cnk24.sample.app.ImageActivity;
@@ -61,5 +74,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
         }
+    }
+
+    private void NewAlbum() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_new_folder, null);
+        final EditText name = (EditText)view.findViewById(R.id.et_name);
+        Button btnOK = (Button)view.findViewById(R.id.btn_add);
+        Button btnCancel = (Button)view.findViewById(R.id.btn_cancel);
+
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = (int)(size.x * 0.7f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        Window window = dialog.getWindow();
+        window.setAttributes(lp);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, name.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void Help() {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_album_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_new_folder: {
+                NewAlbum();
+                break;
+            }
+            case R.id.menu_help: {
+                Help();
+                break;
+            }
+        }
+        return true;
     }
 }
