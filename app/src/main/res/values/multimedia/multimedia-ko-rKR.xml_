@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">멀티미디어 앨범</string>
+
+    <string name="menu_add">추가</string>
+    <string name="add_category">앨범 만들기</string>
+    <string name="menu_help">도움말</string>
+
+    <string name="btn_function_camera">카메라</string>
+    <string name="btn_function_picture">사진</string>
+    <string name="btn_function_video">동영상</string>
+
+    <string name="btn_plus">+</string>
+    <string name="btn_add">추가</string>
+    <string name="btn_edit">편집</string>
+    <string name="btn_delete">삭제</string>
+    <string name="btn_close">닫기</string>
+    <string name="btn_ok">확인</string>
+    <string name="btn_cancel">취소</string>
+    <string name="btn_yes">네</string>
+    <string name="btn_no">아니오</string>
+
+    <string name="title_camera">카메라</string>
+    <string name="menu_camera_image">사진</string>
+    <string name="menu_camera_video">동영상</string>
+
+    <string name="title_image_select">사진 선택</string>
+    <string name="menu_image_select">사진</string>
+
+    <string name="title_video_select">동영상 선택</string>
+    <string name="menu_video_select">동영상</string>
+
+    <string name="checkable">체크 옵션</string>
+    <string name="canceled">취소</string>
+    <string name="no_selected">첫번째를 선택해 주세요.</string>
+
+    <string name="hint_image_preview_click">미리 보려면 항목을 클릭하세요.</string>
+    <string name="hint_video_preview_click">미리 보려면 항목을 클릭하세요.</string>
+
+    <string name="tab_image">사진</string>
+    <string name="tab_video">동영상</string>
+
+    <string name="alert_title_question">질문</string>
+    <string name="alert_msg_delete">["%s"] 정말 삭제 하시겠습니까?</string>
+    <string name="selected_delete_message">정말 삭제 하시겠습니까?</string>
+    <string name="delete_complete">삭제 완료</string>
+
+    <string name="media_qty">P(%d) V(%d)</string>
+
+    <string name="checkbox_look">다시 보지 않기</string>
+
+    <string name="new_folder">앨범 만들기</string>
+    <string name="new_folder_hint">휴가</string>
+
+    <string name="note_help">참고: 앱은 원본 사진이나 동영상을 변형하지 않습니다. 다만, 사용자가 만든 앨범 구조만 사용됩니다.\n 원본을 삭제하면 앱에서도 삭제됩니다. 그리고, 앱에서 삭제시에는 원본은 남아 있습니다.</string>
+
+</resources>

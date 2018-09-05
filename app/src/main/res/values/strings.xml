@@ -48,6 +48,6 @@
     <string name="btn_add">Add</string>
     <string name="btn_cancel">Cancel</string>
 
-    <string name="help">Note : The app does not return the original picture or video. However, only the album structure you create is used. If you delete the original, it will also be deleted from the app. If you delete the app, the original will not be deleted.</string>
+    <string name="help">Note: The app does not modify the original picture or video. However, only the user-created album structure is used.\n Deleting the original will also delete it from the app. In addition, the original remains when deleted from the app.</string>
 
 </resources>

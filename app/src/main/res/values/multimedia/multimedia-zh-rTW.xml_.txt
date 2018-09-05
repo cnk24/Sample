@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">多媒體相冊</string>
+
+    <string name="menu_add">添加</string>
+    <string name="add_category">制作相冊</string>
+    <string name="menu_help">助言</string>
+
+    <string name="btn_function_camera">相機</string>
+    <string name="btn_function_picture">照片</string>
+    <string name="btn_function_video">視頻</string>
+
+    <string name="btn_plus">+</string>
+    <string name="btn_add">添加</string>
+    <string name="btn_edit">修訂</string>
+    <string name="btn_delete">刪除</string>
+    <string name="btn_close">取消</string>
+    <string name="btn_ok">好</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_yes">好</string>
+    <string name="btn_no">不</string>
+
+    <string name="title_camera">相機</string>
+    <string name="menu_camera_image">照片</string>
+    <string name="menu_camera_video">視頻</string>
+
+    <string name="title_image_select">選擇照片</string>
+    <string name="menu_image_select">照片</string>
+
+    <string name="title_video_select">選擇視頻</string>
+    <string name="menu_video_select">視頻</string>
+
+    <string name="checkable">選擇</string>
+    <string name="canceled">取消</string>
+    <string name="no_selected">首先,請選擇。</string>
+
+    <string name="hint_image_preview_click">單擊"預覽在一個項目。</string>
+    <string name="hint_video_preview_click">單擊"預覽在一個項目。</string>
+
+    <string name="tab_image">照片</string>
+    <string name="tab_video">視頻</string>
+
+    <string name="alert_title_question">提問</string>
+    <string name="alert_msg_delete">["%s"] 你想刪除。</string>
+    <string name="selected_delete_message">你想刪除。</string>
+    <string name="delete_complete">刪除完成</string>
+
+    <string name="media_qty">P(%d) V(%d)</string>
+
+    <string name="checkbox_look">不要再找找看</string>
+
+    <string name="new_folder">制作相冊</string>
+    <string name="new_folder_hint">旅行</string>
+
+    <string name="note_help">參考:未修改原本的照片或視頻。 只是使用了用戶製作的專輯結構。\n 然後在應用程序中刪除的話,原件還剩下原件。</string>
+
+</resources>

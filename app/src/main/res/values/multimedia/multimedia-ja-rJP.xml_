@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">マルチメディアアルバム</string>
+
+    <string name="menu_add">追加</string>
+    <string name="add_category">アルバム作成する</string>
+    <string name="menu_help">助言</string>
+
+    <string name="btn_function_camera">カメラ</string>
+    <string name="btn_function_picture">写真</string>
+    <string name="btn_function_video">ビデオ</string>
+
+    <string name="btn_plus">+</string>
+    <string name="btn_add">追加</string>
+    <string name="btn_edit">修正</string>
+    <string name="btn_delete">削除</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_yes">はい</string>
+    <string name="btn_no">いいえ</string>
+
+    <string name="title_camera">カメラ</string>
+    <string name="menu_camera_image">写真</string>
+    <string name="menu_camera_video">ビデオ</string>
+
+    <string name="title_image_select">写真の選択</string>
+    <string name="menu_image_select">写真</string>
+
+    <string name="title_video_select">ビデオの選択</string>
+    <string name="menu_video_select">ビデオ</string>
+
+    <string name="checkable">チェック可能なオプション</string>
+    <string name="canceled">取消</string>
+    <string name="no_selected">最初に選択してください.</string>
+
+    <string name="hint_image_preview_click">アイテムをクリックしてプレビューします.</string>
+    <string name="hint_video_preview_click">アイテムをクリックしてプレビューします.</string>
+
+    <string name="tab_image">写真</string>
+    <string name="tab_video">ビデオ</string>
+
+    <string name="alert_title_question">質問</string>
+    <string name="alert_msg_delete">["%s"] 削除しますか</string>
+    <string name="selected_delete_message">削除しますか?</string>
+    <string name="delete_complete">削除完了</string>
+
+    <string name="media_qty">P(%d) V(%d)</string>
+
+    <string name="checkbox_look">もう見ない</string>
+
+    <string name="new_folder">写真帳作成する</string>
+    <string name="new_folder_hint">休暇</string>
+
+    <string name="note_help">注: このアプリはオリジナルの写真やビデオは修正しません. ただし,ユーザー作成のアルバム構造のみが使用されます.\n オリジナルを削除するとアプリからも削除される. また,アプリから削除してもオリジナルのままです.</string>
+
+</resources>
