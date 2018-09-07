@@ -15,9 +15,11 @@
  */
 package com.cnk24.sample.app;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -97,6 +99,26 @@ public class ImageActivity extends AppCompatActivity
 
     private void deleteAlbumFile() {
         if (mDeleteAlbumFiles.size() > 0) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes 버튼을 클릭했을때 처리
+                            setDelete(false);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No 버튼을 클릭했을때 처리
+                            setDelete(false);
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.question_content).setPositiveButton(R.string.question_yes, dialogClickListener)
+                    .setNegativeButton(R.string.question_no, dialogClickListener).show();
         }
     }
 
@@ -194,7 +216,6 @@ public class ImageActivity extends AppCompatActivity
             }
             case R.id.menu_delete: {
                 deleteAlbumFile();
-                setDelete(false);
                 break;
             }
         }
