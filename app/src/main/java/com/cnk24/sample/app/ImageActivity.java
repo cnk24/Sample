@@ -15,18 +15,17 @@
  */
 package com.cnk24.sample.app;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +34,7 @@ import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
-import com.cnk24.mediaalbum.impl.OnItemClickListener;
-import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
-import com.cnk24.mediaalbum.widget.divider.Divider;
+import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.sample.R;
 import com.cnk24.sample.app.data.RecyclerViewDataAdapter;
 
@@ -50,6 +47,9 @@ public class ImageActivity extends AppCompatActivity
 
     private RecyclerViewDataAdapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles;
+
+    private boolean mDeleteFlag = false;
+    private ArrayList<AlbumFile> mDeleteAlbumFiles = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,13 +69,35 @@ public class ImageActivity extends AppCompatActivity
         //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         //recyclerView.addItemDecoration(divider);
 
-        mAdapter = new RecyclerViewDataAdapter(this, new OnAlbumItemClickListener() {
+        mAdapter = new RecyclerViewDataAdapter(this);
+        mAdapter.setAlbumItemClickListener(new OnAlbumItemClickListener() {
             @Override
             public void onAlbumItemClick(View view, AlbumFile albumFile) {
                 previewImage(albumFile);
             }
         });
+        mAdapter.setCheckedClickListener(new OnCheckedClickListener() {
+            @Override
+            public void onCheckedClick(CompoundButton button, AlbumFile albumFile) {
+                mDeleteAlbumFiles.add(albumFile);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void setDelete(boolean flag) {
+        if (mAlbumFiles != null) {
+            mDeleteFlag = flag;
+            invalidateOptionsMenu();
+
+            mAdapter.setDeleteFlag(flag);
+            mAdapter.notifyDataSetChanged(mAlbumFiles);
+        }
+    }
+
+    private void deleteAlbumFile() {
+        if (mDeleteAlbumFiles.size() > 0) {
+        }
     }
 
     /**
@@ -162,7 +184,31 @@ public class ImageActivity extends AppCompatActivity
                 selectImage();
                 break;
             }
+            case R.id.menu_select: {
+                setDelete(true);
+                break;
+            }
+            case R.id.menu_cancel: {
+                setDelete(false);
+                break;
+            }
+            case R.id.menu_delete: {
+                deleteAlbumFile();
+                setDelete(false);
+                break;
+            }
         }
         return true;
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_select_image).setVisible(!mDeleteFlag);
+        menu.findItem(R.id.menu_select).setVisible(!mDeleteFlag);
+
+        menu.findItem(R.id.menu_cancel).setVisible(mDeleteFlag);
+        menu.findItem(R.id.menu_delete).setVisible(mDeleteFlag);
+        return true;
+    }
+
 }

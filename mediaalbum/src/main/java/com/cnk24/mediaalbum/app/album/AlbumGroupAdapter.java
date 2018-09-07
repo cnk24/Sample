@@ -52,7 +52,6 @@ public class AlbumGroupAdapter extends RecyclerView.Adapter<AlbumGroupAdapter.It
     private int mSpanCount;
     private int mOrientation;
 
-    //private AppCompatCheckBox mCheckBox;
     private ArrayList<SectionDataModel> mItemList;
 
     public AlbumGroupAdapter(Context context, boolean hasCamera, int choiceMode, ColorStateList selector) {

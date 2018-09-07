@@ -17,18 +17,21 @@ package com.cnk24.sample.app.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnk24.mediaalbum.Album;
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
-import com.cnk24.mediaalbum.impl.OnItemClickListener;
+import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.util.AlbumUtils;
+import com.cnk24.mediaalbum.widget.TransferLayout;
 import com.cnk24.sample.R;
 
 import java.util.ArrayList;
@@ -37,13 +40,26 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private LayoutInflater mInflater;
     private OnAlbumItemClickListener mAlbumItemClickListener;
+    private OnCheckedClickListener mCheckedClickListener;
 
     private ArrayList<AlbumFile> mItemList;
+    private boolean mDeleteFlag;
 
-    public SectionListDataAdapter(Context context, OnAlbumItemClickListener itemClickListener, ArrayList<AlbumFile> itemList) {
+    public SectionListDataAdapter(Context context, ArrayList<AlbumFile> itemList) {
         this.mInflater = LayoutInflater.from(context);
-        this.mAlbumItemClickListener = itemClickListener;
         this.mItemList = itemList;
+    }
+
+    public void setAlbumItemClickListener(OnAlbumItemClickListener itemClickListener) {
+        this.mAlbumItemClickListener = itemClickListener;
+    }
+
+    public void setCheckedClickListener(OnCheckedClickListener checkedClickListener) {
+        this.mCheckedClickListener = checkedClickListener;
+    }
+
+    public void setDeleteFlag(boolean flag) {
+        this.mDeleteFlag = flag;
     }
 
     @Override
@@ -55,7 +71,7 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
-                return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mAlbumItemClickListener);
+                return new SectionListDataAdapter.ImageViewHolder(mInflater.inflate(R.layout.item_content_image, viewGroup, false), mAlbumItemClickListener, mCheckedClickListener, mDeleteFlag);
             }
             case AlbumFile.TYPE_VIDEO: {
                 return new SectionListDataAdapter.VideoViewHolder(mInflater.inflate(R.layout.item_content_video, viewGroup, false), mAlbumItemClickListener);
@@ -90,14 +106,33 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final OnAlbumItemClickListener mAlbumItemClickListener;
-        private ImageView mIvImage;
+        private final OnCheckedClickListener mCheckedClickListener;
+
         private AlbumFile mAlbumFile;
 
-        ImageViewHolder(View itemView, OnAlbumItemClickListener itemClickListener) {
+        private ImageView mIvImage;
+        private AppCompatCheckBox mCheckBox;
+        private TransferLayout mCheckLayer;
+        private FrameLayout mCheckGroup;
+
+        ImageViewHolder(View itemView, OnAlbumItemClickListener itemClickListener, OnCheckedClickListener checkedClickListener, boolean deleteFlag) {
             super(itemView);
             this.mAlbumItemClickListener = itemClickListener;
+            this.mCheckedClickListener = checkedClickListener;
+
             this.mIvImage = itemView.findViewById(R.id.iv_media_content_image);
+            this.mCheckBox = itemView.findViewById(R.id.check_box);
+            this.mCheckLayer = itemView.findViewById(R.id.check_layer);
+            this.mCheckGroup = itemView.findViewById(R.id.check_group);
+
             itemView.setOnClickListener(this);
+            mCheckBox.setOnClickListener(this);
+
+            if (deleteFlag) {
+                mCheckGroup.setVisibility(View.VISIBLE);
+            } else {
+                mCheckGroup.setVisibility(View.GONE);
+            }
         }
 
         public void setData(AlbumFile albumFile) {
@@ -110,8 +145,15 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @Override
         public void onClick(View v) {
-            if (mAlbumItemClickListener != null) {
+            if (v == itemView) {
                 mAlbumItemClickListener.onAlbumItemClick(v, mAlbumFile);
+            } else if (v == mCheckBox) {
+                mCheckedClickListener.onCheckedClick(mCheckBox, mAlbumFile);
+                if (mCheckBox.isChecked()) {
+                    mCheckLayer.setAlpha(0.8f);
+                } else {
+                    mCheckLayer.setAlpha(0.0f);
+                }
             }
         }
     }

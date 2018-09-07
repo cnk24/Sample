@@ -18,7 +18,6 @@ package com.cnk24.sample.app.data;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import android.widget.TextView;
 
 import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
-import com.cnk24.mediaalbum.impl.OnItemClickListener;
+import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
 import com.cnk24.sample.R;
@@ -38,17 +37,30 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
     private Context mContext;
     private OnAlbumItemClickListener mAlbumItemClickListener;
+    private OnCheckedClickListener mCheckedClickListener;
 
     private ArrayList<SectionDataModel> mItemList;
+    private boolean mDeleteFlag;
 
-    public RecyclerViewDataAdapter(Context context, OnAlbumItemClickListener itemClickListener) {
+    public RecyclerViewDataAdapter(Context context) {
         this.mContext = context;
-        this.mAlbumItemClickListener = itemClickListener;
     }
 
     public void notifyDataSetChanged(ArrayList<AlbumFile> itemList) {
         this.mItemList = initItemList(itemList);
         super.notifyDataSetChanged();
+    }
+
+    public void setAlbumItemClickListener(OnAlbumItemClickListener itemClickListener) {
+        this.mAlbumItemClickListener = itemClickListener;
+    }
+
+    public void setCheckedClickListener(OnCheckedClickListener checkedClickListener) {
+        this.mCheckedClickListener = checkedClickListener;
+    }
+
+    public void setDeleteFlag(boolean flag) {
+        this.mDeleteFlag = flag;
     }
 
     private ArrayList<SectionDataModel> initItemList(ArrayList<AlbumFile> dataset) {
@@ -85,7 +97,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         ArrayList singleSectionItems = mItemList.get(position).getItemListInSection();
         itemRowHolder.itemTitle.setText(sectionName);
 
-        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, mAlbumItemClickListener, singleSectionItems);
+        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, singleSectionItems);
+        itemListDataAdapter.setAlbumItemClickListener(mAlbumItemClickListener);
+        itemListDataAdapter.setCheckedClickListener(mCheckedClickListener);
+        itemListDataAdapter.setDeleteFlag(mDeleteFlag);
 
         itemRowHolder.recycler_view_list.setHasFixedSize(true);
         itemRowHolder.recycler_view_list.setLayoutManager(new GridLayoutManager(this.mContext, 4));

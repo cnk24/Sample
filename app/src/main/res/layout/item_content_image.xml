@@ -14,8 +14,36 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<com.cnk24.mediaalbum.widget.SquareImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/iv_media_content_image"
-    style="@style/MediaAlbum.MatchParent"
-    android:contentDescription="@string/media_title"
-    android:scaleType="centerCrop" />
+<com.cnk24.mediaalbum.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MediaAlbum.MatchParent">
+
+    <ImageView
+        android:id="@+id/iv_media_content_image"
+        style="@style/MediaAlbum.MatchParent"
+        android:contentDescription="@string/media_title"
+        android:scaleType="centerCrop" />
+
+    <FrameLayout
+        android:id="@+id/check_group"
+        style="@style/MediaAlbum.MatchParent">
+
+        <com.cnk24.mediaalbum.widget.TransferLayout
+            android:id="@+id/check_layer"
+            android:alpha="0.0"
+            android:background="@color/albumSheetLayer"
+            style="@style/MediaAlbum.MatchParent" />
+
+        <com.cnk24.mediaalbum.widget.TransferLayout
+            android:clickable="true"
+            style="@style/MediaAlbum.MatchParent" >
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/check_box"
+                android:layout_gravity="right"
+                style="@style/MediaAlbum.CheckBox.Scale" />
+
+        </com.cnk24.mediaalbum.widget.TransferLayout>
+
+    </FrameLayout>
+
+</com.cnk24.mediaalbum.widget.SquareRelativeLayout>

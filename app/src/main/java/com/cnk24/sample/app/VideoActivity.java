@@ -27,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.cnk24.mediaalbum.AlbumFile;
 import com.cnk24.mediaalbum.ItemAction;
 import com.cnk24.mediaalbum.api.widget.Widget;
 import com.cnk24.mediaalbum.impl.OnAlbumItemClickListener;
+import com.cnk24.mediaalbum.impl.OnCheckedClickListener;
 import com.cnk24.mediaalbum.impl.OnItemClickListener;
 import com.cnk24.mediaalbum.widget.divider.Api21ItemDivider;
 import com.cnk24.mediaalbum.widget.divider.Divider;
@@ -73,10 +75,17 @@ public class VideoActivity extends AppCompatActivity {
         //Divider divider = new Api21ItemDivider(Color.TRANSPARENT, 5, 5);
         //recyclerView.addItemDecoration(divider);
 
-        mAdapter = new RecyclerViewDataAdapter(this, new OnAlbumItemClickListener() {
+        mAdapter = new RecyclerViewDataAdapter(this);
+        mAdapter.setAlbumItemClickListener(new OnAlbumItemClickListener() {
             @Override
             public void onAlbumItemClick(View view, AlbumFile albumFile) {
                 previewVideo(albumFile);
+            }
+        });
+        mAdapter.setCheckedClickListener(new OnCheckedClickListener() {
+            @Override
+            public void onCheckedClick(CompoundButton button, AlbumFile albumFile) {
+
             }
         });
         recyclerView.setAdapter(mAdapter);
