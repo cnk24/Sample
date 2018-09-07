@@ -16,6 +16,7 @@
 package com.cnk24.mediaalbum.app.gallery;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.cnk24.mediaalbum.Album;
