@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.cnk24.mediaalbum.Action;
 import com.cnk24.mediaalbum.Album;
@@ -60,8 +61,9 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
     private AppBarLayout mAppBarLayout;
     private CountDownTimer mAppBarCountDownTimer;
 
-    private CountDownTimer mSingleTapCountDownTimer;
-    private boolean mSingleTapFlag;
+    private int mTapCount;
+    private float mPosX;
+    private float mPosY;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -210,19 +212,20 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
     }
 
     private void SingleTapCountDown() {
-        mSingleTapCountDownTimer = new CountDownTimer(300, 1) {
+        new CountDownTimer(ViewConfiguration.getDoubleTapTimeout(), 1) {
             public void onTick(long millisUntilFinished) {
-                mSingleTapFlag = true;
             }
 
             public void onFinish() {
-                mSingleTapFlag = false;
-
-                if (mAppBarLayout.getY() < 0) {
-                    AppBarDown(mAppBarLayout);
-                } else {
-                    AppBarUp(mAppBarLayout);
+                if (mTapCount == 1) {
+                    if (mAppBarLayout.getY() < 0) {
+                        AppBarDown(mAppBarLayout);
+                    } else {
+                        AppBarUp(mAppBarLayout);
+                    }
                 }
+
+                mTapCount = 0;
             }
         }.start();
     }
@@ -232,18 +235,18 @@ public class GalleryAlbumActivity extends BaseActivity implements Contract.Galle
         int action = event.getAction();
         switch(action) {
             case(MotionEvent.ACTION_DOWN):
-                if (mSingleTapFlag) {
-                    mSingleTapFlag = false;
-                    mSingleTapCountDownTimer.cancel();
-                } else {
-                    SingleTapCountDown();
-                }
+                mPosX = event.getX();
+                mPosY = event.getY();
                 break;
             case(MotionEvent.ACTION_UP):
+                if (mPosX == event.getX() && mPosY == event.getY()) {
+                    if (mTapCount == 0) {
+                        SingleTapCountDown();
+                    }
+                    mTapCount++;
+                }
                 break;
             case(MotionEvent.ACTION_MOVE):
-                mSingleTapFlag = false;
-                mSingleTapCountDownTimer.cancel();
                 break;
             default:
                 break;

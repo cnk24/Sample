@@ -78,4 +78,5 @@
 
     <string name="media_item_unavailable">Unavailable</string>
     <string name="media_take_file_unavailable">Unavailable file, please try again.</string>
+
 </resources>
